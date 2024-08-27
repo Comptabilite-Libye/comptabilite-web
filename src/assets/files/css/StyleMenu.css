@@ -12,7 +12,12 @@ h2 {
 .container {
     margin: 50px auto;
 }
-h2 ,span{
+@media (min-width: 992px) {
+    .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9 {
+        float: right;
+    }
+}
+h2 ,span , p{
     font-family: cairo !important; 
   }
 :host ::ng-deep  .mainbox    {
@@ -74,7 +79,7 @@ h2 ,span{
     -ms-transition: all 0.4s ease-in;
     -o-transition: all 0.4s ease-in;
     transition: all 0.4s ease-in;
-    font-size: 20px;
+    font-size: 25px;
     color: #616161;
 }
 #item:focus .block1 i, #item:active .block1 i, #item:hover .block1 i {
@@ -87,10 +92,10 @@ h2 ,span{
 }
 .block2 {
     display:inline-block;
-    text-align: left;
+    text-align: right;
 }
 .block2 span {
-    font-size: 15px;
+    font-size: 18px;
     color: #000000;
 }
 .block2 p {

@@ -9,6 +9,9 @@ import { TypeDepenseComponent } from './MenuParametrage/type-depense/type-depens
 import { TypeRecetteComponent } from './MenuParametrage/type-recette/type-recette.component';
 import { MenuRecetteComponent } from './Recette/menu-recette/menu-recette.component';
 import { EntreeCaisseComponent } from './Recette/entree-caisse/entree-caisse.component';
+import { DeviseComponent } from './MenuParametrage/devise/devise.component';
+import { BeneficiaireComponent } from './MenuParametrage/beneficiaire/beneficiaire.component';
+import { FournisseurComponent } from './MenuParametrage/fournisseur/fournisseur.component';
 
 const routes: Routes = [
 
@@ -22,6 +25,9 @@ const routes: Routes = [
   { path: 'menu_parametrage/caisse', component: CaisseComponent },
   { path: 'menu_parametrage/type_depense', component: TypeDepenseComponent },
   { path: 'menu_parametrage/type_recette', component: TypeRecetteComponent },
+  { path: 'menu_parametrage/devise', component: DeviseComponent },
+  { path: 'menu_parametrage/beneficiaire', component: BeneficiaireComponent },
+  { path: 'menu_parametrage/fournisseur', component: FournisseurComponent },
 
 
   { path: 'menu_recette', component: MenuRecetteComponent },

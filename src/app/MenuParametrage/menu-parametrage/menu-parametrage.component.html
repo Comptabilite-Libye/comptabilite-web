@@ -2,77 +2,83 @@
     <div class="row text-center">
       <h2>الإعدادت العامة</h2>
       <div id="menu-box">
-        <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_achat/appel_offre']">
+        <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_parametrage/caisse']">
           <div class="container-block">
-            <div class="block1">
-              <i class="fa fa-envelope-open-text" aria-hidden="true"></i>
-            </div>
             <div class="block2">
-              <span>Appel Offre</span>
-              <p>Appel Offre</p>
+              <span> الخزائن</span>
+              <p> الخزائن...</p>
   
             </div>
+            <div class="block1">
+              <!-- <i class="fa fa-envelope-open-text" aria-hidden="true"></i> -->
+              <i class="fa-solid fa-circle-dollar-to-slot"></i>
+            </div>
+            
           </div>
         </div>
-        <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_achat/demande_achat']">
+        <div id="item" class="col-sm-6 col-md-3"[routerLink]="['/menu_parametrage/devise']">
           <div class="container-block">
+            <div class="block2">
+              <span>العملات</span>
+              <p>العملات...</p>
+            </div>
             <div class="block1">
               <i class="fa fa-rectangle-list" aria-hidden="true"></i>
             </div>
-            <div class="block2">
-              <span>Demande Achat</span>
-              <p>Demande Achat</p>
-            </div>
+            
             <div class="block3" >
               <i class="pi pi-bell" pBadge value="4" severity="danger"></i>
             </div>
           </div>
         </div>
-        <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_achat/ordre_achat']">
+        <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_parametrage/beneficiaire']">
           <div class="container-block">
+           
+            <div class="block2">
+              <span>المستفيدين</span>
+  
+              <p>المستفيدين...</p>
+            </div>
             <div class="block1">
               <i class="fa fa-tag" aria-hidden="true"></i>
-            </div>
-            <div class="block2">
-              <span>Ordre d'achat</span>
-  
-              <p>Ordre d'achat</p>
             </div>
           </div>
         </div>
         
-        <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_achat/bon_reception']">
+        <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_parametrage/fournisseur']">
           <div class="container-block">
+            
+            <div class="block2">
+              <span>الموردين</span>
+              <p>الموردين...</p>
+            </div>
             <div class="block1">
               <i class="fa fa-bars" aria-hidden="true"></i>
             </div>
-            <div class="block2">
-              <span>Bon Reception</span>
-              <p>Mouvment Reception , ...</p>
-            </div>
           </div>
         </div>
-        <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_parametrage_matiere/taille']">
+        <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_parametrage/type_depense']">
           <div class="container-block">
             <div class="block1">
               <i class="fa fa-folder-tree" aria-hidden="true"></i>
             </div>
             <div class="block2">
-              <span>GED</span>
-              <p>Document PDF, JPG , ...</p>
+              <span>أنواع المصروافات</span>
+              <p>أنواع المصروافات...</p>
             </div>
           </div>
         </div>
-        <!--<div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_parametrage_matiere/grille_taille']">
-            <div class="container-block">
-              <div class="block1">
-                <i class="fa fa-tasks"></i>
-              </div>
-              <div class="block2">
-                <span>Grille Taille</span> 
-              </div>
-            </div>    
-          </div> -->
+        <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_parametrage/type_recette']">
+          <div class="container-block">
+            <div class="block1">
+              <i class="fa fa-folder-tree" aria-hidden="true"></i>
+            </div>
+            <div class="block2">
+              <span>أنواع الإيرادات</span>
+              <p>>أنواع الإيرادا...</p>
+            </div>
+          </div>
+        </div>
   
       </div>
     </div>
