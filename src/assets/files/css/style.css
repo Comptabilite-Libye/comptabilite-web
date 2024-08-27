@@ -1,0 +1,1878 @@
+:host ::ng-deep header {
+  padding: 12px 0px 10px 17px;
+  border: 1px solid #bfbfbf;
+  border-radius: 5px;
+}
+
+:host ::ng-deep .p-datatable-thead th {
+  text-align: left !important;
+  color: #333 !important;
+  /* background-color: #324960 !important; */
+  /* background: linear-gradient(to top, lightgrey 0%, lightgrey 1%, #e0e0e0 26%, #efefef 48%, #d9d9d9 75%, #bcbcbc 100%); */
+  background-image: linear-gradient(to bottom, #fff 0, #e0e0e0 100%) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0) !important;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important;
+
+  border: 1px solid #b7b7b7 !important; 
+  height: 29px !important;
+  padding: 0px 10px 0px !important;
+  box-shadow: 4px -8px 20px 0px rgb(179 179 179 / 36%);
+  font-family: Cairo !important;
+  border-radius: 3px; 
+  font-size: 13px !important; 
+  font-weight: bold !important;
+}
+
+:host ::ng-deep th {
+  border: 1px solid white;
+}
+
+:host ::ng-deep .p-datatable-tbody td {
+  text-align: left !important;
+  border: 1px solid #bfbfbf !important;
+  border-width: 1px 1px 1px 1px !important;
+  padding: 2px 5px 0px !important;
+  font-size: 15px !important;
+  height: 25px !important;
+}
+
+
+
+/* :host ::ng-deep .p-datatable .p-datatable-tbody>tr.p-highlight {
+    background: #d1d1d1 !important;
+    color: #495057 !important;
+    font-weight: bold !important;
+  }
+   */
+:host ::ng-deep .mat-row,
+tr.mat-footer-row {
+  height: 25px !important;
+}
+
+
+:host ::ng-deep .act-col {
+  text-align: center !important;
+  border: 1px solid #bfbfbf !important;
+  padding-left: 10px !important;
+  width: 68px;
+  text-align-last: center;
+}
+
+
+
+
+
+:host ::ng-deep .recherche {
+  width: auto;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid #9595957a;
+  padding: 5px 1px 0px 10px;
+  position: relative !important;
+  bottom: 15px !important;
+  display: flex;
+}
+
+:host ::ng-deep .label-recherche {
+  font-family: auto;
+  font-size: 14px;
+  padding: 5px 0px 0px 0px;
+}
+
+:host ::ng-deep .recherche_art {
+  width: 463px;
+  border-radius: 5px;
+  border: 1px solid rgba(149, 149, 149, 0.4784313725);
+  padding: 5px 0px 1px 1px;
+  position: relative !important;
+  bottom: 5px !important;
+  display: flex;
+}
+
+.Bouton-rechercher-art {
+  margin-right: 30px;
+  display: flex;
+  height: 34px;
+  /* padding: 5px 15px 0px; */
+  margin-bottom: 3px;
+  border: 1px solid #adadad;
+}
+
+.recherche-zone {
+  display: contents;
+}
+
+.Bouton-rechercher {
+  margin-right: 5px;
+  display: flex;
+  height: 30px;
+  width: 105px;
+  padding: 3px 6px 0px;
+  margin-bottom: 3px;
+  border: 1px solid #adadad;
+
+}
+
+
+
+/* //////////////////////////////////////// */
+
+
+:host ::ng-deep .recherche-value {
+  width: 130px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #afafaf;
+  font-family: auto;
+  font-size: 15px;
+  padding: 1px 0px 5px 5px;
+  margin: 0px 15px 0px 10px;
+}
+
+
+:host ::ng-deep .recherche-value-tab {
+  width: 100%;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #afafaf;
+  font-family: auto;
+  font-size: 15px; 
+}
+
+
+
+
+/* /////// modal */
+
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.employee-form {
+  background-color: white;
+  width: 600px;
+  padding: 20px 50px;
+  border-radius: 5px;
+}
+
+.form-control {
+  width: 90%;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  background-color: whitesmoke;
+  border-radius: 6px;
+  padding: 5px;
+  /* width: 1050px; */
+}
+
+
+.modal-header {
+  margin: -16px;
+}
+
+/* table postion */
+:host ::ng-deep .p-datatable-wrapper {
+  margin: 10px 0px 0px 0px;
+}
+
+/* /// button ajout et modif et suppri  */
+
+.Bouton-add-new1 {
+  margin-right: 5px;
+  display: flex;
+  height: 30px;
+  width: 92px;
+  padding: 3px 7px 0px 5px;
+  margin-bottom: 3px;
+  border: 1px solid #adadad;
+
+}
+
+
+.dropbtn {
+  margin-right: 5px;
+  display: flex;
+  height: 30px;
+  width: 100px;
+  padding: 3px 7px 0px 5px;
+  margin-bottom: 3px;
+}
+
+.Bouton-add-new2 {
+  margin-right: 5px;
+  display: flex;
+  height: 30px;
+  width: 100px;
+  padding: 3px 7px 0px 5px;
+  margin-bottom: 3px;
+  border: 1px solid #adadad;
+
+}
+
+
+.Bouton-add-new-other {
+  margin-right: 5px;
+  display: flex;
+  height: 30px;
+  width: 150px;
+  padding: 3px 7px 0px 5px;
+  margin-bottom: 3px;
+  border:1px solid #adadad
+}
+
+.bouton_style-2 {
+  font-size: 15px;
+  font-family: Cairo !important;
+  font-weight: bold;
+  /* border: 1px solid gray; */
+}
+
+
+:host ::ng-deep .ActionBtn {
+  width: auto;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid #9595957a;
+  padding: 5px 1px 0px 10px;
+  position: relative !important;
+  bottom: 15px !important;
+  display: flex;
+  float: right;
+}
+
+
+
+.add-icon {
+  color: green;
+  font-weight: bold;
+  padding: 0px 0px 0px 2px;
+}
+
+.modif-icon {
+  color: rgb(6 57 135);
+  user-select: none;
+  background-repeat: no-repeat;
+  display: inline-block;
+  fill: currentColor;
+  height: 24px;
+  width: 24px;
+  overflow: hidden;
+}
+
+.delete-icon {
+  color: rgb(255, 51, 0);
+}
+
+:host ::ng-deep .p-dialog-content {
+  overflow-y: inherit;
+  flex-grow: inherit;
+}
+
+:host ::ng-deep .p-dialog-title {
+  display: none;
+}
+
+:host ::ng-deep .p-dialog-titlebar-close {
+  display: none;
+}
+
+:host ::ng-deep .p-dialog-footer {
+  display: block;
+}
+
+:host ::ng-deep .p-dialog-header-close-icon {
+  display: none;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header-icons {
+  display: none;
+}
+
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  border-bottom: 0 none;
+  background: #f8f9fa;
+  color: #343a40;
+  padding: 0.5rem;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+
+:host ::ng-deep .ModalAdd {
+  border-radius: 6px;
+  width: 800px;
+  font-family: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* width: 90% !important; */
+  height: 450px !important;
+  top: 5% !important;
+  left: 0% !important;
+}
+
+:host ::ng-deep .ModalAddOrder {
+  border-radius: 6px;
+  width: 900px;
+  font-family: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+:host ::ng-deep .ModalPrint {
+  border-radius: 6px;
+  width: 1100px;
+  font-family: auto;
+  /* overflow-y: scroll; */
+  overflow-x: hidden;
+}
+.sidebar.open  +.mainbox {
+ 
+  display: grid;
+  width: 100%;
+  height: 250px;
+  grid-template-areas: "head head" "left  main" "left  foot";
+  grid-template-rows: 50px 1fr 30px;
+  grid-template-columns: 120px 1fr 0px ;
+  grid-gap: 5px;
+  height: 100vh;
+  margin: 0px;
+  font-size: 15px;
+  overflow-y: scroll !important;
+
+}  
+
+
+:host ::ng-deep  .mainbox    {
+ 
+  display: grid;
+  width: 100%; 
+  grid-template-areas: "head head" "left  main" "left  foot";
+  grid-template-rows: 50px 1fr 30px;
+  grid-template-columns: 70px 1fr 0px ;
+  grid-gap: 5px; 
+  margin: 0px;
+  font-size: 15px; 
+
+}
+:host ::ng-deep .p-datatable .p-datatable-header {
+  background: #f8f9fa;
+  color: #343a40;
+  border: 1px solid #dee2e6;
+  border-width: 1px 0 1px 0;
+  padding: 3rem 0rem !important;
+  font-weight: 700;
+}
+
+
+
+:host ::ng-deep label input[type=radio].radiobox+span:before {
+  background: 0 0;
+  border-color: #888;
+  box-shadow: none;
+}
+
+label input[type=radio].radiobox:checked+span:before {
+  content: "\f111";
+  color: #66665e;
+  border-color: #1293b8;
+}
+
+label input[type=radio].radiobox,
+checked+span {
+  font-weight: 400;
+}
+
+label:hover input[type=radio].radiobox+span:before {
+  border-color: #1293b8;
+}
+
+label:hover input[type=radio].radiobox:checked+span:before {
+  border-color: #888;
+  color: #66665e;
+}
+
+
+
+input[type=number] {
+  text-align: left;
+}
+
+
+.uneditable-input:focus,
+input[type=color]:focus,
+input[type=date]:focus,
+input[type=datetime-local]:focus,
+input[type=datetime]:focus,
+input[type=email]:focus,
+input[type=month]:focus,
+input[type=number]:focus,
+input[type=password]:focus,
+input[type=search]:focus,
+input[type=tel]:focus,
+input[type=text]:focus,
+input[type=time]:focus,
+input[type=url]:focus,
+input[type=week]:focus,
+select:focus,
+textarea:focus {
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.form-control,
+.input-lg,
+.input-sm,
+.input-xs {
+  border-radius: 6px !important;
+}
+
+.input-xs {
+  height: 25px;
+  /* padding: 2px 10px; */
+  font-size: 15px;
+  line-height: 1.5;
+  width: 430px;
+}
+
+:host ::ng-deep label input[type=radio].radiobox+span:before {
+  content: "\a0";
+  border-radius: 50%;
+  box-shadow: inset 0 2px 3px 0 rgba(0, 0, 0, .1), 0 1px 0 0 rgba(255, 255, 255, .2);
+}
+
+:host ::ng-deep label input[type=radio].radiobox:checked+span {
+  font-weight: 700;
+}
+
+:host ::ng-deep label input[type=radio].radiobox:checked+span:before {
+  content: "\f111";
+  color: #2E7BCC;
+}
+
+:host ::ng-deep label input[type=radio].radiobox.style-3:checked+span:before {
+  color: #a90329;
+  border-color: #a90329;
+}
+
+:host ::ng-deep :host ::ng-deep label input[type=radio].radiobox.style-2:checked+span:before {
+  color: #66665e;
+  border-color: #4d90fe;
+  font-size: 9px;
+}
+
+:host ::ng-deep label input[type=radio].radiobox.style-2:checked+span {
+  font-weight: 400;
+}
+
+:host ::ng-deep label input[type=radio].radiobox.style-1+span:before {
+  font-size: 9px;
+  background: #fff;
+  text-shadow: none;
+  box-shadow: none !important;
+  border-width: 1px;
+  height: 13px;
+  line-height: 13px;
+  min-width: 13px;
+}
+
+:host ::ng-deep label input[type=radio].radiobox.style-1:checked+span:before {
+  font-size: 10px;
+  color: #333;
+  border-color: #333;
+  background: #fff;
+}
+
+label input[type=radio].radiobox.style-1:checked+span {
+  font-weight: 400;
+}
+
+label:hover input[type=radio].radiobox+span:before,
+label:hover input[type=radio].radiobox:checked+span:before {
+  color: #2E7BCC;
+  border-color: #2E7BCC;
+}
+
+label:hover input[type=radio].radiobox.style-3+span:before,
+label:hover input[type=radio].radiobox.style-3:checked+span:before {
+  color: #a90329;
+  border-color: #a90329;
+}
+
+label:hover input[type=radio].radiobox.style-2:checked+span:before {
+  color: #66665e;
+  border-color: #4d90fe;
+}
+
+label:hover input[type=radio].radiobox.style-1+span:before,
+label:hover input[type=radio].radiobox.style-1:checked+span:before {
+  color: #333;
+  border-color: #333;
+  background: #fff;
+}
+
+label:active input[type=radio].radiobox+span:before {
+  box-shadow: inset 0 2px 3px 0 rgba(0, 0, 0, .3), 0 1px 0 0 rgba(255, 255, 255, .4);
+}
+
+label input[type=radio][disabled].radiobox+span,
+label input[type=radio][disabled].radiobox:checked+span,
+label:hover input[type=radio][disabled].radiobox:checked+span:before {
+  color: #A7A7A7;
+  cursor: not-allowed;
+}
+
+label input[type=radio][disabled].radiobox:checked+span:before {
+  content: "\f111"
+}
+
+label input[type=radio][disabled].radiobox+span:before,
+label input[type=radio][disabled].radiobox:checked+span:before,
+label:active input[type=radio][disabled].radiobox:checked+span:before,
+label:hover input[type=radio][disabled].radiobox:checked+span:before {
+  background: #eee !important;
+  border-color: #CCC !important;
+  box-shadow: none;
+  color: #A7A7A7;
+}
+
+
+:host ::ng-deep .style td input {
+  text-align: right !important;
+  border: 1px solid #bfbfbf !important;
+  border-width: 1px 1px 1px 1px !important;
+  padding: 2px 5px 0px !important;
+  font-size: 12px !important;
+  height: 25px !important;
+}
+
+
+:host ::ng-deep a:active,
+a:focus,
+a:hover,
+button,
+button:active,
+button:focus,
+embed,
+object {
+  outline: 0;
+}
+
+:host ::ng-deep :focus {
+  outline: 0 !important;
+}
+
+
+:host ::ng-deep .form-control-dev {
+  background: 0 0;
+  border: 0;
+  border-bottom: 1px solid #c2cad8;
+  -webkit-border-radius: 0;
+  display: block;
+  width: calc(100% - 2px);
+  height: 24px;
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border-radius: 0;
+  -webkit-box-shadow: inset 0 1px 1px #c2cad8;
+  box-shadow: none;
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+}
+
+:host ::ng-deep .form-control-dev:focus {
+  border-color: #1293b8;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+:host ::ng-deep .form-control-dev[disabled],
+.form-control-dev[readonly],
+fieldset[disabled] .form-control-dev {
+  cursor: not-allowed;
+  background-color: #fff;
+  opacity: 1;
+}
+
+:host ::ng-deep .form-control-dev {
+  height: 24px;
+  line-height: 24px;
+}
+
+:host ::ng-deep textarea.form-control-dev {
+  height: auto;
+}
+
+:host ::ng-deep .control-label {
+
+  /* text-align: right !important; */
+  font-weight: 400;
+  padding-top: 10px;
+  font-size: 13px;
+  color: black;
+  padding-right: 5px;
+  padding-left: 0px;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content:last-of-type {
+ 
+  overflow: scroll !important;  
+  height: 100%;
+    overflow-x: hidden !important;
+}
+
+
+:host ::ng-deep h2.text-center.text {
+  position: relative;
+  left: 200px;
+  color: #000;
+  font-size: 23px !important;
+}
+
+:host ::ng-deep h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: "Open Sans", Arial, Helvetica, Sans-Serif;
+  font-weight: 300;
+  font-size: 16px;
+  margin-top: 5px;
+  color: black;
+  float: inline-start;
+}
+
+
+
+
+.flex-row-around {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.flex-row-space {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.flex-row-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+textarea {
+  resize: none;
+  width: calc(100% - 20px);
+  margin: auto;
+}
+
+.flex-1 {
+  flex: 1;
+  width: 8.33%;
+}
+
+.flex-2 {
+  flex: 2;
+  /* max-width: 16.67%;
+  */
+}
+
+.flex-3 {
+  flex: 3;
+  max-width: 25%;
+}
+
+.flex-4 {
+  flex: 4;
+  max-width: 33.33%;
+}
+
+.flex-5 {
+  flex: 5;
+  max-width: 41.67%;
+}
+
+.flex-6 {
+  flex: 6;
+  max-width: 100%;
+  padding: 3px 4px 2px;
+}
+
+.flex-7 {
+  flex: 7;
+  max-width: 58.33%;
+}
+
+.flex-8 {
+  flex: 8;
+  max-width: 66.67%;
+}
+
+.flex-9 {
+  flex: 9;
+  max-width: 75%;
+}
+
+.flex-10 {
+  flex: 10;
+  max-width: 83.33%;
+}
+
+.flex-11 {
+  flex: 11;
+  max-width: 91.67%;
+}
+
+.flex-12 {
+  flex: 12;
+  max-width: 100%;
+}
+
+
+
+
+.flex-row-start {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+
+fieldset {
+  border: 1px solid #d9d1d1;
+  margin: 0px 5px 5px 0px;
+}
+
+.form-control-dev[disabled],
+.form-control-dev[readonly],
+fieldset[disabled] .form-control-dev {
+  cursor: not-allowed;
+  background-color: #fff;
+  opacity: 1;
+}
+
+
+.modal-body {
+  position: relative;
+  padding: 25px 0px 1px 1px;
+}
+
+
+button.btn.btn-danger.cancel-voir {
+  position: relative;
+  right: 290px;
+  font-size: 13px;
+  direction: ltr;
+  border: 1px solid gray;
+}
+
+.deleteForm {
+  border: 1px solid #d9d1d1;
+  margin-top: 30px;
+}
+
+.cancel-add-ModalLarge {
+  position: fixed;
+  left: 1045px;
+  float: inline-end;
+  font-size: 13px;
+  direction: ltr;
+  font-weight: 500;
+  height: 35px;
+  margin: 5px 8px 5px 10px;
+  border: 1px solid #adadad;
+
+}
+
+
+
+.save-add-ModalLarge {
+  position: fixed;
+  left: 1140px;
+  float: inline-end;
+  font-size: 13px;
+  direction: ltr;
+  height: 35px;
+  font-weight: 500;
+  margin: 5px 8px 5px 10px;
+  border: 1px solid #adadad;
+
+}
+
+.cancel-add-ModalSmall {
+  position: fixed;
+  height: 35px;
+  left: 605px;
+  font-size: 13px;
+  direction: ltr;
+  font-weight: 500;
+  border: 1px solid #adadad;
+
+}
+
+.close-ModalPrint {
+  position: relative;
+  height: 35px;
+  left: 365px;
+  font-size: 13px;
+  direction: ltr;
+  font-weight: 500;
+}
+
+
+.save-add-ModalSmall {
+  position: fixed;
+  left: 710px;
+  font-size: 13px;
+  direction: ltr;
+  height: 35px;
+  border: 1px solid #adadad;
+
+
+}
+
+.headerForm {
+  padding: 0px 40px 0px 15px;
+  font-family: cursive;
+}
+
+.text-delete {
+  margin-right: 8px;
+  padding: 0px 0px 20px 10px;
+}
+
+.btn-action {
+  position: relative;
+  left: 5px;
+}
+
+.icon-fermer {
+  color: red;
+}
+
+.icon-save {
+  color: green;
+}
+
+
+
+/* //checkbox style  */
+
+
+
+:host ::ng-deep label.p-checkbox-label.ng-star-inserted {
+  font-weight: 400;
+  font-size: 13px;
+  color: black;
+  padding: 3px 15px 0px 0px;
+}
+
+:host ::ng-deep .p-checkbox .p-checkbox-box {
+  border: 1px solid #ced4da;
+  color: #495057;
+  border-radius: 3px;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+:host ::ng-deep .p-checkbox .p-checkbox-box.p-highlight {
+  border-color: #363636;
+  background: #ffffff;
+}
+
+:host ::ng-deep .p-checkbox .p-checkbox-box .p-checkbox-icon {
+  transition-duration: 0.2s;
+  color: #3B82F6;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+:host ::ng-deep .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
+  border-color: #0062cc;
+  background: #fbfbfb;
+  color: #ffffff;
+}
+
+:host ::ng-deep .p-checkbox-box {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox+span:before {
+  content: "\a0"
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox:checked+span:before {
+  content: "\f00c"
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox:checked+span {
+  font-weight: 700;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox:checked+span:before {
+  color: #2E7BCC;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox.style-3:checked+span:before {
+  color: #fff;
+  border-color: #a90329;
+  background: #a90329;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox.style-2+span:before {
+  background: 0 0;
+  border-color: #c1c1c1;
+  box-shadow: none;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox.style-2:checked+span:before {
+  content: "\f00c";
+  color: #66665e;
+  border-color: #4d90fe;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox.style-2,
+checked+span {
+  font-weight: 500;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox.style-1+span:before {
+  color: #333;
+  background: #fff;
+  text-shadow: none;
+  box-shadow: none !important;
+  border-width: 1px;
+  height: 12px;
+  line-height: 13px;
+  min-width: 12px;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox.style-1:checked+span:before {
+  color: #333;
+  border-color: #333;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox.style-1:checked+span {
+  font-weight: 300;
+}
+
+:host ::ng-deep label:active input[type=checkbox].checkbox+span:before {
+  box-shadow: inset 0 2px 3px 0 rgba(0, 0, 0, .3), 0 1px 0 0 rgba(255, 255, 255, .4);
+}
+
+:host ::ng-deep label:hover input[type=checkbox].checkbox+span:before {
+  color: #2E7BCC;
+  border-color: #2E7BCC;
+}
+
+:host ::ng-deep label:hover input[type=checkbox].checkbox.style-3+span:before {
+  color: #fff;
+  border-color: #A90327;
+}
+
+:host ::ng-deep label:hover input[type=checkbox].checkbox.style-2+span:before {
+  box-shadow: inset 0 2px 3px 0 rgba(0, 0, 0, .1), 0 1px 0 0 rgba(255, 255, 255, .2);
+}
+
+:host ::ng-deep label:hover input[type=checkbox].checkbox.style-2:checked+span:before {
+  box-shadow: inset 0 2px 3px 0 rgba(0, 0, 0, .3), 0 1px 0 0 rgba(255, 255, 255, .4);
+}
+
+:host ::ng-deep label:hover input[type=checkbox].checkbox.style-1+span:before {
+  border-color: #333;
+}
+
+:host ::ng-deep label:active input[type=checkbox].checkbox:checked+span:before {
+  color: #fff;
+  background: #2E7BCC;
+  border-color: #2E7BCC;
+}
+
+:host ::ng-deep label:active input[type=checkbox].checkbox.style-3:checked+span:before {
+  color: #a90329;
+  background: #fff;
+  border-color: #a90329;
+}
+
+:host ::ng-deep label:active input[type=checkbox].checkbox.style-2+span:before,
+label:active input[type=checkbox].checkbox.style-2:checked+span:before {
+  color: #66665e;
+  background: 0 0;
+  border-color: #c1c1c1;
+  box-shadow: inset 0 2px 3px 0 rgba(0, 0, 0, .3), 0 1px 0 0 rgba(255, 255, 255, .4);
+  padding-left: 10px !important;
+}
+
+:host ::ng-deep label:active input[type=checkbox].checkbox.style-1:checked+span:before {
+  color: #fff;
+  background: #333;
+  border-color: #333;
+  padding-left: 10px !important;
+}
+
+:host ::ng-deep label input[type=checkbox][disabled].checkbox+span,
+label input[type=checkbox][disabled].checkbox:checked+span,
+label:hover input[type=checkbox][disabled].checkbox:checked+span:before {
+  color: #A7A7A7;
+  cursor: not-allowed;
+}
+
+:host ::ng-deep label input[type=checkbox][disabled].checkbox.style-2:checked+span:before,
+label input[type=checkbox][disabled].checkbox:checked+span:before {
+  content: "\f00c"
+}
+
+
+:host ::ng-deep .checkbox input[type=checkbox].checkbox+span,
+.checkbox-inline input[type=checkbox].checkbox+span,
+.radio input[type=radio].radiobox+span,
+.radiobox-inline input[type=radio].radiobox+span {
+  margin-left: -20px;
+}
+
+:host ::ng-deep .form-inline .checkbox input[type=checkbox].checkbox+span,
+.form-inline .radiobox input[type=radio].radiobox+span {
+  margin-left: 0;
+}
+
+:host ::ng-deep .form-inline .checkbox,
+.form-inline .radiobox {
+  padding-left: 0;
+}
+
+:host ::ng-deep input[type=checkbox].checkbox+span,
+label input[type=radio].radiobox+span {
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+:host ::ng-deep input[type=checkbox].checkbox+span,
+input[type=checkbox].checkbox+span:after,
+input[type=checkbox].checkbox+span:before,
+input[type=radio].radiobox+span,
+input[type=radio].radiobox+span:after,
+input[type=radio].radiobox+span:before {
+  box-sizing: content-box !important;
+}
+
+:host ::ng-deep input[type=checkbox].checkbox,
+input[type=radio].radiobox {
+  visibility: hidden;
+  position: absolute;
+  z-index: 20;
+  width: 18px;
+  height: 18px;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox+span,
+label input[type=radio].radiobox+span {
+  position: relative;
+  z-index: 19;
+  display: inline-block;
+  margin: 0;
+  line-height: 17px;
+  min-height: 14px;
+  min-width: 14px;
+  margin-right: 5px;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox+span:hover,
+label input[type=radio].radiobox+span:hover {
+  cursor: pointer;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox+span:before,
+label input[type=radio].radiobox+span:before {
+  font-family: FontAwesome;
+  font-size: 12px;
+  border-radius: 0;
+  content: "\a0";
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  padding: 1px;
+  height: 12px;
+  line-height: 12px;
+  min-width: 12px;
+  margin-right: 5px;
+  border: 1px solid #bfbfbf;
+  background-color: #f4f4f4;
+  font-weight: 400;
+  margin-top: -1px;
+}
+
+:host ::ng-deep fieldset[disabled] label input[type=checkbox].checkbox+span:hover,
+fieldset[disabled] label input[type=radio].radiobox+span:hover {
+  cursor: not-allowed;
+}
+
+
+:host ::ng-deep label input[type=checkbox].checkbox+span:before {
+  background: 0 0;
+  border-color: #888;
+  box-shadow: none;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox:checked+span:before {
+  content: "\f00c";
+  color: #66665e;
+  border-color: #1293b8;
+}
+
+:host ::ng-deep label input[type=checkbox].checkbox,
+checked+span {
+  font-weight: 500;
+}
+
+:host ::ng-deep label:hover input[type=checkbox].checkbox+span:before {
+  border-color: #1293b8;
+}
+
+label:hover input[type=checkbox].checkbox:checked+span:before {
+  border-color: #888;
+}
+
+:host ::ng-deep .checkbox-actif-visible {
+  text-align: center;
+  border: 1px solid #bfbfbf !important;
+  padding-left: 10px !important;
+  width: 68px;
+}
+
+
+
+:host ::ng-deep label.p-checkbox-label.ng-star-inserted.p-checkbox-label-active {
+  font-weight: 600;
+}
+
+
+
+
+
+/* ////// drop down select  */
+
+
+/* :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+    font-size: 13px !important;
+    margin: 0;
+    padding: 0.75rem 1.25rem;
+    border: 0 none;
+    color: #495057;
+    background: transparent;
+    transition: box-shadow 0.2s;
+    border-radius: 0;
+  } */
+
+:host ::ng-deep span.ng-tns-c82-6.p-dropdown-label {
+  font-size: 12px;
+}
+
+:host ::ng-deep .p-dropdown.p-dropdown-clearable .p-dropdown-label {
+  padding-right: 1.75rem;
+  color: #555;
+  font-size: 13px;
+}
+
+:host ::ng-deep .dropdown1 {
+  font-size: 13px;
+}
+
+
+:host ::ng-deep .p-disabled,
+.p-disabled * {
+  cursor: default !important;
+  pointer-events: none;
+  font-size: 13px !important;
+}
+
+:host ::ng-deep .NewModalAddOrderNew {
+  border-radius: 6px;
+  /* width: 1300px; */
+  font-family: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 95% !important;
+  height: 90% !important;
+  top: 5% !important;
+  left: 0% !important;
+}
+
+ 
+:host ::ng-deep .ModalDetails {
+  border-radius: 6px;
+  width: 800px;
+  font-family: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* width: 90% !important; */
+  height: 300px !important;
+  top: 0% !important;
+  left: 0% !important;
+}
+
+ 
+
+:host ::ng-deep .ModalPassword {
+  border-radius: 6px;
+  /* width: 1300px; */
+  font-family: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 30% !important;
+  height: 200px !important;
+  top: 5% !important;
+  left: 0% !important;
+}
+:host ::ng-deep .ng-trigger.ng-trigger-overlayAnimation.ng-tns-c3832276034-6.p-dropdown-panel.p-component.ng-star-inserted {
+  top: 0px !important;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-clear-icon {
+  position: inherit;
+  right: initial;
+  top: 16px;
+}
+
+
+:host ::ng-deep .p-dropdown:disabled {
+  font-size: 13px !important;
+}
+
+
+:host ::ng-deep .p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+  padding-right: -0.25rem !important;
+  margin-right: 0.25rem !important;
+  position: relative;
+  z-index: 5000;
+}
+:host ::ng-deep .p-datatable-scrollable .p-datatable-wrapper {
+  position: static;
+  overflow: auto;
+}
+.drop-control {
+  display: block !important;
+  position: relative !important;
+  flex: auto !important;
+  min-width: 0 !important;
+  width: 180px !important;
+  height: 4px !important;
+}
+
+.active+.ajax-dropdown {
+  animation-name: flipInY;
+  animation-duration: .7s;
+  animation-fill-mode: both;
+}
+
+/* :host ::ng-deep .chkActif {
+  padding: 0px 20px 0px 345px;
+} */
+
+:host ::ng-deep .ChkVisib {
+  padding: 0px 5px 0px 0px;
+}
+
+
+
+:host ::ng-deep i.fa-lg.fa-fw.fa.fa-times.icon-required {
+  color: red;
+  font-size: 7px;
+  bottom: 3px !important;
+  position: relative;
+}
+
+
+/* /////// modal delete  */
+
+:host ::ng-deep .ModalDelete {
+  border-radius: 6px;
+  width: 625px;
+  font-family: auto;
+}
+
+
+:host ::ng-deep .save-delete {
+  position: relative;
+  left: 165px;
+  font-size: 13px;
+  direction: ltr;
+  top: 7px;
+  width: 110px;
+  height: 30px;
+  border: 1px solid #adadad;
+
+}
+
+
+:host ::ng-deep .btn-cancel-delete {
+  position: relative;
+  right: 50px !important;
+  font-size: 13px;
+  direction: ltr;
+  top: 7px;
+  width: 100px;
+  height: 30px;
+}
+
+
+
+/* ///// fin modal delete  */
+
+
+/* report viewerrr */
+
+.pdfobject-container {
+  max-width: 100%;
+  width: 1300px;
+  height: 600px;
+  border: 10px solid rgba(0, 0, 0, 0.2);
+  margin: 0;
+}
+
+
+
+
+:host ::ng-deep .txt-header-modal {
+  margin: 0;
+  font-family: "Open Sans", Arial, Helvetica, Sans-Serif;
+  font-weight: 300;
+  font-size: 16px;
+  margin-top: 5px;
+  color: black;
+  float: left;
+}
+
+
+/* ///// drop down  */
+
+:host ::ng-deep .p-dropdown {
+  display: inline-flex;
+  cursor: pointer;
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+  /* height: 23px; */
+}
+
+:host ::ng-deep .p-dropdown-clear-icon {
+  position: absolute;
+  top: 50%;
+  margin-top: -.5rem
+}
+
+:host ::ng-deep .p-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0
+}
+
+:host ::ng-deep .p-dropdown-label {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 1 1 auto;
+  width: 1%;
+  text-overflow: ellipsis;
+  cursor: pointer
+}
+
+:host ::ng-deep .p-dropdown-label-empty {
+  overflow: hidden;
+  visibility: hidden
+}
+
+:host ::ng-deep input.p-dropdown-label {
+  cursor: default
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-panel {
+  min-width: 100%;
+  border: 1px solid gray;
+}
+
+:host ::ng-deep .p-dropdown-panel {
+  position: absolute;
+  top: 0;
+  left: 0
+}
+
+:host ::ng-deep .p-dropdown-items-wrapper {
+  overflow: auto
+}
+
+:host ::ng-deep .p-dropdown-item {
+  cursor: pointer;
+  font-weight: 400;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  font-size: 13px; 
+  display: flex;
+  height: 40px;
+
+}
+
+:host ::ng-deep .p-dropdown-items {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  border: 1px solid #bfbfbf;
+  /* transform: translate3d(5px, 35px, 0px)!important; */
+}
+
+:host ::ng-deep .p-dropdown-filter {
+  width: 100%
+}
+
+:host ::ng-deep .p-dropdown-filter-container {
+  position: relative
+}
+
+:host ::ng-deep .p-dropdown-filter-icon {
+  position: absolute;
+  top: 50%;
+  margin-top: -.5rem
+}
+
+:host ::ng-deep .p-fluid .p-dropdown {
+  display: flex
+}
+
+:host ::ng-deep .p-fluid .p-dropdown .p-dropdown-label {
+  width: 1%
+}
+
+
+
+/* ///// tabel modal add */
+
+.tab {
+  padding: 5px 5px 30px 5px;
+  border: 1px solid #bfbfbf;
+  border-radius: 6px;
+  margin: 5px 0px 0px 0px;
+}
+
+
+
+:host ::ng-deep .p-button.p-button-item,
+.p-buttonset.p-button-item>.p-button,
+.p-splitbutton.p-button-item>.p-button {
+  color: #EF4444;
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  position: relative;
+  right: 0px !important;
+  text-align: center;
+  height: 15px;
+}
+
+
+:host ::ng-deep .Details-Modal {
+  color:#007610 !important;
+  background: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  position: relative !important;
+  right: 0px !important;
+  text-align: center !important;
+  height: 15px !important;
+}
+.modal-container {
+  position: relative; 
+  zoom: 1; /* Disable zooming within the modal container */
+}
+
+
+:host ::ng-deep .Add-row {
+  color:#007610 !important;
+  background: #ffffff !important;
+  border: 1px solid #ffffff !important;
+  position: relative !important;
+  right: 0px !important;
+  text-align: center !important;
+  height: 15px !important;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody>tr.p-highlight {
+  background: #d5dbe2;
+  color: #1D4ED8;
+}
+
+:host ::ng-deep .p-datatable-scrollable .p-datatable-thead>tr>th,
+.p-datatable-scrollable .p-datatable-tbody>tr>td,
+.p-datatable-scrollable .p-datatable-tfoot>tr>td {
+  display: flex;
+  flex: none !important;
+  align-items: center;
+}
+
+:host ::ng-deep td {
+  flex: none !important;
+}
+
+:host ::ng-deep .p-inputtext {
+
+  font-size: 13px;
+}
+
+:host ::ng-deep .p-inputtext:enabled:hover {
+  border-color: #3B82F6;
+  /* height: 30px !important; */
+  /* font-size: 13px; */
+}
+
+
+
+.DropChoisie {
+  border: 1px solid #e2e2e2;
+  margin: 0px -6px 2px -5px !important;
+  padding: 0px 0px 0px 0px;
+  height: 25px;
+  width: 150px;
+}
+
+.DropChoisieEtat {
+  border: 1px solid #e2e2e2;
+  margin: 0px -6px 2px -5px !important;
+  padding: 0px 0px 0px 0px;
+  height: 25px;
+  width: 50px;
+}
+
+.DropChoisie:disabled {
+  border: 1px solid #ff0000;
+  margin: 0px -6px 2px -5px !important;
+  padding: 0px 0px 0px 0px;
+  height: 25px;
+  width: 150px;
+}
+
+
+.DropChoisie:hover,
+.DropChoisie:focus {
+  border: 1px solid #398fc1;
+  margin: 0px -6px 2px -5px !important;
+  padding: 0px 0px 0px 0px;
+  height: 25px;
+  width: 150px;
+}
+
+.DropDownItems {
+  border-radius: 6px !important;
+  border: 1px solid gray !important;
+  /* background-color: rgb(141, 141, 141); */
+  text-decoration: overline !important;
+}
+ 
+
+
+.InputQte {
+  width: 90px;
+  margin: 0px 0px 3px -6px;
+  height: 24px;
+  border: 1px solid #e2e2e2;
+}
+
+legend {
+  display: block;
+  width: 20% !important;
+  padding: 0px 0px 0px 5px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: inherit;
+  color: #333;
+  border: 0;
+  border-bottom: 0px !important;
+}
+
+.dropbtn {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Dropdown button on hover & focus */
+/* .dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+} */
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  /* display: inline-block; */
+
+}
+
+.p-dialog-header.ng-tns-c2656225073-7.ng-star-inserted {
+  flex: 12;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 5px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+  display: block;
+}
+
+
+:host ::ng-deep .p-datatable .p-datatable-tfoot>tr>td {
+  text-align: left;
+  padding: 5px;
+  border: 1px solid #dee2e6;
+  font-weight: 400;
+  color: #343a40;
+  background: #f8f9fa;
+  border-radius: 6px;
+  width: 150px !important;
+}
+
+:host ::ng-deep .p-radiobutton .p-radiobutton-box.p-highlight {
+  border-color: #ffffff;
+  /* background: #963bf6; */
+  background: cadetblue;
+}
+
+:host ::ng-deep .p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+  border-color: #ffffff;
+  /* background: #963bf6; */
+  background: cadetblue;
+  color: #ffffff;
+}
+
+:host ::ng-deep .p-radiobutton-box.p-highlight .p-radiobutton-icon {
+  transform: translateZ(0) scale(1.0, 1.0);
+  visibility: visible;
+  background: cadetblue;
+}
+
+/* :host ::ng-deep .p-contextmenu.p-component {
+  width: 170px;
+} */
+
+:host ::ng-deep span.p-menuitem-text.ng-star-inserted {
+  font-size: 13px;
+}
+
+#sect1 {
+  height: 650px;
+  color: #fff;
+  background-image: url("src/assets/assets/images/etat_RCPPartiel.png");
+  background-size: 100%;
+  background-size: cover;
+}
+
+/* "url('assets/assets/images/etat_RCPPartiel.png')"; */
+
+
+:host ::ng-deep  li.p-ripple.p-element.p-multiselect-item {
+  font-size: 13px !important;
+}
+
+
+:host ::ng-deep .p-card.p-element {
+  margin: 12px 26px 26px 20px !important;
+  position: fixed !important;
+}
+
+:host ::ng-deep .p-paginator .p-dropdown .p-dropdown-label {
+ 
+  padding: 3px 5px 5px 10px;
+}
+
+/* input::file-selector-button {
+  font-weight: bold;
+  color: rgb(83, 83, 83);
+  padding: 0.5em;
+  border: thin solid grey;
+  border-radius: 3px;
+  font-size: 13px;
+} */
+:host ::ng-deep  .p-datatable .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
+  /* color: #ffffff; */
+  font-size: 14px;
+}
+
+:host ::ng-deep  .p-datatable .p-sortable-column .p-sortable-column-icon {
+  /* color: #ffffff; */
+  margin-left: 0.5rem;
+  font-size: 12px;
+}
+
+:host ::ng-deep .p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon {
+  color: #404040;
+}
+
+:host ::ng-deep .p-datatable {
+  scrollbar-color: #324960 white;
+}
+
+label.header_name {
+  font-size: 15px;
+  font-family: auto;
+}
+
+
+.Bouton-Select{
+  margin-right: 5px;
+  display: flex;
+  height: 30px;
+  width: 105px;
+  padding: 3px 7px 0px 5px;
+  margin-bottom: 3px;
+  border: 1px solid #adadad;
+}
+
+.spinner {
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  right: 50%;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000; 
+}
+
+.disabled {
+  opacity: 0.5; /* Make it semi-transparent */
+  cursor: not-allowed; 
+  pointer-events: none; /* Prevent click events */
+}
+/*******************\ Loading Roller \*******************/
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+ }
+  100% {
+    transform: rotate(360deg);
+ }
+}
+.lds-roller {
+  position: relative;
+  display: inline-block;
+  height: 64px;
+  width: 64px;
+}
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 32px 32px;
+}
+.lds-roller div:after {
+  position: absolute;
+  display: block;
+  background: #00539f;
+  border-radius: 50%;
+  content: " ";
+  margin: -3px 0 0 -3px;
+  height: 6px;
+  width: 6px;
+}
+.lds-roller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+  top: 50px;
+  left: 50px;
+}
+.lds-roller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+  top: 54px;
+  left: 45px;
+}
+.lds-roller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+  top: 57px;
+  left: 39px;
+}
+.lds-roller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+  top: 58px;
+  left: 32px;
+}
+.lds-roller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+  top: 57px;
+  left: 25px;
+}
+.lds-roller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+  top: 54px;
+  left: 19px;
+}
+.lds-roller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+  top: 50px;
+  left: 14px;
+}
+.lds-roller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+  top: 45px;
+  left: 10px;
+}
