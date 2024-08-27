@@ -1,23 +1,32 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BoardAdminComponent } from './Authenfication/board-admin/board-admin.component';
-import { BoardModeratorComponent } from './Authenfication/board-moderator/board-moderator.component';
-import { BoardUserComponent } from './Authenfication/board-user/board-user.component';
+import { RouterModule, Routes } from '@angular/router'; 
 import { HomeComponent } from './Authenfication/home/home.component';
-import { LoginComponent } from './Authenfication/login/login.component';
-import { ProfileComponent } from './Authenfication/profile/profile.component';
+import { LoginComponent } from './Authenfication/login/login.component'; 
 import { RegisterComponent } from './Authenfication/register/register.component';
+import { MenuParametrageComponent } from './MenuParametrage/menu-parametrage/menu-parametrage.component';
+import { CaisseComponent } from './MenuParametrage/caisse/caisse.component';
+import { TypeDepenseComponent } from './MenuParametrage/type-depense/type-depense.component';
+import { TypeRecetteComponent } from './MenuParametrage/type-recette/type-recette.component';
+import { MenuRecetteComponent } from './Recette/menu-recette/menu-recette.component';
+import { EntreeCaisseComponent } from './Recette/entree-caisse/entree-caisse.component';
 
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'user', component: BoardUserComponent },
-  { path: 'mod', component: BoardModeratorComponent },
-  { path: 'admin', component: BoardAdminComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+
+  { path: 'menu_parametrage', component: MenuParametrageComponent },
+  { path: 'menu_parametrage/caisse', component: CaisseComponent },
+  { path: 'menu_parametrage/type_depense', component: TypeDepenseComponent },
+  { path: 'menu_parametrage/type_recette', component: TypeRecetteComponent },
+
+
+  { path: 'menu_recette', component: MenuRecetteComponent },
+  { path: 'menu_recette/entree_caisse', component: EntreeCaisseComponent },
+
  
 
 ];

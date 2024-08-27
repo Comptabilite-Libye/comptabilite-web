@@ -3,7 +3,9 @@
   border: 1px solid #bfbfbf;
   border-radius: 5px;
 }
-
+span{
+  font-family: cairo !important; 
+}
 :host ::ng-deep .p-datatable-thead th {
   text-align: left !important;
   color: #333 !important;
@@ -1702,13 +1704,7 @@ legend {
   font-size: 13px;
 }
 
-#sect1 {
-  height: 650px;
-  color: #fff;
-  background-image: url("src/assets/assets/images/etat_RCPPartiel.png");
-  background-size: 100%;
-  background-size: cover;
-}
+ 
 
 /* "url('assets/assets/images/etat_RCPPartiel.png')"; */
 

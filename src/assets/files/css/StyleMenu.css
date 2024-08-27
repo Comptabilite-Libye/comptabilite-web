@@ -1,10 +1,10 @@
 html, body {
-    font-family: Segoe UI;
+    font-family: cairo !important; 
     color: #424242;
     background: #f5f5f5;
 }
 h2 {
-    font-family: Segoe UI Light;
+    /* font-family: Segoe UI Light; */
     letter-spacing: 1px;
     font-size: 35px;
     margin-bottom: 30px;
@@ -12,6 +12,9 @@ h2 {
 .container {
     margin: 50px auto;
 }
+h2 ,span{
+    font-family: cairo !important; 
+  }
 :host ::ng-deep  .mainbox    {
  
     display: grid !important;

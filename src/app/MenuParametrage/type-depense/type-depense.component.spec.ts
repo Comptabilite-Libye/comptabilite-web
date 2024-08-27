@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BoardAdminComponent } from './board-admin.component';
+import { TypeDepenseComponent } from './type-depense.component';
 
-describe('BoardAdminComponent', () => {
-  let component: BoardAdminComponent;
-  let fixture: ComponentFixture<BoardAdminComponent>;
+describe('TypeDepenseComponent', () => {
+  let component: TypeDepenseComponent;
+  let fixture: ComponentFixture<TypeDepenseComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BoardAdminComponent ]
+      declarations: [TypeDepenseComponent]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BoardAdminComponent);
+    fixture = TestBed.createComponent(TypeDepenseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

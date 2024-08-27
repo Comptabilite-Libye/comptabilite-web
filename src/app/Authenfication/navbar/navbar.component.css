@@ -1,10 +1,15 @@
 /* Global
 / -------------------------------------------------- */
-
+/* @import "src/assets/files/css/style.css"; */
+ 
 html {
     position: relative;
     min-height: 100%;
 }
+
+
+
+ 
 
 
 .dash-navbar-top {
@@ -316,13 +321,14 @@ html {
 
 span.links_name {
     color: #fff;
-    font-size: 13px !important;
+    font-size: 15px !important;
     font-weight: 400;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
     transition: 0.4s;
     position: relative;
+    /* font-family: cairo !important; */
 }
 
 
@@ -413,7 +419,7 @@ span.links_name {
     overflow-y: scroll;
     scrollbar-width: thin;
     padding: 0px 0px 0px 0px; 
-    scrollbar-color: #5a5555 #ffffff; 
+    scrollbar-color: #ffffff #30688b;
 }
 
 .left.open .mainbox {
