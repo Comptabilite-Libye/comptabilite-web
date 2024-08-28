@@ -1,6 +1,7 @@
 export const environment = {
-    production: true ,
-    API_ACCESS:"/api/auth",
-    API_Parametrage:"/api/auth",
-    idleTimeInMinutes:20
+    production: true,
+    apiUrl: "http://localhost:9090/api/auth",
+    API_ACCESS: "http://localhost:9090/api/auth",
+    API_Parametrage: "/parametrage/",
+    idleTimeInMinutes: 20
 };

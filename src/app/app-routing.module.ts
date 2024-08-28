@@ -12,6 +12,7 @@ import { EntreeCaisseComponent } from './Recette/entree-caisse/entree-caisse.com
 import { DeviseComponent } from './MenuParametrage/devise/devise.component';
 import { BeneficiaireComponent } from './MenuParametrage/beneficiaire/beneficiaire.component';
 import { FournisseurComponent } from './MenuParametrage/fournisseur/fournisseur.component';
+import { BanqueComponent } from './MenuParametrage/banque/banque.component';
 
 const routes: Routes = [
 
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'menu_parametrage/devise', component: DeviseComponent },
   { path: 'menu_parametrage/beneficiaire', component: BeneficiaireComponent },
   { path: 'menu_parametrage/fournisseur', component: FournisseurComponent },
+  { path: 'menu_parametrage/banque', component: BanqueComponent },
 
 
   { path: 'menu_recette', component: MenuRecetteComponent },

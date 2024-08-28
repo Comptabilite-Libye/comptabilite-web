@@ -6,18 +6,17 @@ import { catchError, throwError  } from 'rxjs';
 import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'  
-import { TypeDepense } from '../domaine/domaine';
+import { Caisse } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
  
 
 declare const PDFObject: any;
-
 @Component({
-  selector: 'app-type-depense',
-  templateUrl: './type-depense.component.html',
-  styleUrls: ['./type-depense.component.css',  '.../../../src/assets/files/css/style.css'], providers: [ConfirmationService, MessageService]
+  selector: 'app-banque',
+  templateUrl: './banque.component.html',
+  styleUrls: ['./banque.component.css',  '.../../../src/assets/files/css/style.css'], providers: [ConfirmationService, MessageService]
 })
-export class TypeDepenseComponent {
+export class BanqueComponent {
 
 
   openModal!: boolean;
@@ -31,7 +30,7 @@ export class TypeDepenseComponent {
   isLoading = false;
   ngOnInit(): void {
 
-    this.GelAllTypeDepense();
+    this.GelAllCaisse();
     this.Voids();
 
 
@@ -97,7 +96,7 @@ export class TypeDepenseComponent {
   actif!: boolean;
   visible!: boolean;
   
-  selectedTypeDepense!: TypeDepense; 
+  selectedCaisse!: Caisse; 
 
 
   onRowSelect(event: any) {
@@ -117,30 +116,30 @@ export class TypeDepenseComponent {
 
 
 
-  DeleteTypeDepense(code: any) {
-    this.param_service.DeleteTypeDepense(code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-        } else {
-          alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-        }
-        return throwError(errorMessage);
-      })
+  DeleteCaisse(code: any) {
+    // this.param_service.DeleteCaisse(code).pipe(
+    //   catchError((error: HttpErrorResponse) => {
+    //     let errorMessage = '';
+    //     if (error.error instanceof ErrorEvent) {
+    //     } else {
+    //       alertifyjs.set('notifier', 'position', 'top-left');
+    //       alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+    //     }
+    //     return throwError(errorMessage);
+    //   })
 
-    ).subscribe(
-      (res:any) => {
-        alertifyjs.set('notifier', 'position', 'top-left');
-        alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
+    // ).subscribe(
+    //   (res:any) => {
+    //     alertifyjs.set('notifier', 'position', 'top-left');
+    //     alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
 
-        this.ngOnInit();
-        this.check_actif = true;
-        this.check_inactif = false;
-        this.visDelete = false;
+    //     this.ngOnInit();
+    //     this.check_actif = true;
+    //     this.check_inactif = false;
+    // this.visDelete = false;
 
-      }
-    )
+    //   }
+    // )
   }
   clearSelected(): void {
     this.code == undefined;
@@ -222,7 +221,7 @@ export class TypeDepenseComponent {
 
     
       button.setAttribute('data-target', '#ModalPrint');
-      this.formHeader = "Imprimer Liste TypeDepense"
+      this.formHeader = "Imprimer Liste Caisse"
       this.visibleModalPrint = true;
       this.RemplirePrint();
  
@@ -254,89 +253,89 @@ export class TypeDepenseComponent {
     return hours + ':' + mins
   }
   datform = new Date();
-  PostTypeDepense() {
+  PostCaisse() {
     
 
-    if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
-      alertifyjs.set('notifier', 'position', 'top-left');
-      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
+    // if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
+    //   alertifyjs.set('notifier', 'position', 'top-left');
+    //   alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
 
-    } else {
-
-
-      let body = {
-        codeSaisie: this.codeSaisie,
-        designationAr: this.designationAr,
-        designationLt: this.designationLt, 
-        userCreate: this.userCreate,
-
-        dateCreate: new Date().toISOString(), //
-        code: this.code,
-        actif: this.actif,
-        visible: this.visible,
-
-      }
-      if (this.code != null) {
-        body['code'] = this.code;
-
-        this.param_service.UpdateTypeDepense(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            if (error.error instanceof ErrorEvent) {
-            } else {
-              alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-
-            }
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
-
-          (res: any) => {
-            alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
-            this.visibleModal = false;
-            this.clearForm();
-            this.ngOnInit();
-            this.check_actif = true;
-            this.check_inactif = false;
-            this.onRowUnselect(event);
-            this.clearSelected();
-
-          }
-        );
+    // } else {
 
 
-      }
-      else {
-        this.param_service.PostTypeDepense(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            if (error.error instanceof ErrorEvent) { } else {
-              alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+    //   let body = {
+    //     codeSaisie: this.codeSaisie,
+    //     designationAr: this.designationAr,
+    //     designationLt: this.designationLt, 
+    //     userCreate: this.userCreate,
 
-            }
-            return throwError(errorMessage);
-          })
-        ).subscribe(
-          (res:any) => {
-            alertifyjs.set('notifier', 'position', 'top-left'); 
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
-            this.visibleModal = false;
-            this.clearForm();
-            this.ngOnInit();
-            this.code;
-            this.check_actif = true;
-            this.check_inactif = false;
-            this.onRowUnselect(event);
-            this.clearSelected();
+    //     dateCreate: new Date().toISOString(), //
+    //     code: this.code,
+    //     actif: this.actif,
+    //     visible: this.visible,
 
-          }
-        )
-      }
-    }
+    //   }
+    //   if (this.code != null) {
+    //     body['code'] = this.code;
+
+    //     this.param_service.UpdateCaisse(body).pipe(
+    //       catchError((error: HttpErrorResponse) => {
+    //         let errorMessage = '';
+    //         if (error.error instanceof ErrorEvent) {
+    //         } else {
+    //           alertifyjs.set('notifier', 'position', 'top-left');
+    //           alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+
+    //         }
+    //         return throwError(errorMessage);
+    //       })
+
+    //     ).subscribe(
+
+    //       (res: any) => {
+    //         alertifyjs.set('notifier', 'position', 'top-left');
+    //         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
+    //         this.visibleModal = false;
+    //         this.clearForm();
+    //         this.ngOnInit();
+    //         this.check_actif = true;
+    //         this.check_inactif = false;
+    //         this.onRowUnselect(event);
+    //         this.clearSelected();
+
+    //       }
+    //     );
+
+
+    //   }
+    //   else {
+    //     this.param_achat_service.PostCaisse(body).pipe(
+    //       catchError((error: HttpErrorResponse) => {
+    //         let errorMessage = '';
+    //         if (error.error instanceof ErrorEvent) { } else {
+    //           alertifyjs.set('notifier', 'position', 'top-left');
+    //           alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+
+    //         }
+    //         return throwError(errorMessage);
+    //       })
+    //     ).subscribe(
+    //       (res:any) => {
+    //         alertifyjs.set('notifier', 'position', 'top-left'); 
+    //         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+    //         this.visibleModal = false;
+    //         this.clearForm();
+    //         this.ngOnInit();
+    //         this.code;
+    //         this.check_actif = true;
+    //         this.check_inactif = false;
+    //         this.onRowUnselect(event);
+    //         this.clearSelected();
+
+    //       }
+    //     )
+    //   }
+    // }
 
 
   }
@@ -369,9 +368,9 @@ export class TypeDepenseComponent {
   // cars!: Array<Matiere>;
   // brands!: SelectItem[];
   // clonedCars: { [s: string]: Matiere } = {}; 
-  dataTypeDepense = new Array<TypeDepense>(); 
-  GelAllTypeDepense() {
-    this.param_service.GetTypeDepense().pipe(
+  dataCaisse = new Array<Caisse>(); 
+  GelAllCaisse() {
+    this.param_service.GetCaisse().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
         if (error.error instanceof ErrorEvent) { } else {
@@ -386,12 +385,11 @@ export class TypeDepenseComponent {
 
 
 
-      this.dataTypeDepense = data;
+      this.dataCaisse = data;
       this.onRowUnselect(event);
  
     }) 
   }
 
 }
-
 

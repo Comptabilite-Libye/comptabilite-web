@@ -1,16 +1,25 @@
+body {
+  font-family: Cairo !important;
+}
+
 :host ::ng-deep header {
   padding: 10px 20px 10px 17px;
   border: 1px solid #bfbfbf;
   border-radius: 5px;
   display: flex;
+  margin: 5px 0px 0px 0px;
+}
+
+.control-input {
+  padding-right: 10px;
 }
 
 span {
-  font-family: cairo !important;
+  font-family: auto;
 }
 
 :host ::ng-deep .p-datatable-thead th {
-  text-align: left !important;
+  text-align: right !important;
   color: #333 !important;
   /* background-color: #324960 !important; */
   /* background: linear-gradient(to top, lightgrey 0%, lightgrey 1%, #e0e0e0 26%, #efefef 48%, #d9d9d9 75%, #bcbcbc 100%); */
@@ -22,7 +31,7 @@ span {
   height: 29px !important;
   padding: 0px 10px 0px !important;
   box-shadow: 4px -8px 20px 0px rgb(179 179 179 / 36%);
-  font-family: Cairo !important;
+  font-family: auto;
   border-radius: 3px;
   font-size: 13px !important;
   font-weight: bold !important;
@@ -33,12 +42,13 @@ span {
 }
 
 :host ::ng-deep .p-datatable-tbody td {
-  text-align: left !important;
+  text-align: right !important;
   border: 1px solid #bfbfbf !important;
   border-width: 1px 1px 1px 1px !important;
   padding: 2px 5px 0px !important;
   font-size: 15px !important;
   height: 25px !important;
+  font-family: auto;
 }
 
 
@@ -240,7 +250,7 @@ tr.mat-footer-row {
 
 .bouton_style-2 {
   font-size: 15px;
-  font-family: Cairo !important;
+  font-family: auto;
   font-weight: bold;
   /* border: 1px solid gray; */
 }
@@ -322,11 +332,8 @@ tr.mat-footer-row {
   width: 800px;
   font-family: auto;
   overflow-y: auto;
-  overflow-x: hidden;
-  /* width: 90% !important; */
-  height: 450px !important;
-  top: 5% !important;
-  left: 0% !important;
+  overflow-x: hidden; 
+  height: 450px !important; 
 }
 
 :host ::ng-deep .ModalAddOrder {
@@ -641,24 +648,24 @@ fieldset[disabled] .form-control-dev {
   color: black;
   padding-right: 5px;
   padding-left: 0px;
-  font-family: cairo !important;
+  font-family: auto;
 }
 
 :host ::ng-deep .control-label {
 
-  /* text-align: right !important; */
   font-weight: 400;
   padding-top: 10px;
-  font-size: 13px;
+  font-size: 15px;
   color: black;
-  padding-right: 5px;
-  padding-left: 0px;
+  padding-right: 0px;
+  padding-left: 5px;
+  float: right;
 }
 
 
 :host ::ng-deep .p-dialog .p-dialog-content:last-of-type {
 
-  overflow: scroll !important;
+  overflow: auto !important;
   height: 100%;
   overflow-x: hidden !important;
 }
@@ -676,7 +683,7 @@ h2,
 h3,
 h4 {
   margin: 0;
-  font-family: "Open Sans", Arial, Helvetica, Sans-Serif;
+  font-family: auto;
   font-weight: 300;
   font-size: 16px;
   margin-top: 5px;
@@ -809,7 +816,7 @@ fieldset[disabled] .form-control-dev {
 button.btn.btn-danger.cancel-voir {
   position: relative;
   right: 290px;
-  font-size: 13px;
+  font-size: 15px;
   direction: ltr;
   border: 1px solid gray;
 }
@@ -823,12 +830,13 @@ button.btn.btn-danger.cancel-voir {
   position: fixed;
   right: 1045px;
   float: inline-end;
-  font-size: 13px;
+  font-size: 15px;
   direction: ltr;
   font-weight: 500;
   height: 35px;
   margin: 5px 8px 5px 10px;
   border: 1px solid #adadad;
+  width: 70px;
 
 }
 
@@ -838,23 +846,25 @@ button.btn.btn-danger.cancel-voir {
   position: fixed;
   right: 1140px;
   float: inline-end;
-  font-size: 13px;
+  font-size: 15px;
   direction: ltr;
   height: 35px;
   font-weight: 500;
   margin: 5px 8px 5px 10px;
   border: 1px solid #adadad;
+  width: 70px;
 
 }
 
 .cancel-add-ModalSmall {
   position: fixed;
   height: 35px;
-  right: 605px;
-  font-size: 13px;
+  right: 700px;
+  font-size: 15px;
   direction: ltr;
   font-weight: 500;
   border: 1px solid #adadad;
+  width: 70px;
 
 }
 
@@ -865,23 +875,25 @@ button.btn.btn-danger.cancel-voir {
   font-size: 13px;
   direction: ltr;
   font-weight: 500;
+  width: 70px;
 }
 
 
 .save-add-ModalSmall {
   position: fixed;
-  right: 710px;
+  right: 620px;
   font-size: 13px;
   direction: ltr;
   height: 35px;
   border: 1px solid #adadad;
-
+  width: 70px;
 
 }
 
 .headerForm {
   padding: 0px 40px 0px 15px;
-  font-family: cursive;
+  font-family: auto;
+  font-size: 20px;
 }
 
 .text-delete {
@@ -908,7 +920,7 @@ button.btn.btn-danger.cancel-voir {
 
 
 
-:host ::ng-deep label.p-checkbox-label.ng-star-inserted {
+:host ::ng-deep label.p-checkbox-label {
   font-weight: 400;
   font-size: 13px;
   color: black;
@@ -1189,7 +1201,7 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
 
 
 
-:host ::ng-deep label.p-checkbox-label.ng-star-inserted.p-checkbox-label-active {
+:host ::ng-deep label.p-checkbox-label.p-checkbox-label-active {
   font-weight: 600;
 }
 
@@ -1345,7 +1357,7 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
 :host ::ng-deep .save-delete {
   position: relative;
   left: 165px;
-  font-size: 13px;
+  font-size: 15px;
   direction: ltr;
   top: 7px;
   width: 110px;
@@ -1358,7 +1370,7 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
 :host ::ng-deep .btn-cancel-delete {
   position: relative;
   right: 50px !important;
-  font-size: 13px;
+  font-size: 15px;
   direction: ltr;
   top: 7px;
   width: 100px;
@@ -1385,7 +1397,7 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
 
 :host ::ng-deep .txt-header-modal {
   margin: 0;
-  font-family: "Open Sans", Arial, Helvetica, Sans-Serif;
+  font-family: auto;
   font-weight: 300;
   font-size: 16px;
   margin-top: 5px;

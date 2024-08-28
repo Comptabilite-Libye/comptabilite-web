@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Router } from '@angular/router';
-
+import { catchError, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import * as alertifyjs from 'alertifyjs'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,20 +35,26 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(userName, password).subscribe(
       data => {
-        this.tokenStorage.saveToken(data.accessToken);
+        console.log("data", data)
+        this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
+        sessionStorage.setItem("userName", userName);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
         this.reloadPage();
-        sessionStorage.setItem("userName",userName)
-     
+
 
       },
       err => {
-        this.errorMessage = err.error.description;
+
+        // this.errorMessage = err.error;
         this.isLoginFailed = true;
+        alertifyjs.set('notifier', 'position', 'top-left');
+        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + `Login Failed`);
+
+        // console.log("errrrrrrrrr", err.error.description)
       }
     );
   }
@@ -57,9 +65,9 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['home']);
   }
 
-  reloadCurrentRoute() { 
+  reloadCurrentRoute() {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      
+
       this.router.navigate(['home']);
     });
   }

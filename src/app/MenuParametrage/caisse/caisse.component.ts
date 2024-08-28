@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component,  ChangeDetectorRef } from '@angular/core';
 import {   FormBuilder  } from '@angular/forms';
 import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
@@ -118,28 +118,28 @@ export class CaisseComponent {
 
 
   DeleteCaisse(code: any) {
-    // this.param_service.DeleteCaisse(code).pipe(
-    //   catchError((error: HttpErrorResponse) => {
-    //     let errorMessage = '';
-    //     if (error.error instanceof ErrorEvent) {
-    //     } else {
-    //       alertifyjs.set('notifier', 'position', 'top-left');
-    //       alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-    //     }
-    //     return throwError(errorMessage);
-    //   })
+    this.param_service.DeleteCaisse(code).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+        } else {
+          alertifyjs.set('notifier', 'position', 'top-left');
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+        }
+        return throwError(errorMessage);
+      })
 
-    // ).subscribe(
-    //   (res:any) => {
-    //     alertifyjs.set('notifier', 'position', 'top-left');
-    //     alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
+    ).subscribe(
+      (res:any) => {
+        alertifyjs.set('notifier', 'position', 'top-left');
+        alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
 
-    //     this.ngOnInit();
-    //     this.check_actif = true;
-    //     this.check_inactif = false;
-
-    //   }
-    // )
+        this.ngOnInit();
+        this.check_actif = true;
+        this.check_inactif = false;
+        this.visDelete = false;
+      }
+    )
   }
   clearSelected(): void {
     this.code == undefined;
@@ -256,86 +256,85 @@ export class CaisseComponent {
   PostCaisse() {
     
 
-    // if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
-    //   alertifyjs.set('notifier', 'position', 'top-left');
-    //   alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
+    if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
+      alertifyjs.set('notifier', 'position', 'top-left');
+      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
 
-    // } else {
-
-
-    //   let body = {
-    //     codeSaisie: this.codeSaisie,
-    //     designationAr: this.designationAr,
-    //     designationLt: this.designationLt, 
-    //     userCreate: this.userCreate,
-
-    //     dateCreate: new Date().toISOString(), //
-    //     code: this.code,
-    //     actif: this.actif,
-    //     visible: this.visible,
-
-    //   }
-    //   if (this.code != null) {
-    //     body['code'] = this.code;
-
-    //     this.param_service.UpdateCaisse(body).pipe(
-    //       catchError((error: HttpErrorResponse) => {
-    //         let errorMessage = '';
-    //         if (error.error instanceof ErrorEvent) {
-    //         } else {
-    //           alertifyjs.set('notifier', 'position', 'top-left');
-    //           alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-
-    //         }
-    //         return throwError(errorMessage);
-    //       })
-
-    //     ).subscribe(
-
-    //       (res: any) => {
-    //         alertifyjs.set('notifier', 'position', 'top-left');
-    //         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
-    //         this.visibleModal = false;
-    //         this.clearForm();
-    //         this.ngOnInit();
-    //         this.check_actif = true;
-    //         this.check_inactif = false;
-    //         this.onRowUnselect(event);
-    //         this.clearSelected();
-
-    //       }
-    //     );
+    } else {
 
 
-    //   }
-    //   else {
-    //     this.param_achat_service.PostCaisse(body).pipe(
-    //       catchError((error: HttpErrorResponse) => {
-    //         let errorMessage = '';
-    //         if (error.error instanceof ErrorEvent) { } else {
-    //           alertifyjs.set('notifier', 'position', 'top-left');
-    //           alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+      let body = {
+        codeSaisie: this.codeSaisie,
+        designationAr: this.designationAr,
+        designationLt: this.designationLt, 
+        userCreate: this.userCreate,
 
-    //         }
-    //         return throwError(errorMessage);
-    //       })
-    //     ).subscribe(
-    //       (res:any) => {
-    //         alertifyjs.set('notifier', 'position', 'top-left'); 
-    //         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
-    //         this.visibleModal = false;
-    //         this.clearForm();
-    //         this.ngOnInit();
-    //         this.code;
-    //         this.check_actif = true;
-    //         this.check_inactif = false;
-    //         this.onRowUnselect(event);
-    //         this.clearSelected();
+        dateCreate: new Date().toISOString(), //
+        code: this.code,
+        actif: this.actif, 
 
-    //       }
-    //     )
-    //   }
-    // }
+      }
+      if (this.code != null) {
+        body['code'] = this.code;
+
+        this.param_service.UpdateCaisse(body).pipe(
+          catchError((error: HttpErrorResponse) => {
+            let errorMessage = '';
+            if (error.error instanceof ErrorEvent) {
+            } else {
+              alertifyjs.set('notifier', 'position', 'top-left');
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+
+            }
+            return throwError(errorMessage);
+          })
+
+        ).subscribe(
+
+          (res: any) => {
+            alertifyjs.set('notifier', 'position', 'top-left');
+            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
+            this.visibleModal = false;
+            this.clearForm();
+            this.ngOnInit();
+            this.check_actif = true;
+            this.check_inactif = false;
+            this.onRowUnselect(event);
+            this.clearSelected();
+
+          }
+        );
+
+
+      }
+      else {
+        this.param_service.PostCaisse(body).pipe(
+          catchError((error: HttpErrorResponse) => {
+            let errorMessage = '';
+            if (error.error instanceof ErrorEvent) { } else {
+              alertifyjs.set('notifier', 'position', 'top-left');
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+
+            }
+            return throwError(errorMessage);
+          })
+        ).subscribe(
+          (res:any) => {
+            alertifyjs.set('notifier', 'position', 'top-left'); 
+            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+            this.visibleModal = false;
+            this.clearForm();
+            this.ngOnInit();
+            this.code;
+            this.check_actif = true;
+            this.check_inactif = false;
+            this.onRowUnselect(event);
+            this.clearSelected();
+
+          }
+        )
+      }
+    }
 
 
   }
@@ -368,7 +367,8 @@ export class CaisseComponent {
   // cars!: Array<Matiere>;
   // brands!: SelectItem[];
   // clonedCars: { [s: string]: Matiere } = {}; 
-  dataCaisse = new Array<Caisse>(); 
+  dataCaisse = new Array<Caisse>();
+  content?: string; 
   GelAllCaisse() {
     this.param_service.GetCaisse().pipe(
       catchError((error: HttpErrorResponse) => {
@@ -381,15 +381,23 @@ export class CaisseComponent {
         return throwError(errorMessage);
       })
 
-    ).subscribe((data: any) => {
-
-
-
+    ).subscribe((data: any) => { 
       this.dataCaisse = data;
       this.onRowUnselect(event);
  
-    }) 
+    })  
   }
+
+  getAuthorizationHeaders() {
+    const token = sessionStorage.getItem('auth-token'); 
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` 
+    });
+  }
+
+
+  
 
 }
 

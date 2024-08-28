@@ -2,10 +2,10 @@
     <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
 
     <header>
-         
-            <label   class="header_name">الخزائن</label>
-         
-        
+
+        <label class="header_name">الخزائن</label>
+
+
     </header>
     <aside>
         <div class="Groupe-Bouton">
@@ -27,7 +27,7 @@
                         <div class="flex-row-start flex-12">
                             <fieldset style="padding: 5px;">
                                 <section class="flex-row-start">
-                                
+
                                     <label class="control-label-titer flex-6">البيان :</label>
                                     <span class="p-input-icon-left ml-auto flex-6">
                                         <input pInputText class="recherche-value" [(ngModel)]="searchTerm"
@@ -39,7 +39,8 @@
                                         data-original-title="Add"
                                         (click)="dt1.filterGlobal($any($event.target).value, 'contains')">
                                         <div class="bouton_style-2" style="margin: 0px 15px 0px 0px;">بحث</div>
-                                        <mat-icon style="margin: 0px 15px 0px 0px;" class="search-icon">search</mat-icon>
+                                        <mat-icon style="margin: 0px 15px 0px 0px;"
+                                            class="search-icon">search</mat-icon>
                                     </button>
                                     <button type="button" class="Bouton-rechercher btn  btn-default "
                                         data-original-title="Add" (click)="clear(dt1)" (click)="GelAllCaisse()">
@@ -49,21 +50,21 @@
                                 </section>
                             </fieldset>
 
-                            
+
                             <section class="flex-row-start flex-2">
                             </section>
 
                             <fieldset style="padding: 5px;">
                                 <section class="flex-row-start flex-6">
-                                    <button data-backdrop="false" type="button" class="Bouton-add-new1 btn  btn-default "
-                                        data-original-title="Add" data-toggle="modal" data-target="#Modal"
-                                        (click)="onOpenModal('add')">
+                                    <button data-backdrop="false" type="button"
+                                        class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
+                                        data-toggle="modal" data-target="#Modal" (click)="onOpenModal('add')">
                                         <div class="bouton_style-2">إضافة</div>
                                         <mat-icon class="add-icon" style="margin: 0px 10px 0px 0px;">add</mat-icon>
                                     </button>
-                                    <button data-backdrop="false" type="button" class="Bouton-add-new1 btn  btn-default "
-                                        data-original-title="Add" data-toggle="modal" data-target="#Modal"
-                                        (click)="onOpenModal('edit')">
+                                    <button data-backdrop="false" type="button"
+                                        class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
+                                        data-toggle="modal" data-target="#Modal" (click)="onOpenModal('edit')">
                                         <div class="bouton_style-2">تعديل</div>
                                         <mat-icon class="modif-icon" style="margin: 0px 10px 0px 0px;">create</mat-icon>
                                     </button>
@@ -71,18 +72,20 @@
                                         data-original-title="Delete" data-toggle="modal" data-target="#ModalDelete"
                                         (click)="onOpenModal('Delete')">
                                         <div class="bouton_style-2">حذف</div>
-                                        <mat-icon class="delete-icon" style="margin: 0px 10px 0px 0px;">delete</mat-icon>
+                                        <mat-icon class="delete-icon"
+                                            style="margin: 0px 10px 0px 0px;">delete</mat-icon>
                                     </button>
                                     <button data-backdrop="false" type="button" class="Bouton-add-new2 btn btn-default "
                                         data-original-title="Print" data-toggle="modal" data-target="#ModalPrint"
                                         (click)="onOpenModal('Print')">
                                         <div class="bouton_style-2">طباعة</div>
-                                        <mat-icon class="print-icon" style="margin: 0px 10px 0px 0px;"> local_printshop</mat-icon>
+                                        <mat-icon class="print-icon" style="margin: 0px 10px 0px 0px;">
+                                            local_printshop</mat-icon>
                                     </button>
-    
+
                                 </section>
                             </fieldset>
-                            
+
 
                         </div>
 
@@ -93,11 +96,11 @@
 
                     <ng-template pTemplate="header">
                         <tr style="font-size: 15px !important;">
-                            <th>code Saisie</th>
-                            <th>Designation Arabic</th>
-                            <th>Designation Latin</th>
-                            <th class="act-col">Actif</th>
-                            <th class="act-col">Visible</th>
+                            <th>الرمز</th>
+                            <th>البيان بالعربي</th>
+                            <th> البيان باللاتيني</th>
+                            <th class="act-col">متداول</th>
+                            <th class="act-col">مرئي</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-fl>
@@ -164,37 +167,35 @@
             <fieldset class="flex-12">
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
-                        <label class="control-label flex-6">الرمز</label>
-                        <div class="control-input  flex-6">
-                            <input id="codeSaisie" disabled=false maxlength="10" name="codeSaisie" type="text"
+                        <label class="control-label ">الرمز : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input  ">
+                            <input disabled="" id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
                                 class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="codeSaisie">
-                            <i class="fa-lg fa-fw fa fa-times icon-required"></i>
                         </div>
                     </section>
-                    <section class="flex-row-start flex-6">
+                    <section class="flex-row-start flex-6 ">
                         <p-checkbox [binary]="true" name="actif" value="val3" label="متداول"
                             [(ngModel)]="actif"></p-checkbox>
-
-
                     </section>
                 </div>
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
-                        <label class="control-label flex-6">البيان بالعربي</label>
-                        <div class="control-input flex-6">
+                        <label class="control-label ">البيان بالعربي : <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input">
                             <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationAr"
                                 [required]="true">
-                            <i class="fa-lg fa-fw fa fa-times icon-required"></i>
+                            
                         </div>
                     </section>
                     <section class="flex-row-start flex-6">
-                        <label class="control-label flex-6"> البيان باللاتيني</label>
-                        <div class="control-input flex-6">
+                        <label class="control-label  "> البيان باللاتيني :   <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input  ">
                             <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationLt"
                                 [required]="true">
-                            <i class="fa-lg fa-fw fa fa-times icon-required"></i>
+                          
                         </div>
                     </section>
 
@@ -215,21 +216,22 @@
 <!-- modal primeNG  Delete-->
 <p-dialog class="modal-delete" id="ModalDelete" data-backdrop="false" header="Header" [(visible)]="visDelete"
     styleClass="ModalDelete" [modal]="true" [draggable]="false" [resizable]="false">
-    <div class="modal-header">
-        <h3 class="footer-dev">
-            <div class="action">
-                <h2 class="text-center text-default txt-header-modal"> {{formHeader}}</h2>
-            </div>
-        </h3>
-    </div>
+    <ng-template pTemplate="header">
+        <h2 class="text-default headerForm"> {{formHeader}}</h2> 
+    </ng-template>
     <div class="modal-body">
         <form action="" #addForms="ngForm">
             <fieldset class="deleteForms">
-                <h4 class="text-delete ">Êtes-vous sûr de vouloir supprimer ?
-                    <p-button icon="pi pi-save" data-dismiss="modal" label="supprimer"
-                        styleClass="save-delete p-button-success" (click)="DeleteCaisse(code)"></p-button>
-                    <p-button icon="pi pi-sign-out" label="Fermer" styleClass="btn-cancel-delete p-button-danger"
-                        data-dismiss="modal"> </p-button>
+                <h4 class="text-delete ">هل أنت متأكد من الحذف ?
+                  
+                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteCaisse(code)"> <i
+                            class="fa-lg fa-fw fa fa-check icon-save"></i>
+                        حذف
+                    </button>
+                    <button class="btn btn-default cancel-add-ModalSmall" style="right: 520px;" :closable="true" data-dismiss="modal"
+                     > <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+                </button>
+                    
 
 
                 </h4>
@@ -239,7 +241,6 @@
     </div>
 </p-dialog>
 <!-- fin modal primeng  -->
-
 
 
 

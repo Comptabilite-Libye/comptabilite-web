@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core'; 
+import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from './Authenfication/_services/token-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { EventBusService } from './Authenfication/_helpers/EventBusService ';
+import { AuthService } from './Authenfication/_services/auth.service';
+ 
 
 @Component({
   selector: 'app-root',
@@ -8,15 +12,17 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
+  eventBusSub?: Subscription;
   private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
 
-  constructor(private tokenStorageService: TokenStorageService, private router: Router,private route: ActivatedRoute) { }
+  constructor(private authService: AuthService, private eventBusService: EventBusService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    
     this.liveClock();
     this.MethodeVisbileNavBars();
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -30,38 +36,53 @@ export class AppComponent implements OnInit {
 
       this.username = user.username;
     }
+    this.eventBusSub = this.eventBusService.on('logout', () => {
+      this.logout();
+    });
   }
-  
 
-  
+
+  logout(): void {
+    this.authService.logout().subscribe({
+      next: res => {
+        console.log(res);
+        this.tokenStorageService.signOut();
+
+        window.location.reload();
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
 
   disabled: boolean = false;
-  
+
   getvaluesFromLocalStorage() {
-    var count=0;
-     var intervalId = setInterval(() => {
-      if ( sessionStorage.getItem("auth-user") == ''  ) {
+    var count = 0;
+    var intervalId = setInterval(() => {
+      if (sessionStorage.getItem("auth-user") == '') {
         this.disabled = false
       } else {
         this.disabled = true
       }
-      
-    //   count=count+1;
-    // if (count==1000) clearInterval(intervalId);
-    // console.log("timer stoped" ) 
-    }, 100);
-     
 
- 
+      //   count=count+1;
+      // if (count==1000) clearInterval(intervalId);
+      // console.log("timer stoped" ) 
+    }, 100);
+
+
+
   }
 
-  UserConnected:any;
+  UserConnected: any;
   liveDateTime = new Date();
   liveClock() {
     setInterval(() => {
       this.liveDateTime = new Date();
     }, 1000);
-  }visibleModalLogOut: boolean = false;
+  } visibleModalLogOut: boolean = false;
   formHeader = ".....";
   public onOpenModal(mode: string) {
 
@@ -91,12 +112,9 @@ export class AppComponent implements OnInit {
     this.tokenStorageService.signOut();
     window.location.reload();
     sessionStorage.clear();
-  //   this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
-  //     this.router.navigate(['']);
-  // });
-  this.reloadPage();
+    this.reloadPage();
     this.router.navigate(['/login'], { relativeTo: this.route })
-   
+
 
   }
   VisibleBarTime: boolean = false;

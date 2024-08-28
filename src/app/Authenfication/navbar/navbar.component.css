@@ -1,7 +1,7 @@
 /* Global
 / -------------------------------------------------- */
 /* @import "src/assets/files/css/style.css"; */
- 
+
 html {
     position: relative;
     min-height: 100%;
@@ -9,7 +9,7 @@ html {
 
 
 
- 
+
 
 
 .dash-navbar-top {
@@ -321,7 +321,7 @@ html {
 
 span.links_name {
     color: #fff;
-    font-size: 15px !important;
+    font-size: 1em !important;
     font-weight: 400;
     white-space: nowrap;
     opacity: 0;
@@ -336,19 +336,36 @@ span.links_name {
     display: block !important;
 }
 
+img {
+    padding: 1px;
+    height: 50px;
+}
+
 .left {
     position: fixed;
     right: 0;
     top: 0px;
     height: 100%;
-    width: 78px;
-    background: #30688b;
+    width: 70px;
+    /* background: #30688b; */
     padding: 4px 4px;
     z-index: 200;
     transition: all 0.5s ease;
-    width: 75px; 
+
     overflow-x: hidden;
-    overflow-y: auto;   
+    overflow-y: auto;
+
+
+    color: #333 !important;
+    background-image: linear-gradient(to bottom, #fff 0, #e0e0e0 100%) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffffff", endColorstr="#ffe0e0e0", GradientType=0) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important;
+    border: 1px solid #b7b7b7 !important;
+    /* height: 29px !important; */
+    /* padding: 0px 10px 0px !important; */
+    box-shadow: 4px -8px 20px 0px rgb(179 179 179 / 36%);
+    font-family: auto;
+    border-radius: 20px 0px 0px 0px;
 }
 
 .left.open:hover {
@@ -381,10 +398,8 @@ span.links_name {
 }
 
 .left .logo-details .logo_name {
-    color: #fff;
-    font-size: 20px;
+    color: #000000;
     font-weight: 600;
-    opacity: 0;
     transition: all 0.5s ease;
 }
 
@@ -416,10 +431,10 @@ span.links_name {
 }
 
 :host ::ng-deep .left .scroll {
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: thin;
-    padding: 0px 0px 0px 0px; 
-    scrollbar-color: #ffffff #30688b;
+    padding: 0px 0px 0px 0px;
+    scrollbar-color: #000000 #ffffff;
 }
 
 .left.open .mainbox {
@@ -501,7 +516,7 @@ span.links_name {
 .left li a .links_name {
     color: #fff;
     font-size: 15px;
-    font-weight: 400;
+    font-weight: 500;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
@@ -687,7 +702,7 @@ span.links_name {
 .left li a:hover .links_name,
 .left li a:hover i {
     transition: all 0.5s ease;
-    color: #ffffff;
+    color: #000000;
 }
 
 
@@ -743,7 +758,7 @@ span.links_name {
 } */
 
 
- 
+
 
 .left:hover {
     width: 250px;
@@ -780,10 +795,11 @@ span.links_name {
     font-size: 13px;
     width: 230px;
     border-bottom: 1px solid #2b3443;
+
 }
 
 .left ul li a:hover {
-    background: #c7c7c7;
+    background: #d5d5d5;
     text-decoration: none;
 }
 

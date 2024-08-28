@@ -30,6 +30,8 @@ import { EntreeCaisseComponent } from './Recette/entree-caisse/entree-caisse.com
 import { DeviseComponent } from './MenuParametrage/devise/devise.component';
 import { BeneficiaireComponent } from './MenuParametrage/beneficiaire/beneficiaire.component';
 import { FournisseurComponent } from './MenuParametrage/fournisseur/fournisseur.component';
+import { BanqueComponent } from './MenuParametrage/banque/banque.component';
+import { MessageService } from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +48,8 @@ import { FournisseurComponent } from './MenuParametrage/fournisseur/fournisseur.
     EntreeCaisseComponent,
     DeviseComponent,
     BeneficiaireComponent,
-    FournisseurComponent
+    FournisseurComponent,
+    BanqueComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,7 @@ import { FournisseurComponent } from './MenuParametrage/fournisseur/fournisseur.
     DialogModule,MatFormFieldModule,TableModule,
     ToastModule
   ],
-  providers: [authInterceptorProviders,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, provideAnimationsAsync()],        
+  providers: [MessageService,authInterceptorProviders,{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, provideAnimationsAsync()],        
   
   bootstrap: [AppComponent],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

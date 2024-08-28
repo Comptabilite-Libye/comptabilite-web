@@ -3,7 +3,7 @@
 
     <header>
 
-        <label class="header_name">المستفدين</label>
+        <label class="header_name">المصارف</label>
 
 
     </header>
@@ -17,8 +17,8 @@
         <div class="material-table">
             <div class="card">
                 <p-toast></p-toast>
-                <p-table #dt1 [value]="dataBeneficiaire" [globalFilterFields]="['designationAr', 'designationLt']"
-                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedBeneficiaire"
+                <p-table #dt1 [value]="dataCaisse" [globalFilterFields]="['designationAr', 'designationLt']"
+                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedCaisse"
                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" dataKey="code"
                     [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
 
@@ -43,7 +43,7 @@
                                             class="search-icon">search</mat-icon>
                                     </button>
                                     <button type="button" class="Bouton-rechercher btn  btn-default "
-                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllBeneficiaire()">
+                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllCaisse()">
                                         <div class="bouton_style-2">إعادة تعيين</div>
                                         <mat-icon class="search-icon">refresh</mat-icon>
                                     </button>
@@ -146,7 +146,7 @@
 
 <!-- modal primeNG ADD -->
 <p-dialog id="Modal" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModal"
-    data-backdrop="false" [modal]="true" styleClass="ModalAdd" [draggable]="false" [ngStyle]="{'height':  '220px !important'  }" >
+    data-backdrop="false" [modal]="true" styleClass="ModalAdd" [draggable]="false">
 
 
     <ng-template pTemplate="header">
@@ -154,7 +154,7 @@
         <button class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
             (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
         </button>
-        <button class="btn btn-default save-add-ModalSmall" (click)="PostBeneficiaire()"> <i
+        <button class="btn btn-default save-add-ModalSmall" (click)="PostCaisse()"> <i
                 class="fa-lg fa-fw fa fa-check icon-save"></i>
             حفظ
         </button>
@@ -170,7 +170,7 @@
                         <label class="control-label ">الرمز : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input  ">
-                            <input id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
+                            <input disabled="" id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
                                 class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="codeSaisie">
                         </div>
                     </section>
@@ -224,7 +224,7 @@
             <fieldset class="deleteForms">
                 <h4 class="text-delete ">هل أنت متأكد من الحذف ?
                   
-                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteBeneficiaire(code)"> <i
+                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteCaisse(code)"> <i
                             class="fa-lg fa-fw fa fa-check icon-save"></i>
                         حذف
                     </button>
@@ -241,7 +241,6 @@
     </div>
 </p-dialog>
 <!-- fin modal primeng  -->
-
 
 
 
