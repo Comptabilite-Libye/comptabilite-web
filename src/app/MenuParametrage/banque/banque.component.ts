@@ -168,6 +168,10 @@ export class BanqueComponent {
       this.visible = false;
       this.visibleModal = true;
       this.code == undefined;  
+      let el = <HTMLInputElement>document.getElementById('codeSaisie');
+        if (el != null) {
+          el.disabled = false;
+        }
 
     }
     if (mode === 'edit') {

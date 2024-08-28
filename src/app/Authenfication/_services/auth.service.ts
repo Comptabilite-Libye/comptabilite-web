@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    return this.http.post(`${environment.API_ACCESS}` + 'signout', { }, httpOptions);
+    return this.http.post(`${environment.API_ACCESS}` + '/signout', { }, httpOptions);
   }
    
 }

@@ -118,29 +118,29 @@ export class TypeRecetteComponent {
 
 
   DeleteTypeRecette(code: any) {
-    // this.param_service.DeleteTypeRecette(code).pipe(
-    //   catchError((error: HttpErrorResponse) => {
-    //     let errorMessage = '';
-    //     if (error.error instanceof ErrorEvent) {
-    //     } else {
-    //       alertifyjs.set('notifier', 'position', 'top-left');
-    //       alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-    //     }
-    //     return throwError(errorMessage);
-    //   })
+    this.param_service.DeleteTypeRecette(code).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+        } else {
+          alertifyjs.set('notifier', 'position', 'top-left');
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+        }
+        return throwError(errorMessage);
+      })
 
-    // ).subscribe(
-    //   (res:any) => {
-    //     alertifyjs.set('notifier', 'position', 'top-left');
-    //     alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
+    ).subscribe(
+      (res:any) => {
+        alertifyjs.set('notifier', 'position', 'top-left');
+        alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
 
-    //     this.ngOnInit();
-    //     this.check_actif = true;
-    //     this.check_inactif = false;
-    // this.visDelete = false;
+        this.ngOnInit();
+        this.check_actif = true;
+        this.check_inactif = false;
+    this.visDelete = false;
 
-    //   }
-    // )
+      }
+    )
   }
   clearSelected(): void {
     this.code == undefined;
@@ -169,7 +169,10 @@ export class TypeRecetteComponent {
       this.visible = false;
       this.visibleModal = true;
       this.code == undefined;  
-
+      let el = <HTMLInputElement>document.getElementById('codeSaisie');
+      if (el != null) {
+        el.disabled = false;
+      }
     }
     if (mode === 'edit') {
 
@@ -187,10 +190,10 @@ export class TypeRecetteComponent {
 
         button.setAttribute('data-target', '#Modal');
         this.formHeader = "تعديل"
-        let el = <HTMLInputElement>document.getElementById('codeSaisie');
-      if (el != null) {
-        el.disabled = true;
-      }
+      //   let el = <HTMLInputElement>document.getElementById('codeSaisie');
+      // if (el != null) {
+      //   el.disabled = true;
+      // }
         this.visibleModal = true;
         this.onRowSelect;
 
@@ -257,86 +260,86 @@ export class TypeRecetteComponent {
   PostTypeRecette() {
     
 
-    // if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
-    //   alertifyjs.set('notifier', 'position', 'top-left');
-    //   alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
+    if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
+      alertifyjs.set('notifier', 'position', 'top-left');
+      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
 
-    // } else {
-
-
-    //   let body = {
-    //     codeSaisie: this.codeSaisie,
-    //     designationAr: this.designationAr,
-    //     designationLt: this.designationLt, 
-    //     userCreate: this.userCreate,
-
-    //     dateCreate: new Date().toISOString(), //
-    //     code: this.code,
-    //     actif: this.actif,
-    //     visible: this.visible,
-
-    //   }
-    //   if (this.code != null) {
-    //     body['code'] = this.code;
-
-    //     this.param_service.UpdateTypeRecette(body).pipe(
-    //       catchError((error: HttpErrorResponse) => {
-    //         let errorMessage = '';
-    //         if (error.error instanceof ErrorEvent) {
-    //         } else {
-    //           alertifyjs.set('notifier', 'position', 'top-left');
-    //           alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-
-    //         }
-    //         return throwError(errorMessage);
-    //       })
-
-    //     ).subscribe(
-
-    //       (res: any) => {
-    //         alertifyjs.set('notifier', 'position', 'top-left');
-    //         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
-    //         this.visibleModal = false;
-    //         this.clearForm();
-    //         this.ngOnInit();
-    //         this.check_actif = true;
-    //         this.check_inactif = false;
-    //         this.onRowUnselect(event);
-    //         this.clearSelected();
-
-    //       }
-    //     );
+    } else {
 
 
-    //   }
-    //   else {
-    //     this.param_achat_service.PostTypeRecette(body).pipe(
-    //       catchError((error: HttpErrorResponse) => {
-    //         let errorMessage = '';
-    //         if (error.error instanceof ErrorEvent) { } else {
-    //           alertifyjs.set('notifier', 'position', 'top-left');
-    //           alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+      let body = {
+        codeSaisie: this.codeSaisie,
+        designationAr: this.designationAr,
+        designationLt: this.designationLt, 
+        userCreate: this.userCreate,
 
-    //         }
-    //         return throwError(errorMessage);
-    //       })
-    //     ).subscribe(
-    //       (res:any) => {
-    //         alertifyjs.set('notifier', 'position', 'top-left'); 
-    //         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
-    //         this.visibleModal = false;
-    //         this.clearForm();
-    //         this.ngOnInit();
-    //         this.code;
-    //         this.check_actif = true;
-    //         this.check_inactif = false;
-    //         this.onRowUnselect(event);
-    //         this.clearSelected();
+        dateCreate: new Date().toISOString(), //
+        code: this.code,
+        actif: this.actif,
+        visible: this.visible,
 
-    //       }
-    //     )
-    //   }
-    // }
+      }
+      if (this.code != null) {
+        body['code'] = this.code;
+
+        this.param_service.UpdateTypeRecette(body).pipe(
+          catchError((error: HttpErrorResponse) => {
+            let errorMessage = '';
+            if (error.error instanceof ErrorEvent) {
+            } else {
+              alertifyjs.set('notifier', 'position', 'top-left');
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+
+            }
+            return throwError(errorMessage);
+          })
+
+        ).subscribe(
+
+          (res: any) => {
+            alertifyjs.set('notifier', 'position', 'top-left');
+            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
+            this.visibleModal = false;
+            this.clearForm();
+            this.ngOnInit();
+            this.check_actif = true;
+            this.check_inactif = false;
+            this.onRowUnselect(event);
+            this.clearSelected();
+
+          }
+        );
+
+
+      }
+      else {
+        this.param_service.PostTypeRecette(body).pipe(
+          catchError((error: HttpErrorResponse) => {
+            let errorMessage = '';
+            if (error.error instanceof ErrorEvent) { } else {
+              alertifyjs.set('notifier', 'position', 'top-left');
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+
+            }
+            return throwError(errorMessage);
+          })
+        ).subscribe(
+          (res:any) => {
+            alertifyjs.set('notifier', 'position', 'top-left'); 
+            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+            this.visibleModal = false;
+            this.clearForm();
+            this.ngOnInit();
+            this.code;
+            this.check_actif = true;
+            this.check_inactif = false;
+            this.onRowUnselect(event);
+            this.clearSelected();
+
+          }
+        )
+      }
+    }
 
 
   }

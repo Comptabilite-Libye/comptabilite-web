@@ -33,10 +33,17 @@ export class AuthService {
       });
   }
 
-  public logout() {
-    localStorage.removeItem(this.tokenKey);
-    this.router.navigate(['/login']);
-  }
+  // public logout() {
+  //   // localStorage.removeItem(this.tokenKey);
+  //   // sessionStorage.clear();
+  //   // this.router.navigate(['/login']);
+  //   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+  //     sessionStorage.clear();
+  //     this.router.navigate(['login']);
+
+   
+  //   });
+  // }
 
   public isLoggedIn(): boolean {
     let token = localStorage.getItem(this.tokenKey);

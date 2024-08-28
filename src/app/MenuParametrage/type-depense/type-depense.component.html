@@ -170,7 +170,7 @@
                         <label class="control-label ">الرمز : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input  ">
-                            <input   id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
+                            <input [disabled]="DisCodeSaisie" id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
                                 class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="codeSaisie">
                         </div>
                     </section>
@@ -181,21 +181,23 @@
                 </div>
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
-                        <label class="control-label ">البيان بالعربي : <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <label class="control-label ">البيان بالعربي : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input">
                             <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationAr"
                                 [required]="true">
-                            
+
                         </div>
                     </section>
                     <section class="flex-row-start flex-6">
-                        <label class="control-label  "> البيان باللاتيني :   <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <label class="control-label  "> البيان باللاتيني : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input  ">
                             <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationLt"
                                 [required]="true">
-                          
+
                         </div>
                     </section>
 
@@ -217,21 +219,21 @@
 <p-dialog class="modal-delete" id="ModalDelete" data-backdrop="false" header="Header" [(visible)]="visDelete"
     styleClass="ModalDelete" [modal]="true" [draggable]="false" [resizable]="false">
     <ng-template pTemplate="header">
-        <h2 class="text-default headerForm"> {{formHeader}}</h2> 
+        <h2 class="text-default headerForm"> {{formHeader}}</h2>
     </ng-template>
     <div class="modal-body">
         <form action="" #addForms="ngForm">
             <fieldset class="deleteForms">
                 <h4 class="text-delete ">هل أنت متأكد من الحذف ?
-                  
-                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteTypeDepense(code)"> <i
-                            class="fa-lg fa-fw fa fa-check icon-save"></i>
+
+                    <button class="btn btn-default save-add-ModalSmall" style="right: 430px;"
+                        (click)="DeleteTypeDepense(code)"> <i class="fa-lg fa-fw fa fa-check icon-save"></i>
                         حذف
                     </button>
-                    <button class="btn btn-default cancel-add-ModalSmall" style="right: 520px;" :closable="true" data-dismiss="modal"
-                     > <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
-                </button>
-                    
+                    <button class="btn btn-default cancel-add-ModalSmall" style="right: 520px;" :closable="true"
+                        data-dismiss="modal"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+                    </button>
+
 
 
                 </h4>

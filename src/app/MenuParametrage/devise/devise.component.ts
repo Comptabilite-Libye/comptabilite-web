@@ -166,7 +166,11 @@ export class DeviseComponent {
       this.actif = false;
       this.visible = false;
       this.visibleModal = true;
-      this.code == undefined;  
+      this.code == undefined; 
+      let el = <HTMLInputElement>document.getElementById('codeSaisie');
+      if (el != null) {
+        el.disabled = false;
+      } 
 
     }
     if (mode === 'edit') {

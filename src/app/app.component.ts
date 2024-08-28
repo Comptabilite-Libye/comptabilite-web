@@ -22,6 +22,10 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService, private eventBusService: EventBusService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+
+
+
+
     
     this.liveClock();
     this.MethodeVisbileNavBars();
@@ -113,7 +117,7 @@ export class AppComponent implements OnInit {
     window.location.reload();
     sessionStorage.clear();
     this.reloadPage();
-    this.router.navigate(['/login'], { relativeTo: this.route })
+    this.router.navigate(['/login'], { relativeTo: this.route });
 
 
   }
