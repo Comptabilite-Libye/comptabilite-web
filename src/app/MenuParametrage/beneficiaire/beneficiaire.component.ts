@@ -2,13 +2,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
-import { catchError, throwError } from 'rxjs';
+import { catchError, delay, retryWhen, take, throwError, timeout } from 'rxjs';
 import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'
 import { Beneficiaire } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
 
 
 declare const PDFObject: any;
@@ -20,11 +21,11 @@ declare const PDFObject: any;
 })
 export class BeneficiaireComponent {
 
-
+  IsLoading = true; 
   openModal!: boolean;
 
 
-  constructor(private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private loadingComponent : LoadingComponent,private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }
@@ -123,12 +124,9 @@ export class BeneficiaireComponent {
     this.param_service.DeleteBeneficiaire(code).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-
-        } else {
           alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}`);
-        }
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+
         return throwError(errorMessage);
       })
 
@@ -172,10 +170,7 @@ export class BeneficiaireComponent {
       this.visible = false;
       this.visibleModal = true;
       this.code == undefined;
-      let el = <HTMLInputElement>document.getElementById('codeSaisie');
-        if (el != null) {
-          el.disabled = false;
-        }
+       
 
     }
     if (mode === 'edit') {
@@ -194,10 +189,7 @@ export class BeneficiaireComponent {
 
         button.setAttribute('data-target', '#Modal');
         this.formHeader = "تعديل"
-        let el = <HTMLInputElement>document.getElementById('codeSaisie');
-        if (el != null) {
-          el.disabled = true;
-        }
+      
         this.visibleModal = true;
         this.onRowSelect;
 
@@ -289,12 +281,9 @@ export class BeneficiaireComponent {
         this.param_service.UpdateBeneficiaire(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            if (error.error instanceof ErrorEvent) {
-            } else {
               alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}`);
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
 
-            }
             return throwError(errorMessage);
           })
 
@@ -320,11 +309,9 @@ export class BeneficiaireComponent {
         this.param_service.PostBeneficiaire(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            if (error.error instanceof ErrorEvent) { } else {
               alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}`);
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
 
-            }
             return throwError(errorMessage);
           })
         ).subscribe(
@@ -378,36 +365,20 @@ export class BeneficiaireComponent {
   // clonedCars: { [s: string]: Matiere } = {}; 
   dataBeneficiaire = new Array<Beneficiaire>();
   GelAllBeneficiaire() {
-    this.param_service.GetBeneficiaire().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-
-          // return throwError('Unable to Connect to the Server');
-
-
-
-        } else {
-          if (error.status === 403) {
-
+    this.param_service.GetBeneficiaire().pipe( 
+        catchError((error: HttpErrorResponse) => {
+          let errorMessage = '';
             alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;"></i>' + ` ccccc`);
+            alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
 
-          } else {
-            alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;"></i>' + ` ${error.error.description}`);
-
-
-          }
-
-        }
-        return throwError(errorMessage);
-      })
-
+          return throwError(errorMessage);
+        }) 
+    
     ).subscribe((data: any) => {
 
 
-
+      this.loadingComponent.IsLoading = false;
+      this.IsLoading = false;
       this.dataBeneficiaire = data;
       this.onRowUnselect(event);
 

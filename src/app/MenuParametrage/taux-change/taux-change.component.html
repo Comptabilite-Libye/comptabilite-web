@@ -1,0 +1,195 @@
+<body translate="no" class="tt" [ngClass]="{ 'disabled': IsLoading }">
+    <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
+    <app-loading [IsLoading]="IsLoading">
+    </app-loading>
+    <header>
+        <label class="header_name"> سعر صرف العملة</label>
+
+
+    </header>
+    <aside>
+        <div class="Groupe-Bouton">
+
+        </div>
+    </aside>
+    <section id="main-container">
+
+        <div class="material-table">
+            <div class="card">
+                <p-toast></p-toast>
+                <p-table #dt1 [value]="dataTauxDeChange" [globalFilterFields]="['designationAr', 'designationLt']"
+                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedTauxDeChange"
+                    (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" dataKey="code"
+                    [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
+
+                    <ng-template pTemplate="caption" class="col-md-12">
+
+                        <div class="flex-row-start flex-12">
+                            <fieldset style="padding: 5px;">
+                                <section class="flex-row-start">
+
+                                    <label class="control-label-titer flex-6">البيان :</label>
+                                    <span class="p-input-icon-left ml-auto flex-6">
+                                        <input pInputText class="recherche-value" [(ngModel)]="searchTerm"
+                                            name="zone-recherche" type="text"
+                                            (keyup.enter)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                                            placeholder="البيان ..." />
+                                    </span>
+                                    <button type="button" class="Bouton-rechercher btn  btn-default "
+                                        data-original-title="Add"
+                                        (click)="dt1.filterGlobal($any($event.target).value, 'contains')">
+                                        <div class="bouton_style-2" style="margin: 0px 15px 0px 0px;">بحث</div>
+                                        <mat-icon style="margin: 0px 15px 0px 0px;"
+                                            class="search-icon">search</mat-icon>
+                                    </button>
+                                    <button type="button" class="Bouton-rechercher btn  btn-default "
+                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelTauxDeChange()">
+                                        <div class="bouton_style-2">إعادة تعيين</div>
+                                        <mat-icon class="search-icon">refresh</mat-icon>
+                                    </button>
+                                </section>
+                            </fieldset>
+
+
+                            <section class="flex-row-start flex-8">
+                            </section>
+
+                            <fieldset style="padding: 5px;">
+                                <section class="flex-row-start flex-6">
+                                    <button data-backdrop="false" type="button"
+                                        class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
+                                        data-toggle="modal" data-target="#Modal" (click)="onOpenModal('add')">
+                                        <div class="bouton_style-2">إضافة</div>
+                                        <mat-icon class="add-icon" style="margin: 0px 10px 0px 0px;">add</mat-icon>
+                                    </button>
+                                    <button data-backdrop="false" type="button"
+                                        class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
+                                        data-toggle="modal" data-target="#Modal" (click)="onOpenModal('edit')">
+                                        <div class="bouton_style-2">تعديل</div>
+                                        <mat-icon class="modif-icon" style="margin: 0px 10px 0px 0px;">create</mat-icon>
+                                    </button>
+                                </section>
+                            </fieldset>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr style="font-size: 15px !important;">
+                            <th>الرمز</th>
+                            <th>العملة</th>
+                            <th>سعر الصرف</th> 
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-domaine>
+                        <tr [pSelectableRow]="domaine">
+                            <td style="font-size: 15px !important;">{{domaine.codeSaisie}}</td>
+                            <td style="font-size: 15px !important;">{{domaine.deviseDTO.designationAr}}</td>
+                            <td style="font-size: 15px !important;">{{domaine.tauxChange}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </section>
+    <!-- <aside>aside</aside> -->
+    <footer>footer
+
+        <!-- <div id="pdfContainer"></div>  -->
+    </footer>
+</body>
+
+
+
+
+
+
+<!-- modal primeNG ADD -->
+<p-dialog id="Modal" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModal"
+    data-backdrop="false" [modal]="true" styleClass="ModalAdd" [draggable]="false">
+    <ng-template pTemplate="header">
+        <h2 class="text-default headerForm"> {{formHeader}}</h2>
+        <button class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
+            (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+        </button>
+        <button class="btn btn-default save-add-ModalSmall" (click)="PostTauxDeChange()"> <i
+                class="fa-lg fa-fw fa fa-check icon-save"></i>
+            حفظ
+        </button>
+        <p-toast key="toast1"></p-toast>
+    </ng-template>
+
+    <div class="modal-body">
+        <!-- <form> -->
+        <div class="flex-row-start flex-12">
+            <fieldset class="flex-12">
+                <div class="flex-row-start flex-12">
+                    <section class="flex-row-start flex-6">
+                        <label class="control-label ">الرمز : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input  ">
+                            <input oninput="this.value = this.value.toUpperCase()"  style="text-transform:uppercase" [disabled]="DisCodeSaisie" id="codeSaisie" maxlength="10" name="codeSaisie"
+                                type="text" class="onlyForCentral form-control-dev input-xs" required
+                                [(ngModel)]="codeSaisie">
+                        </div>
+                    </section>
+                    <section class="flex-row-start flex-6 ">
+
+                    </section>
+                </div>
+                <div class="flex-row-start flex-12">
+                    <section class="flex-row-start flex-6">
+                        <label class="control-label flex-3"> العملة : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input flex-7">
+                            <p-dropdown name="caisseAlimenter" [filter]="true" appendTo="body" class="dropdown"
+                                [options]="listDeviseRslt" [(ngModel)]="selectedDevise" [showClear]="true"
+                                [style]="{'width':'100%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                                [required]="true" [lazy]="true" #caisseAlimenter="ngModel">
+                            </p-dropdown>
+                        </div>
+                    </section>
+                    <section class="flex-row-start flex-6">
+                        <label class="control-label  "> سعر الصرف : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input  ">
+                            <input type="number" id="tauxChange" maxlength="200" name="tauxChange"
+                                class="onlyForCentral form-control-dev input-xs" min="0.01" max="1000" [(ngModel)]="tauxChange"
+                                [required]="true">
+
+                        </div>
+                    </section>
+
+                </div>
+
+
+            </fieldset>
+
+        </div>
+
+
+
+
+    </div>
+
+</p-dialog>
+
+
+
+<!-- modal primeNG Print -->
+<p-dialog id="ModalPrint" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModalPrint"
+    data-backdrop="false" [modal]="true" styleClass="ModalPrint" [draggable]="false">
+    <p-toast key="toast1"></p-toast>
+
+    <ng-template pTemplate="header">
+        <h2 class="text-default headerForm"> {{formHeader}}</h2>
+        <button style="right: 995px;" class="btn btn-default cancel-add-ModalSmall" :closable="true"
+            data-dismiss="modal" (click)="clearForm() ; CloseModalPrint()"> <i
+                class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+        </button>
+
+        <p-toast key="toast1"></p-toast>
+    </ng-template>
+    <div class="modal-body">
+        <div id="pdfContainer"></div>
+    </div>
+
+</p-dialog>

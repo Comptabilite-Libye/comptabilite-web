@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router'; 
 import * as alertifyjs from 'alertifyjs'
 @Component({
   selector: 'app-login',
@@ -35,10 +33,11 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(userName, password).subscribe(
       data => {
-        console.log("data", data)
+        console.log("data", data);
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
         sessionStorage.setItem("userName", userName);
+       
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
@@ -47,21 +46,23 @@ export class LoginComponent implements OnInit {
 
 
       },
-      err => {
+      err => { 
+        if([500].includes(err.status)){
+          alertifyjs.set('notifier', 'position', 'top-left');
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` Service Core Not Available 503`);
+  
+        }
 
-        // this.errorMessage = err.error;
+
         this.isLoginFailed = true;
-        alertifyjs.set('notifier', 'position', 'top-left');
-        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + `Login Failed`);
-
-        // console.log("errrrrrrrrr", err.error.description)
+  
       }
     );
   }
 
   reloadPage(): void {
     window.location.reload();
-    // this.reloadCurrentRoute();
+  console.log("Login component")
     this.router.navigate(['home']);
   }
 
@@ -71,4 +72,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['home']);
     });
   }
+
+
+  
 }

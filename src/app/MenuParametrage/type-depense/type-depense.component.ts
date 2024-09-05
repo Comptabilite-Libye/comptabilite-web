@@ -8,6 +8,7 @@ import { Table } from 'primeng/table';
 import * as alertifyjs from 'alertifyjs'
 import { TypeDepense } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
 
 
 declare const PDFObject: any;
@@ -19,11 +20,11 @@ declare const PDFObject: any;
 })
 export class TypeDepenseComponent {
 
-
+  IsLoading = true; 
   openModal!: boolean;
 
 
-  constructor(private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private loadingComponent : LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }
@@ -31,11 +32,7 @@ export class TypeDepenseComponent {
   isLoading = false;
   ngOnInit(): void {
 
-    this.GelAllTypeDepense();
-    this.Voids();
-
-
-
+    this.GelAllTypeDepense();  
 
 
   }
@@ -122,11 +119,9 @@ export class TypeDepenseComponent {
     this.param_service.DeleteTypeDepense(code).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-        } else {
           alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}`);
-        }
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+    
         return throwError(errorMessage);
       })
 
@@ -187,11 +182,7 @@ export class TypeDepenseComponent {
 
         button.setAttribute('data-target', '#Modal');
         this.formHeader = "تعديل"
-        // let el = <HTMLInputElement>document.getElementById('codeSaisie');
-        // if (el != null) {
-        //   el.disabled = true;
-        // }  
-         
+    
         this.DisCodeSaisie = true;
         this.visibleModal = true;
         // this.onRowSelect;
@@ -284,12 +275,9 @@ export class TypeDepenseComponent {
         this.param_service.UpdateTypeDepense(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            if (error.error instanceof ErrorEvent) {
-            } else {
               alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}`);
-
-            }
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+        
             return throwError(errorMessage);
           })
 
@@ -315,11 +303,9 @@ export class TypeDepenseComponent {
         this.param_service.PostTypeDepense(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            if (error.error instanceof ErrorEvent) { } else {
               alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}`);
-
-            }
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+        
             return throwError(errorMessage);
           })
         ).subscribe(
@@ -343,15 +329,7 @@ export class TypeDepenseComponent {
 
   }
 
-
-  Voids(): void {
-    // this.cars = [
-
-    // ].sort((car1, car2) => {
-    //   return 0;
-    // });
-
-  }
+ 
 
 
 
@@ -376,22 +354,25 @@ export class TypeDepenseComponent {
     this.param_service.GetTypeDepense().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.error instanceof ErrorEvent) { } else {
           alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;"></i>' + ` ${error.error.description}`);
-
-        }
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+    
         return throwError(errorMessage);
       })
 
     ).subscribe((data: any) => {
 
-
+      this.loadingComponent.IsLoading = false;
+      this.IsLoading = false;
 
       this.dataTypeDepense = data;
       this.onRowUnselect(event);
 
     })
+  }
+
+  CloseModalPrint(){
+    this.visibleModalPrint=false;
   }
 
 }

@@ -14,6 +14,14 @@ export interface Devise{
 }
 
 
+export interface Banque{
+    code: number, 
+    designationAr: string,
+    designationLt: string,
+    actif: boolean,
+}
+
+
 export interface Beneficiaire{
     code: number, 
     designationAr: string,
@@ -40,4 +48,23 @@ export interface TypeRecette{
     designationAr: string,
     designationLt: string,
     actif: boolean,
+}
+
+export interface ModeReglement{
+    code: number,
+    codeSaisie: string,
+    designationAr: string,
+    designationLt: string,
+    actif: boolean,
+}
+
+
+export interface TauxDeChange{
+    code: number,
+    tauxChange: string,
+    deviseDTO:{
+        code:number,
+        designationAr:string,
+        designationLt:string
+    }
 }

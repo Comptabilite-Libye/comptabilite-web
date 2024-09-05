@@ -27,7 +27,9 @@
           </div>
 
           <div class="block3">
-            <i class="pi pi-bell" pBadge value="4" severity="danger"></i>
+            <!-- <i class="pi pi-bell" pBadge value="4" severity="danger"></i> -->
+            <i class="pi pi-bell mr-4 p-text-secondary" pBadge style="font-size: 2rem" value="2" severity="danger"></i>
+
           </div>
         </div>
       </div>
@@ -93,6 +95,34 @@
           </div>
         </div>
       </div>
+
+      <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_parametrage/mode_reglement']">
+        <div class="container-block">
+         
+          <div class="block2">
+            <span>طريقة الدفع</span>
+            <p> طريقة الدفع...</p>
+          </div>
+          <div class="block1">
+            <i class="fa-solid fa-money-bill-wave"></i>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="item" class="col-sm-6 col-md-3" [routerLink]="['/menu_parametrage/taux_change']">
+        <div class="container-block">
+         
+          <div class="block2">
+            <span>سعر الصرف </span>
+            <p>سعر الصرف...</p>
+          </div>
+          <div class="block1">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+          </div>
+        </div>
+      </div>
+
 
     </div>
   </div>

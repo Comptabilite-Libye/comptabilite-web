@@ -1,45 +1,45 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component,  ChangeDetectorRef } from '@angular/core';
-import {   FormBuilder  } from '@angular/forms';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
-import { catchError, throwError  } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
 
-import * as alertifyjs from 'alertifyjs'  
+import * as alertifyjs from 'alertifyjs'
 import { TypeRecette } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
- 
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
+
 
 declare const PDFObject: any;
 
 @Component({
   selector: 'app-type-recette',
   templateUrl: './type-recette.component.html',
-  styleUrls: ['./type-recette.component.css',  '.../../../src/assets/files/css/style.css'], providers: [ConfirmationService, MessageService]
+  styleUrls: ['./type-recette.component.css', '.../../../src/assets/files/css/style.css'], providers: [ConfirmationService, MessageService]
 
 })
 export class TypeRecetteComponent {
-
+  IsLoading = true;
   openModal!: boolean;
 
 
-  constructor(private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
-  }  
+  }
   pdfData!: Blob;
   isLoading = false;
   ngOnInit(): void {
 
     this.GelAllTypeRecette();
-    this.Voids();
 
 
 
 
 
   }
- 
+
   RemplirePrint(): void {
 
     this.param_service.getPDFf().subscribe((blob: Blob) => {
@@ -78,14 +78,14 @@ export class TypeRecetteComponent {
     this.designationLt = '';
     this.actif = false;
     this.visible = false;
-    this.codeSaisie = '';  
+    this.codeSaisie = '';
     this.onRowUnselect(event);
 
   }
   check_actif = false;
   check_inactif = false;
 
-  formHeader = "....."; 
+  formHeader = ".....";
   searchTerm = '';
   visibleModal: boolean = false;
   visibleModalPrint: boolean = false;
@@ -93,11 +93,11 @@ export class TypeRecetteComponent {
   code!: number | null;
   codeSaisie: any;
   designationAr: string = 'NULL';
-  designationLt: string = "NULL";  
+  designationLt: string = "NULL";
   actif!: boolean;
   visible!: boolean;
-  
-  selectedTypeRecette!: TypeRecette; 
+
+  selectedTypeRecette!: TypeRecette;
 
 
   onRowSelect(event: any) {
@@ -106,7 +106,7 @@ export class TypeRecetteComponent {
     this.visible = event.data.visible;
     this.codeSaisie = event.data.codeSaisie;
     this.designationAr = event.data.designationAr;
-    this.designationLt = event.data.designationLt; 
+    this.designationLt = event.data.designationLt;
 
     console.log('vtData : ', event);
   }
@@ -121,23 +121,21 @@ export class TypeRecetteComponent {
     this.param_service.DeleteTypeRecette(code).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-        } else {
-          alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-        }
+        alertifyjs.set('notifier', 'position', 'top-left');
+        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+
         return throwError(errorMessage);
       })
 
     ).subscribe(
-      (res:any) => {
+      (res: any) => {
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
 
         this.ngOnInit();
         this.check_actif = true;
         this.check_inactif = false;
-    this.visDelete = false;
+        this.visDelete = false;
 
       }
     )
@@ -147,12 +145,12 @@ export class TypeRecetteComponent {
     this.codeSaisie = '';
     this.designationAr = '';
     this.designationLt = '';
-    this.actif = false; 
-    this.visible = false; 
+    this.actif = false;
+    this.visible = false;
   }
- 
+
   public onOpenModal(mode: string) {
- 
+
     this.visibleModal = false;
     this.visDelete = false;
     const container = document.getElementById('main-container');
@@ -162,17 +160,14 @@ export class TypeRecetteComponent {
     button.setAttribute('data-toggle', 'modal');
     if (mode === 'add') {
       button.setAttribute('data-target', '#Modal');
-      this.formHeader = "إضافة" 
-      this.onRowUnselect(event); 
+      this.formHeader = "إضافة"
+      this.onRowUnselect(event);
       this.clearSelected();
       this.actif = false;
       this.visible = false;
       this.visibleModal = true;
-      this.code == undefined;  
-      let el = <HTMLInputElement>document.getElementById('codeSaisie');
-      if (el != null) {
-        el.disabled = false;
-      }
+      this.code == undefined;
+    
     }
     if (mode === 'edit') {
 
@@ -181,7 +176,7 @@ export class TypeRecetteComponent {
         // alert("Choise A row Please");
 
         //  
-        this.clearForm(); 
+        this.clearForm();
         this.onRowUnselect(event);
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.error("Choise A row Please");
@@ -190,10 +185,10 @@ export class TypeRecetteComponent {
 
         button.setAttribute('data-target', '#Modal');
         this.formHeader = "تعديل"
-      //   let el = <HTMLInputElement>document.getElementById('codeSaisie');
-      // if (el != null) {
-      //   el.disabled = true;
-      // }
+        //   let el = <HTMLInputElement>document.getElementById('codeSaisie');
+        // if (el != null) {
+        //   el.disabled = true;
+        // }
         this.visibleModal = true;
         this.onRowSelect;
 
@@ -205,8 +200,8 @@ export class TypeRecetteComponent {
 
       if (this.code == undefined) {
         this.onRowUnselect;
-        alertifyjs.set('notifier', 'position', 'top-left'); 
-        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px  !important;"></i>'  + " Choise A row Please");
+        alertifyjs.set('notifier', 'position', 'top-left');
+        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px  !important;"></i>' + " Choise A row Please");
 
         this.visDelete == false && this.visibleModal == false
       } else {
@@ -223,42 +218,23 @@ export class TypeRecetteComponent {
 
     if (mode === 'Print') {
 
-    
+
       button.setAttribute('data-target', '#ModalPrint');
       this.formHeader = "Imprimer Liste TypeRecette"
       this.visibleModalPrint = true;
       this.RemplirePrint();
- 
+
 
     }
 
   }
 
-    
-  userCreate = "soufien";
-  // datecreate !: Date;
-  currentDate = new Date(); 
 
-  ajusterHourAndMinutes() {
-    let hour = new Date().getHours();
-    let hours;
-    if (hour < 10) {
-      hours = '0' + hour;
-    } else {
-      hours = hour;
-    }
-    let min = new Date().getMinutes();
-    let mins;
-    if (min < 10) {
-      mins = '0' + min;
-    } else {
-      mins = min;
-    }
-    return hours + ':' + mins
-  }
-  datform = new Date();
+  userCreate = ""; 
+
+   
   PostTypeRecette() {
-    
+
 
     if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
       alertifyjs.set('notifier', 'position', 'top-left');
@@ -270,7 +246,7 @@ export class TypeRecetteComponent {
       let body = {
         codeSaisie: this.codeSaisie,
         designationAr: this.designationAr,
-        designationLt: this.designationLt, 
+        designationLt: this.designationLt,
         userCreate: this.userCreate,
 
         dateCreate: new Date().toISOString(), //
@@ -285,12 +261,9 @@ export class TypeRecetteComponent {
         this.param_service.UpdateTypeRecette(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            if (error.error instanceof ErrorEvent) {
-            } else {
               alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-
-            }
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+        
             return throwError(errorMessage);
           })
 
@@ -316,16 +289,14 @@ export class TypeRecetteComponent {
         this.param_service.PostTypeRecette(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            if (error.error instanceof ErrorEvent) { } else {
               alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-
-            }
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+        
             return throwError(errorMessage);
           })
         ).subscribe(
-          (res:any) => {
-            alertifyjs.set('notifier', 'position', 'top-left'); 
+          (res: any) => {
+            alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
             this.visibleModal = false;
             this.clearForm();
@@ -343,16 +314,7 @@ export class TypeRecetteComponent {
 
 
   }
- 
 
-  Voids(): void {
-    // this.cars = [
-
-    // ].sort((car1, car2) => {
-    //   return 0;
-    // });
-
-  }
  
 
 
@@ -360,39 +322,34 @@ export class TypeRecetteComponent {
     this.listDesig.splice(index, 1);
     console.log(index);
   }
-  
-
- 
 
 
 
-  compteur: number = 0;
-  listDesig = new Array<any>();
-  
-  // cars!: Array<Matiere>;
-  // brands!: SelectItem[];
-  // clonedCars: { [s: string]: Matiere } = {}; 
-  dataTypeRecette = new Array<TypeRecette>(); 
+
+
+
+  // compteur: number = 0;
+  listDesig = new Array<any>(); 
+  dataTypeRecette = new Array<TypeRecette>();
   GelAllTypeRecette() {
     this.param_service.GetTypeRecette().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.error instanceof ErrorEvent) { } else {
           alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;"></i>' + ` ${error.error.description}` );
-
-        }
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+    
         return throwError(errorMessage);
       })
 
     ).subscribe((data: any) => {
 
-
+      this.loadingComponent.IsLoading = false;
+      this.IsLoading = false;
 
       this.dataTypeRecette = data;
       this.onRowUnselect(event);
- 
-    }) 
+
+    })
   }
 
 }

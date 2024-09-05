@@ -24,7 +24,7 @@ export class ParametrageService {
   }
 
   
-
+//caisse
 
   GetCaisse(): Observable<any> {
 
@@ -32,7 +32,7 @@ export class ParametrageService {
       headers: this.getAuthorizationHeaders()
     });
   }
-  PostCaisse(body: any) {
+  PostCaisse(body: any) : Observable<any> {
 
     return this.http.post(`${environment.API_Parametrage}caisse`, body, {
       headers: this.getAuthorizationHeaders()
@@ -57,6 +57,13 @@ export class ParametrageService {
     return this.http.get(`${environment.API_Parametrage}devise/all`, {
       headers: this.getAuthorizationHeaders()
     });
+  }
+  GetDeviseByHasTaux(): Observable<any> {
+    return this.http.get(`${environment.API_Parametrage}devise/hasTaux`)
+  }
+
+  GetDeviseByCode(code:number) {
+    return this.http.get(`${environment.API_Parametrage}devise/`+code)
   }
 
   PostDevise(body: any) {
@@ -93,7 +100,7 @@ export class ParametrageService {
   } 
   UpdateBeneficiaire(body: any) {
 
-    return this.http.put(`${environment.API_Parametrage}beneficiaire/update`, body);
+    return this.http.put(`${environment.API_Parametrage}beneficiaire/update`, body ,{responseType:'json'});
   }
 
   DeleteBeneficiaire(code: any) {
@@ -181,4 +188,85 @@ export class ParametrageService {
 
     return this.http.delete(`${environment.API_Parametrage}type_recette/delete/`+code);
   }
+
+
+
+  
+   /// Banque
+
+  
+   GetBanque(): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}banque/all`, {
+      headers: this.getAuthorizationHeaders()
+    });
+  }
+
+  PostBanque(body: any) {
+    return this.http.post(`${environment.API_Parametrage}banque`, body, {
+      headers: this.getAuthorizationHeaders()
+    });
+  } 
+  UpdateBanque(body: any) {
+    return this.http.put(`${environment.API_Parametrage}banque/update`, body);
+  }
+
+  DeleteBanque(code: any) {
+    return this.http.delete(`${environment.API_Parametrage}banque/delete/`+code);
+  }
+
+
+  // mode reglement
+
+
+
+
+  GetModeReglement(): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}mode_reglement/all`, {
+      headers: this.getAuthorizationHeaders()
+    });
+  }
+  PostModeReglement(body: any) : Observable<any> {
+
+    return this.http.post(`${environment.API_Parametrage}mode_reglement`,body)
+  }
+ 
+  UpdateModeReglement(body: any) {
+
+    return this.http.put(`${environment.API_Parametrage}mode_reglement/update`, body);
+  }
+
+  DeleteModeReglement(code: any) {
+
+    return this.http.delete(`${environment.API_Parametrage}mode_reglement/delete/`+code);
+  }
+
+
+
+  // taux de change
+
+
+
+
+  GetTauxDeChange(): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}taux_change/all`, {
+      headers: this.getAuthorizationHeaders()
+    });
+  }
+  PostTauxDeChange(body: any) : Observable<any> {
+
+    return this.http.post(`${environment.API_Parametrage}taux_change`,body)
+  }
+ 
+  UpdateTauxDeChange(body: any) {
+ 
+    return this.http.put(`${environment.API_Parametrage}taux_change/update`, body);
+  }
+
+ 
+
+
+
 }

@@ -18,7 +18,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) { }
 
   login(userName: string, password: string): Observable<any> { 
-    return this.http.post(`${environment.API_ACCESS}` + '/login', {
+    return this.http.post(`${environment.API_ACCESS}` + 'login', {
       userName,
       password
     }, httpOptions);
@@ -27,5 +27,6 @@ export class AuthService {
   logout(): Observable<any> {
     return this.http.post(`${environment.API_ACCESS}` + '/signout', { }, httpOptions);
   }
+  
    
 }

@@ -1,45 +1,33 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Component,  ChangeDetectorRef } from '@angular/core';
-import {   FormBuilder  } from '@angular/forms';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
-import { catchError, throwError  } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
 
-import * as alertifyjs from 'alertifyjs'  
+import * as alertifyjs from 'alertifyjs'
 import { Caisse } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
- 
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
+
 
 declare const PDFObject: any;
 
 @Component({
   selector: 'app-caisse',
   templateUrl: './caisse.component.html',
-  styleUrls: ['./caisse.component.css',  '.../../../src/assets/files/css/style.css'], providers: [ConfirmationService, MessageService]
+  styleUrls: ['./caisse.component.css', '.../../../src/assets/files/css/style.css'], providers: [ConfirmationService, MessageService]
 })
 export class CaisseComponent {
-
-
+  IsLoading = true;
   openModal!: boolean;
-
-
-  constructor(private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
-
-
-  }  
-  pdfData!: Blob;
-  isLoading = false;
-  ngOnInit(): void {
-
-    this.GelAllCaisse();
-    this.Voids();
-
-
-
-
-
+  constructor(private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
- 
+  pdfData!: Blob;
+  ngOnInit(): void { 
+    this.GelAllCaisse();   
+  }
+
   RemplirePrint(): void {
 
     this.param_service.getPDFf().subscribe((blob: Blob) => {
@@ -49,7 +37,7 @@ export class CaisseComponent {
         //Here you can do whatever you want with the base64 String
         // console.log("File in Base64: ", event.target.result);
         this.pdfData = event.target.result;
-        this.isLoading = false;
+        // this.isLoading = false;
         if (this.pdfData) {
           this.handleRenderPdf(this.pdfData);
         }
@@ -78,14 +66,14 @@ export class CaisseComponent {
     this.designationLt = '';
     this.actif = false;
     this.visible = false;
-    this.codeSaisie = '';  
+    this.codeSaisie = '';
     this.onRowUnselect(event);
 
   }
   check_actif = false;
   check_inactif = false;
 
-  formHeader = "....."; 
+  formHeader = ".....";
   searchTerm = '';
   visibleModal: boolean = false;
   visibleModalPrint: boolean = false;
@@ -93,11 +81,11 @@ export class CaisseComponent {
   code!: number | null;
   codeSaisie: any;
   designationAr: string = 'NULL';
-  designationLt: string = "NULL";  
+  designationLt: string = "NULL";
   actif!: boolean;
   visible!: boolean;
-  
-  selectedCaisse!: Caisse; 
+
+  selectedCaisse!: Caisse;
 
 
   onRowSelect(event: any) {
@@ -106,7 +94,7 @@ export class CaisseComponent {
     this.visible = event.data.visible;
     this.codeSaisie = event.data.codeSaisie;
     this.designationAr = event.data.designationAr;
-    this.designationLt = event.data.designationLt; 
+    this.designationLt = event.data.designationLt;
 
     console.log('vtData : ', event);
   }
@@ -121,16 +109,14 @@ export class CaisseComponent {
     this.param_service.DeleteCaisse(code).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-        } else {
           alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-        }
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+
         return throwError(errorMessage);
       })
 
     ).subscribe(
-      (res:any) => {
+      (res: any) => {
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
 
@@ -146,12 +132,12 @@ export class CaisseComponent {
     this.codeSaisie = '';
     this.designationAr = '';
     this.designationLt = '';
-    this.actif = false; 
-    this.visible = false; 
+    this.actif = false;
+    this.visible = false;
   }
- 
+
   public onOpenModal(mode: string) {
- 
+
     this.visibleModal = false;
     this.visDelete = false;
     const container = document.getElementById('main-container');
@@ -161,17 +147,13 @@ export class CaisseComponent {
     button.setAttribute('data-toggle', 'modal');
     if (mode === 'add') {
       button.setAttribute('data-target', '#Modal');
-      this.formHeader = "إضافة" 
-      this.onRowUnselect(event); 
+      this.formHeader = "إضافة"
+      this.onRowUnselect(event);
       this.clearSelected();
       this.actif = false;
       this.visible = false;
       this.visibleModal = true;
       this.code == undefined; 
-      let el = <HTMLInputElement>document.getElementById('codeSaisie');
-      if (el != null) {
-        el.disabled = false;
-      } 
 
     }
     if (mode === 'edit') {
@@ -181,7 +163,7 @@ export class CaisseComponent {
         // alert("Choise A row Please");
 
         //  
-        this.clearForm(); 
+        this.clearForm();
         this.onRowUnselect(event);
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.error("Choise A row Please");
@@ -190,10 +172,7 @@ export class CaisseComponent {
 
         button.setAttribute('data-target', '#Modal');
         this.formHeader = "تعديل"
-        let el = <HTMLInputElement>document.getElementById('codeSaisie');
-      if (el != null) {
-        el.disabled = true;
-      }
+
         this.visibleModal = true;
         this.onRowSelect;
 
@@ -205,8 +184,8 @@ export class CaisseComponent {
 
       if (this.code == undefined) {
         this.onRowUnselect;
-        alertifyjs.set('notifier', 'position', 'top-left'); 
-        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px  !important;"></i>'  + " Choise A row Please");
+        alertifyjs.set('notifier', 'position', 'top-left');
+        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px  !important;"></i>' + " Choise A row Please");
 
         this.visDelete == false && this.visibleModal == false
       } else {
@@ -223,21 +202,21 @@ export class CaisseComponent {
 
     if (mode === 'Print') {
 
-    
+
       button.setAttribute('data-target', '#ModalPrint');
       this.formHeader = "Imprimer Liste Caisse"
       this.visibleModalPrint = true;
       this.RemplirePrint();
- 
+
 
     }
 
   }
 
-    
+
   userCreate = "soufien";
   // datecreate !: Date;
-  currentDate = new Date(); 
+  currentDate = new Date();
 
   ajusterHourAndMinutes() {
     let hour = new Date().getHours();
@@ -258,7 +237,7 @@ export class CaisseComponent {
   }
   datform = new Date();
   PostCaisse() {
-    
+
 
     if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
       alertifyjs.set('notifier', 'position', 'top-left');
@@ -270,12 +249,12 @@ export class CaisseComponent {
       let body = {
         codeSaisie: this.codeSaisie,
         designationAr: this.designationAr,
-        designationLt: this.designationLt, 
+        designationLt: this.designationLt,
         userCreate: this.userCreate,
 
         dateCreate: new Date().toISOString(), //
         code: this.code,
-        actif: this.actif, 
+        actif: this.actif,
 
       }
       if (this.code != null) {
@@ -284,12 +263,9 @@ export class CaisseComponent {
         this.param_service.UpdateCaisse(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            if (error.error instanceof ErrorEvent) {
-            } else {
               alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
 
-            }
             return throwError(errorMessage);
           })
 
@@ -312,46 +288,39 @@ export class CaisseComponent {
 
       }
       else {
-        this.param_service.PostCaisse(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            if (error.error instanceof ErrorEvent) { } else {
-              alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+          this.param_service.PostCaisse(body).pipe(
+            catchError((error: HttpErrorResponse) => {
+              let errorMessage = '';
+                alertifyjs.set('notifier', 'position', 'top-left');
+                alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+  
+              return throwError(errorMessage);
+            })
+          ).subscribe(
+            (res:any) => {
+              alertifyjs.set('notifier', 'position', 'top-left'); 
+              alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+              this.visibleModal = false;
+              this.clearForm();
+              this.ngOnInit();
+              this.code;
+              this.check_actif = true;
+              this.check_inactif = false;
+              this.onRowUnselect(event);
+              this.clearSelected();
 
             }
-            return throwError(errorMessage);
-          })
-        ).subscribe(
-          (res:any) => {
-            alertifyjs.set('notifier', 'position', 'top-left'); 
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
-            this.visibleModal = false;
-            this.clearForm();
-            this.ngOnInit();
-            this.code;
-            this.check_actif = true;
-            this.check_inactif = false;
-            this.onRowUnselect(event);
-            this.clearSelected();
+          )
+        }
 
-          }
-        )
       }
+         
+
+
     }
 
 
-  }
- 
-
-  Voids(): void {
-    // this.cars = [
-
-    // ].sort((car1, car2) => {
-    //   return 0;
-    // });
-
-  }
+    
  
 
 
@@ -359,49 +328,44 @@ export class CaisseComponent {
     this.listDesig.splice(index, 1);
     console.log(index);
   }
-  
 
- 
+
+
 
 
 
   compteur: number = 0;
   listDesig = new Array<any>();
-  
+
   // cars!: Array<Matiere>;
   // brands!: SelectItem[];
   // clonedCars: { [s: string]: Matiere } = {}; 
   dataCaisse = new Array<Caisse>();
-  content?: string; 
+  content?: string;
   GelAllCaisse() {
     this.param_service.GetCaisse().pipe(
+
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.error instanceof ErrorEvent) { } else {
           alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;"></i>' + ` ${error.error.description}` );
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
 
-        }
         return throwError(errorMessage);
       })
 
-    ).subscribe((data: any) => { 
+    ).subscribe((data: any) => {
+      this.loadingComponent.IsLoading = false;
+      this.IsLoading = false;
       this.dataCaisse = data;
       this.onRowUnselect(event);
+
+    })
+  }
+
  
-    })  
-  }
-
-  getAuthorizationHeaders() {
-    const token = sessionStorage.getItem('auth-token'); 
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}` 
-    });
-  }
 
 
-  
+
 
 }
 

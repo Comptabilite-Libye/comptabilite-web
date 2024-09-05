@@ -12,36 +12,25 @@ function myFunction2() {
     const items = menu.querySelector('.sidebar');
 
     menu.addEventListener('click', (e) => {
-        items.classList.add("open");
-        menu.focus(); // Probably redundant but just in case!
+      items.classList.add("open");
+      menu.focus(); // Probably redundant but just in case!
     });
 
     menu.addEventListener('mouseleave', () => {
-        items.classList.remove("open");
+      items.classList.remove("open");
     });
-});
+  });
 
 }
 
-
-
+ 
+ 
  
 
-
-// let menu_icon_box = document.querySelector(".scroll");
-// function clickevent(){
-
-//   document.getElementById("act").classList.toggle("active");
-
-// }
-        //     menu_icon_box.classList.toggle("active");
-        // }
-
-
-function closeNavBAr(){
-  document.body.addEventListener("click", e => document.getElementById("sibdebarnav").classList.replace("open" ,""))
+function closeNavBAr() {
+  document.body.addEventListener("click", e => document.getElementById("sibdebarnav").classList.replace("open", ""))
 }
- 
+
 
 function previewFile() {
   const preview = document.querySelector("img");
@@ -63,18 +52,16 @@ function previewFile() {
 }
 
 
- 
+
 
 
 function tester(unBouton) {
   // ici tu testes ton bouton
-  if(trim(unBouton.value)=="")
-     alert("problème!!");
+  if (trim(unBouton.value) == "")
+    alert("problème!!");
 }
 
-function trim(string) 
-{ 
-return string.replace(/(^\s*)|(\s*$)/g,''); 
-} 
+function trim(string) {
+  return string.replace(/(^\s*)|(\s*$)/g, '');
+}
 
- 

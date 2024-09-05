@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation  } from '@angular/core';
 import { TokenStorageService } from './Authenfication/_services/token-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { EventBusService } from './Authenfication/_helpers/EventBusService ';
+import { Subscription } from 'rxjs'; 
 import { AuthService } from './Authenfication/_services/auth.service';
- 
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
   eventBusSub?: Subscription;
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   showModeratorBoard = false;
   username?: string;
 
-  constructor(private authService: AuthService, private eventBusService: EventBusService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -27,22 +27,15 @@ export class AppComponent implements OnInit {
 
 
     
-    this.liveClock();
-    this.MethodeVisbileNavBars();
+    // this.liveClock();
+    // this.MethodeVisbileNavBars();
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
-
-      // this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      // this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-
+      this.roles = user.roles; 
       this.username = user.username;
-    }
-    this.eventBusSub = this.eventBusService.on('logout', () => {
-      this.logout();
-    });
+    } 
   }
 
 
@@ -74,7 +67,7 @@ export class AppComponent implements OnInit {
       //   count=count+1;
       // if (count==1000) clearInterval(intervalId);
       // console.log("timer stoped" ) 
-    }, 100);
+    }, 10);
 
 
 
@@ -82,11 +75,7 @@ export class AppComponent implements OnInit {
 
   UserConnected: any;
   liveDateTime = new Date();
-  liveClock() {
-    setInterval(() => {
-      this.liveDateTime = new Date();
-    }, 1000);
-  } visibleModalLogOut: boolean = false;
+  visibleModalLogOut: boolean = false;
   formHeader = ".....";
   public onOpenModal(mode: string) {
 

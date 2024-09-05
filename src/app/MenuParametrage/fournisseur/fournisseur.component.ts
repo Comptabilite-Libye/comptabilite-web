@@ -8,6 +8,7 @@ import { Table } from 'primeng/table';
 import * as alertifyjs from 'alertifyjs'  
 import { Fournisseur } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
  
 declare const PDFObject: any;
 @Component({
@@ -18,11 +19,11 @@ declare const PDFObject: any;
 })
 export class FournisseurComponent {
 
-
+  IsLoading = true; 
   openModal!: boolean;
 
 
-  constructor(private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private loadingComponent : LoadingComponent,private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }  
@@ -114,19 +115,17 @@ export class FournisseurComponent {
     this.code = event.data = null;
   }
 
-
+ 
 
   DeleteFournisseur(code: any) {
     this.param_service.DeleteFournisseur(code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-        } else {
-          alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-        }
-        return throwError(errorMessage);
-      })
+       catchError((error: HttpErrorResponse) => {
+    let errorMessage = '';
+      alertifyjs.set('notifier', 'position', 'top-left');
+      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+
+    return throwError(errorMessage);
+  })
 
     ).subscribe(
       (res:any) => {
@@ -168,11 +167,7 @@ export class FournisseurComponent {
       this.visible = false;
       this.visibleModal = true;
       this.code == undefined;  
-      let el = <HTMLInputElement>document.getElementById('codeSaisie');
-      if (el != null) {
-        el.disabled = false;
-      }
-
+   
     }
     if (mode === 'edit') {
 
@@ -386,7 +381,8 @@ export class FournisseurComponent {
       })
 
     ).subscribe((data: any) => {
-
+      this.loadingComponent.IsLoading = false;
+      this.IsLoading = false;
 
 
       this.dataFournisseur = data;

@@ -6,8 +6,9 @@ import { catchError, throwError  } from 'rxjs';
 import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'  
-import { Caisse } from '../domaine/domaine';
+import { Banque } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
  
 
 declare const PDFObject: any;
@@ -18,11 +19,11 @@ declare const PDFObject: any;
 })
 export class BanqueComponent {
 
-
+  IsLoading = true; 
   openModal!: boolean;
 
 
-  constructor(private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private loadingComponent : LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }  
@@ -30,7 +31,7 @@ export class BanqueComponent {
   isLoading = false;
   ngOnInit(): void {
 
-    this.GelAllCaisse();
+    this.GelAllBanque();
     this.Voids();
 
 
@@ -39,6 +40,9 @@ export class BanqueComponent {
 
   }
  
+  CloseModalPrint(){
+    this.visibleModalPrint =false;
+  }
   RemplirePrint(): void {
 
     this.param_service.getPDFf().subscribe((blob: Blob) => {
@@ -93,10 +97,11 @@ export class BanqueComponent {
   codeSaisie: any;
   designationAr: string = 'NULL';
   designationLt: string = "NULL";  
+  rib!: string ;  
   actif!: boolean;
   visible!: boolean;
   
-  selectedCaisse!: Caisse; 
+  selectedBanque!: Banque; 
 
 
   onRowSelect(event: any) {
@@ -106,6 +111,7 @@ export class BanqueComponent {
     this.codeSaisie = event.data.codeSaisie;
     this.designationAr = event.data.designationAr;
     this.designationLt = event.data.designationLt; 
+    this.rib = event.data.rib; 
 
     console.log('vtData : ', event);
   }
@@ -116,30 +122,28 @@ export class BanqueComponent {
 
 
 
-  DeleteCaisse(code: any) {
-    // this.param_service.DeleteCaisse(code).pipe(
-    //   catchError((error: HttpErrorResponse) => {
-    //     let errorMessage = '';
-    //     if (error.error instanceof ErrorEvent) {
-    //     } else {
-    //       alertifyjs.set('notifier', 'position', 'top-left');
-    //       alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-    //     }
-    //     return throwError(errorMessage);
-    //   })
+  DeleteBanque(code: any) {
+    this.param_service.DeleteBanque(code).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+          alertifyjs.set('notifier', 'position', 'top-left');
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
 
-    // ).subscribe(
-    //   (res:any) => {
-    //     alertifyjs.set('notifier', 'position', 'top-left');
-    //     alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
+        return throwError(errorMessage);
+      })
 
-    //     this.ngOnInit();
-    //     this.check_actif = true;
-    //     this.check_inactif = false;
-    // this.visDelete = false;
+    ).subscribe(
+      (res:any) => {
+        alertifyjs.set('notifier', 'position', 'top-left');
+        alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
 
-    //   }
-    // )
+        this.ngOnInit();
+        this.check_actif = true;
+        this.check_inactif = false;
+    this.visDelete = false;
+
+      }
+    )
   }
   clearSelected(): void {
     this.code == undefined;
@@ -168,10 +172,7 @@ export class BanqueComponent {
       this.visible = false;
       this.visibleModal = true;
       this.code == undefined;  
-      let el = <HTMLInputElement>document.getElementById('codeSaisie');
-        if (el != null) {
-          el.disabled = false;
-        }
+   
 
     }
     if (mode === 'edit') {
@@ -190,10 +191,7 @@ export class BanqueComponent {
 
         button.setAttribute('data-target', '#Modal');
         this.formHeader = "تعديل"
-        let el = <HTMLInputElement>document.getElementById('codeSaisie');
-      if (el != null) {
-        el.disabled = true;
-      }
+       
         this.visibleModal = true;
         this.onRowSelect;
 
@@ -225,7 +223,7 @@ export class BanqueComponent {
 
     
       button.setAttribute('data-target', '#ModalPrint');
-      this.formHeader = "Imprimer Liste Caisse"
+      this.formHeader = "Imprimer Liste Banque"
       this.visibleModalPrint = true;
       this.RemplirePrint();
  
@@ -257,89 +255,85 @@ export class BanqueComponent {
     return hours + ':' + mins
   }
   datform = new Date();
-  PostCaisse() {
+  PostBanque() {
     
 
-    // if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
-    //   alertifyjs.set('notifier', 'position', 'top-left');
-    //   alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
+    if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
+      alertifyjs.set('notifier', 'position', 'top-left');
+      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
 
-    // } else {
-
-
-    //   let body = {
-    //     codeSaisie: this.codeSaisie,
-    //     designationAr: this.designationAr,
-    //     designationLt: this.designationLt, 
-    //     userCreate: this.userCreate,
-
-    //     dateCreate: new Date().toISOString(), //
-    //     code: this.code,
-    //     actif: this.actif,
-    //     visible: this.visible,
-
-    //   }
-    //   if (this.code != null) {
-    //     body['code'] = this.code;
-
-    //     this.param_service.UpdateCaisse(body).pipe(
-    //       catchError((error: HttpErrorResponse) => {
-    //         let errorMessage = '';
-    //         if (error.error instanceof ErrorEvent) {
-    //         } else {
-    //           alertifyjs.set('notifier', 'position', 'top-left');
-    //           alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-
-    //         }
-    //         return throwError(errorMessage);
-    //       })
-
-    //     ).subscribe(
-
-    //       (res: any) => {
-    //         alertifyjs.set('notifier', 'position', 'top-left');
-    //         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
-    //         this.visibleModal = false;
-    //         this.clearForm();
-    //         this.ngOnInit();
-    //         this.check_actif = true;
-    //         this.check_inactif = false;
-    //         this.onRowUnselect(event);
-    //         this.clearSelected();
-
-    //       }
-    //     );
+    } else {
 
 
-    //   }
-    //   else {
-    //     this.param_achat_service.PostCaisse(body).pipe(
-    //       catchError((error: HttpErrorResponse) => {
-    //         let errorMessage = '';
-    //         if (error.error instanceof ErrorEvent) { } else {
-    //           alertifyjs.set('notifier', 'position', 'top-left');
-    //           alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
+      let body = {
+        codeSaisie: this.codeSaisie,
+        designationAr: this.designationAr,
+        designationLt: this.designationLt, 
+        userCreate: this.userCreate,
+        rib: this.rib,
 
-    //         }
-    //         return throwError(errorMessage);
-    //       })
-    //     ).subscribe(
-    //       (res:any) => {
-    //         alertifyjs.set('notifier', 'position', 'top-left'); 
-    //         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
-    //         this.visibleModal = false;
-    //         this.clearForm();
-    //         this.ngOnInit();
-    //         this.code;
-    //         this.check_actif = true;
-    //         this.check_inactif = false;
-    //         this.onRowUnselect(event);
-    //         this.clearSelected();
+        dateCreate: new Date().toISOString(), //
+        code: this.code,
+        actif: this.actif,
+        visible: this.visible,
 
-    //       }
-    //     )
-    //   }
-    // }
+      }
+      if (this.code != null) {
+        body['code'] = this.code;
+
+        this.param_service.UpdateBanque(body).pipe(
+          catchError((error: HttpErrorResponse) => {
+            let errorMessage = '';
+              alertifyjs.set('notifier', 'position', 'top-left');
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+
+            return throwError(errorMessage);
+          })
+
+        ).subscribe(
+
+          (res: any) => {
+            alertifyjs.set('notifier', 'position', 'top-left');
+            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
+            this.visibleModal = false;
+            this.clearForm();
+            this.ngOnInit();
+            this.check_actif = true;
+            this.check_inactif = false;
+            this.onRowUnselect(event);
+            this.clearSelected();
+
+          }
+        );
+
+
+      }
+      else {
+        this.param_service.PostBanque(body).pipe(
+          catchError((error: HttpErrorResponse) => {
+            let errorMessage = '';
+              alertifyjs.set('notifier', 'position', 'top-left');
+              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
+
+            return throwError(errorMessage);
+          })
+        ).subscribe(
+          (res:any) => {
+            alertifyjs.set('notifier', 'position', 'top-left'); 
+            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+            this.visibleModal = false;
+            this.clearForm();
+            this.ngOnInit();
+            this.code;
+            this.check_actif = true;
+            this.check_inactif = false;
+            this.onRowUnselect(event);
+            this.clearSelected();
+
+          }
+        )
+      }
+    }
 
 
   }
@@ -372,24 +366,23 @@ export class BanqueComponent {
   // cars!: Array<Matiere>;
   // brands!: SelectItem[];
   // clonedCars: { [s: string]: Matiere } = {}; 
-  dataCaisse = new Array<Caisse>(); 
-  GelAllCaisse() {
-    this.param_service.GetCaisse().pipe(
+  dataBanque = new Array<Banque>(); 
+  GelAllBanque() {
+    this.param_service.GetBanque().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.error instanceof ErrorEvent) { } else {
           alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;"></i>' + ` ${error.error.description}` );
+          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
 
-        }
         return throwError(errorMessage);
       })
 
     ).subscribe((data: any) => {
 
+      this.loadingComponent.IsLoading = false;
+      this.IsLoading = false;
 
-
-      this.dataCaisse = data;
+      this.dataBanque = data;
       this.onRowUnselect(event);
  
     }) 

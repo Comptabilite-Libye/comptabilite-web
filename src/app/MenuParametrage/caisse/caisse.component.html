@@ -1,6 +1,7 @@
-<body translate="no" class="tt">
+<body translate="no" class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
     <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
-
+    <app-loading [IsLoading]="IsLoading">
+  </app-loading>
     <header>
 
         <label class="header_name">الخزائن</label>
@@ -19,7 +20,7 @@
                 <p-toast></p-toast>
                 <p-table #dt1 [value]="dataCaisse" [globalFilterFields]="['designationAr', 'designationLt']"
                     selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedCaisse"
-                    (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" dataKey="code"
+                    (onRowSelect)="onRowSelect($event)"   (onRowUnselect)="onRowUnselect($event)" dataKey="code"
                     [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
 
                     <ng-template pTemplate="caption" class="col-md-12">
@@ -51,7 +52,7 @@
                             </fieldset>
 
 
-                            <section class="flex-row-start flex-2">
+                            <section class="flex-row-start flex-5">
                             </section>
 
                             <fieldset style="padding: 5px;">
@@ -170,7 +171,7 @@
                         <label class="control-label ">الرمز : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input  ">
-                            <input disabled="" id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
+                            <input  id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
                                 class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="codeSaisie">
                         </div>
                     </section>
@@ -288,3 +289,5 @@
 
     </div>
 </p-dialog>
+
+ 

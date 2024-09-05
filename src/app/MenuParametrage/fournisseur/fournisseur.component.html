@@ -1,6 +1,7 @@
-<body translate="no" class="tt">
+<body translate="no" class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
     <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
-
+    <app-loading [IsLoading]="IsLoading">
+  </app-loading>
     <header>
 
         <label class="header_name">الموردين</label>
@@ -51,7 +52,7 @@
                             </fieldset>
 
 
-                            <section class="flex-row-start flex-2">
+                            <section class="flex-row-start flex-5">
                             </section>
 
                             <fieldset style="padding: 5px;">

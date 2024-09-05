@@ -1,8 +1,8 @@
-<body translate="no" class="tt">
+<body translate="no" class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
     <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
-
+    <app-loading [IsLoading]="IsLoading">
+  </app-loading>
     <header>
-
         <label class="header_name">أنواع المصروفات</label>
 
 
@@ -51,7 +51,7 @@
                             </fieldset>
 
 
-                            <section class="flex-row-start flex-2">
+                            <section class="flex-row-start flex-5">
                             </section>
 
                             <fieldset style="padding: 5px;">
@@ -248,44 +248,21 @@
 
 
 <!-- modal primeNG Print -->
+<!-- modal primeNG Print -->  
 <p-dialog id="ModalPrint" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModalPrint"
-    data-backdrop="false" [modal]="true" styleClass="ModalPrint" [draggable]="false" [resizable]="false">
-    <div>
-        <div class="modal-header">
-            <h3 class="footer-dev">
-                <div class="action">
-                    <h2 class="text-default headerForm"> {{formHeader}}</h2>
+data-backdrop="false" [modal]="true" styleClass="ModalPrint" [draggable]="false">
+<p-toast key="toast1"></p-toast>
 
-                    <button class="btn btn-default cancel-add-ModalSmall" :closable="false" data-dismiss="modal"
-                        (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>Fermer
-                    </button>
+<ng-template pTemplate="header">
+    <h2 class="text-default headerForm"> {{formHeader}}</h2>
+    <button  style="right: 995px;" class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
+        (click)="clearForm() ; CloseModalPrint()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+    </button>
+   
+    <p-toast key="toast1"></p-toast>
+</ng-template>
+<div class="modal-body">
+    <div id="pdfContainer"></div>
+</div>
 
-                    <p-toast key="toast1"></p-toast>
-
-                </div>
-            </h3>
-        </div>
-        <div class="modal-body">
-            <div id="pdfContainer"></div>
-
-
-            <!-- <div id="myContainer">
-                <div id="outerContainer">
-////sidebarContainer
-                    <div id="sidebarContainer"> </div>  
-
-
-                 /// /mainContainer 
-                    <div id="mainContainer"> </div> 
-
-
-                /// overlayContainer
-                    <div id="overlayContainer" class="hidden"> </div> 
-
-                </div>  
-            </div> -->
-
-        </div>
-
-    </div>
 </p-dialog>

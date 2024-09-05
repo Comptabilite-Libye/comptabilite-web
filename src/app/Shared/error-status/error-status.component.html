@@ -1,0 +1,21 @@
+<section class="page_404">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 mt-5">
+          <div class="col-sm-offset-1 text-center" *ngFor="let error of errorStatus">
+            <h1 class="text-center">{{ error.statusMsg }}</h1>
+            <div class="four_zero_four_bg" style="background-image: url({{error.statusImg}})">
+              <h1 class="text-center">{{ error.statusCode }}</h1>
+            </div>
+            <div class="contant_box">
+              <h3>Look like you're lost</h3>
+              <p>the page you are looking for not available!</p>
+              <a routerLink="" class="link">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Go to Home
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

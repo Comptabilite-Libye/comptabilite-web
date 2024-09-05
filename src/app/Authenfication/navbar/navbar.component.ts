@@ -13,8 +13,7 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  VisibleNavBar : boolean = false;
-  // usernameSsesion  :  any ='';
+  VisibleNavBar : boolean = false; 
   MethodeVisbileNavBars(){   
     var count=0;
     console.log(sessionStorage.getItem("auth-user"));
@@ -24,7 +23,7 @@ export class NavbarComponent implements OnInit {
       this.VisibleNavBar = true; 
     } 
     count=count+1;
-    if (count==1000) clearInterval(intervalId);
+    if (count==100) clearInterval(intervalId);
     }, 10);
 
    
