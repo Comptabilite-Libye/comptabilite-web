@@ -9,6 +9,7 @@ import * as alertifyjs from 'alertifyjs'
 import { ModeReglement } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
+import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
 
 
 declare const PDFObject: any;
@@ -22,7 +23,7 @@ export class ModeReglementComponent {
 
   IsLoading = true;
   openModal!: boolean;
-  constructor(private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private errorHandler: ErrorHandlerService,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
   pdfData!: Blob;
   ngOnInit(): void {
@@ -114,9 +115,7 @@ export class ModeReglementComponent {
     this.param_service.DeleteModeReglement(code).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        alertifyjs.set('notifier', 'position', 'top-left');
-        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
 
@@ -221,26 +220,7 @@ export class ModeReglementComponent {
 
   userCreate = "soufien";
   // datecreate !: Date;
-  currentDate = new Date();
-
-  ajusterHourAndMinutes() {
-    let hour = new Date().getHours();
-    let hours;
-    if (hour < 10) {
-      hours = '0' + hour;
-    } else {
-      hours = hour;
-    }
-    let min = new Date().getMinutes();
-    let mins;
-    if (min < 10) {
-      mins = '0' + min;
-    } else {
-      mins = min;
-    }
-    return hours + ':' + mins
-  }
-  datform = new Date();
+  
   PostModeReglement() {
 
 
@@ -268,9 +248,7 @@ export class ModeReglementComponent {
         this.param_service.UpdateModeReglement(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+            this.errorHandler.handleError(error); 
             return throwError(errorMessage);
           })
 
@@ -296,9 +274,7 @@ export class ModeReglementComponent {
         this.param_service.PostModeReglement(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+            this.errorHandler.handleError(error); 
             return throwError(errorMessage);
           })
         ).subscribe(
@@ -352,9 +328,7 @@ export class ModeReglementComponent {
 
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        alertifyjs.set('notifier', 'position', 'top-left');
-        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
 

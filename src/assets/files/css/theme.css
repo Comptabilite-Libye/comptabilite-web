@@ -957,8 +957,11 @@ p-chips.p-chips-clearable .p-chips-clear-icon {
 
 .p-dropdown .p-dropdown-clear-icon {
     color: #495057;
-    right: 2.357rem
+    right: 2.357rem;
+    
+
 }
+ 
 
 .p-dropdown-panel {
     background: #fff;
@@ -5738,7 +5741,8 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
     border: 1px solid rgba(0, 0, 0, .15);
     box-shadow: none;
     border-radius: 4px;
-    width: 12.5rem
+    width: 11.5rem;
+    height: 40px;
 }
 
 .p-contextmenu .p-menuitem-link {
@@ -5750,7 +5754,10 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 
 .p-contextmenu .p-menuitem-link .p-menuitem-text {
-    color: #212529
+    color: #212529;
+    font-size: 13px;
+    font-family: auto;
+
 }
 
 .p-contextmenu .p-menuitem-link .p-menuitem-icon {

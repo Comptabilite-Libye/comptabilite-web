@@ -8,7 +8,7 @@ import { CaisseComponent } from './MenuParametrage/caisse/caisse.component';
 import { TypeDepenseComponent } from './MenuParametrage/type-depense/type-depense.component';
 import { TypeRecetteComponent } from './MenuParametrage/type-recette/type-recette.component';
 import { MenuRecetteComponent } from './Recette/menu-recette/menu-recette.component';
-import { EntreeCaisseComponent } from './Recette/entree-caisse/entree-caisse.component';
+import { EntreeCaisseComponent } from './Recette/menu-recettes/entree-caisse/entree-caisse.component';
 import { DeviseComponent } from './MenuParametrage/devise/devise.component';
 import { BeneficiaireComponent } from './MenuParametrage/beneficiaire/beneficiaire.component';
 import { FournisseurComponent } from './MenuParametrage/fournisseur/fournisseur.component';
@@ -17,7 +17,12 @@ import { EditionRecetteComponent } from './Recette/edition-recette/edition-recet
 import { ErrorStatusComponent } from './Shared/error-status/error-status.component';
 import { ModeReglementComponent } from './MenuParametrage/mode-reglement/mode-reglement.component';
 import { TauxChangeComponent } from './MenuParametrage/taux-change/taux-change.component';
-
+import { AccessComponent } from './Authenfication/access/access.component';
+import { TransfertEntreCaisseComponent } from './Recette/menu-recettes/transfert-entre-caisse/transfert-entre-caisse.component';
+import { SoldeCaisseComponent } from './Recette/menu-recettes/solde-caisse/solde-caisse.component';
+ import { TypeCaisseComponent } from './MenuParametrage/type-caisse/type-caisse.component';
+import { MenuRecettesComponent } from './Recette/menu-recettes/menu-recettes.component';
+ 
 const routes: Routes = [
  
   { path: 'home', component: HomeComponent },
@@ -26,6 +31,11 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
 
+  // { path: 'menu_access', component: AccessComponent },
+
+  // { path: 'first-module', loadChildren: () => import('./modules/first-module/first-module.module').then(m => m.FirstModuleModule) },
+
+  { path: 'menu_access', loadChildren: () => import('../app/Authenfication/access/access.module').then(m => m.AccessModule) },
   { path: 'menu_parametrage', component: MenuParametrageComponent },
  
   { path: 'menu_parametrage/caisse', component: CaisseComponent },
@@ -37,11 +47,17 @@ const routes: Routes = [
   { path: 'menu_parametrage/banque', component: BanqueComponent },
   { path: 'menu_parametrage/mode_reglement', component: ModeReglementComponent },
   { path: 'menu_parametrage/taux_change', component: TauxChangeComponent },
+  { path: 'menu_parametrage/type_caisse', component: TypeCaisseComponent },
 
 
-  { path: 'menu_recette', component: MenuRecetteComponent },
-  { path: 'menu_recette/entree_caisse', component: EntreeCaisseComponent },
-  { path: 'menu_recette/edition', component: EditionRecetteComponent }, 
+  // { path: 'menu_recette', component: MenuRecettesComponent },
+  // { path: 'menu_recette/entree_caisse', component: EntreeCaisseComponent },
+  // { path: 'menu_recette/edition', component: EditionRecetteComponent }, 
+  // { path: 'menu_recette/transfert_caisse', component: TransfertEntreCaisseComponent }, 
+  // { path: 'menu_recette/solde_caisse', component: SoldeCaisseComponent }, 
+  // { path: 'menu_recette/mouvemenet_caisse', component: MouvementCaisseComponent },
+ 
+  { path: 'menu_recette', loadChildren: () => import('./Recette/menu-recettes/menu-recettes.module').then(m => m.MenuRecettesModule), data:{title:'الإيرادات'}}, 
  
 
 ];

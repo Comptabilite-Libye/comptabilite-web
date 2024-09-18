@@ -6,6 +6,14 @@ export interface Caisse{
     actif: boolean,
 }
 
+export interface TypeCaisse{
+    code: number,
+    codeSaisie: string,
+    designationAr: string,
+    designationLt: string,
+    actif: boolean,
+}
+
 export interface Devise{
     code: number, 
     designationAr: string,

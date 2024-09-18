@@ -8,6 +8,7 @@ import { TypeRecette } from 'src/app/MenuParametrage/domaine/domaine';
 import { MessageService, ConfirmationService, PrimeNGConfig, SelectItem } from 'primeng/api';
 import { DatePipe } from '@angular/common'; 
 import { Calendar } from 'primeng/calendar';
+import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
    
 declare const PDFObject: any;
 
@@ -19,7 +20,7 @@ declare const PDFObject: any;
 
 
 export class EditionRecetteComponent implements OnInit {
-  constructor(public primengConfig: PrimeNGConfig, private param_service: ParametrageService, private datePipe: DatePipe) {
+  constructor(private errorHandler: ErrorHandlerService,public primengConfig: PrimeNGConfig, private param_service: ParametrageService, private datePipe: DatePipe) {
     this.setLangAR();
     this.primengConfig.translationObserver.subscribe(res => console.log(res));
   }
@@ -132,11 +133,8 @@ export class EditionRecetteComponent implements OnInit {
     this.param_service.GetTypeRecette().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.error instanceof ErrorEvent) { } else {
-          alertifyjs.set('notifier', 'position', 'top-right');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;"></i>' + ` ${error.error.description}`);
 
-        }
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
 

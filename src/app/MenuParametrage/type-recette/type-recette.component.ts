@@ -9,6 +9,7 @@ import * as alertifyjs from 'alertifyjs'
 import { TypeRecette } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
+import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
 
 
 declare const PDFObject: any;
@@ -24,7 +25,7 @@ export class TypeRecetteComponent {
   openModal!: boolean;
 
 
-  constructor(private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private errorHandler: ErrorHandlerService,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }
@@ -121,9 +122,7 @@ export class TypeRecetteComponent {
     this.param_service.DeleteTypeRecette(code).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        alertifyjs.set('notifier', 'position', 'top-left');
-        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
 
@@ -261,9 +260,7 @@ export class TypeRecetteComponent {
         this.param_service.UpdateTypeRecette(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-              alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-        
+            this.errorHandler.handleError(error); 
             return throwError(errorMessage);
           })
 
@@ -289,9 +286,7 @@ export class TypeRecetteComponent {
         this.param_service.PostTypeRecette(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-              alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-        
+            this.errorHandler.handleError(error); 
             return throwError(errorMessage);
           })
         ).subscribe(
@@ -335,9 +330,7 @@ export class TypeRecetteComponent {
     this.param_service.GetTypeRecette().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-          alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-    
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
 

@@ -1,0 +1,18 @@
+.breadcrumb {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: .75rem 1rem;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    list-style: none;
+    background-color: #ffffff;
+    border-radius: .25rem;
+    font-family: auto;
+    font-size: 15px;
+    font-weight: bold;
+}
+li.breadcrumb-item {
+    text-decoration: none;
+}

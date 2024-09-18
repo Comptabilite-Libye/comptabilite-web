@@ -1,0 +1,30 @@
+:host ::ng-deep  .ModalAdd { 
+    height: 590px !important;
+}
+
+:host ::ng-deep .save-add-ModalSmalls {
+    position: fixed;
+    right: 235px !important;
+    font-size: 13px;
+    direction: ltr;
+    height: 35px;
+    border: 1px solid #adadad;
+    width: 70px;
+    font-weight: bold;
+}
+
+.cancel-add-ModalSmalls {
+    position: fixed;
+    height: 35px;
+    right:  315px !important;
+    font-size: 15px;
+    direction: ltr;
+    font-weight: 500;
+    border: 1px solid #adadad;
+    width: 70px;
+    font-weight: bold;
+}
+
+span {
+    font-family: 'Font Awesome 6 Free' !important;
+}

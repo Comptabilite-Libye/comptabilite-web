@@ -230,7 +230,7 @@ tr.mat-footer-row {
   margin-right: 5px;
   display: flex;
   height: 30px;
-  width: 75px;
+  width: 70px;
   padding: 3px 7px 0px 5px;
   margin-bottom: 3px;
   border: 1px solid #adadad;
@@ -287,9 +287,7 @@ tr.mat-footer-row {
   overflow: hidden;
 }
 
-.delete-icon {
-  color: rgb(255, 51, 0);
-}
+
 
 :host ::ng-deep .p-dialog-content {
   overflow-y: inherit;
@@ -725,7 +723,7 @@ h4 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 5px;
+  margin-top: 10px;
   margin-left: 5px;
 }
 
@@ -737,8 +735,12 @@ h4 {
 
 textarea {
   resize: none;
-  width: calc(100% - 20px);
+  width: calc(100% - -400px);
   margin: auto;
+  font-size: 15px;
+  font-family: auto;
+  border: 1px solid #d9d1d1;
+  border-radius: 6px;
 }
 
 .flex-1 {
@@ -873,17 +875,12 @@ button.btn.btn-danger.cancel-voir {
   height: 35px;
   margin: 5px 8px 5px 10px;
   border: 1px solid #adadad;
-  width: 70px;
-  
-  font-weight: bold;
-
-}
-
-
-
+  width: 70px; 
+  font-weight: bold; 
+} 
 .save-add-ModalLarge {
   position: fixed;
-  right: 1140px;
+  right:  1140px;
   float: inline-end;
   font-size: 15px;
   direction: ltr;
@@ -1313,8 +1310,7 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
   font-family: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  width: 30% !important;
-  height: 200px !important;
+  width: 400px;
   top: 5% !important;
   left: 0% !important;
 }
@@ -1569,9 +1565,9 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
   background: #ffffff;
   border: 1px solid #ffffff;
   position: relative;
-  right: 0px !important;
+  right: 5px !important;
   text-align: center;
-  height: 15px;
+  height: 25px;
 }
 
 
@@ -2020,3 +2016,30 @@ label.header_name {
   width: 100% !important;
 }
  
+
+i.fa-solid.fa-print.print-icon {
+  font-size: 17px;
+  padding-right: 5px;
+  margin: 2px 5px 0px 0px;
+}
+
+i.fa-solid.fa-trash-can.delete-icon {
+  color: rgb(255, 51, 0);
+  font-size: 17px;
+  padding-right: 5px;
+  margin: 2px 5px 0px 0px;
+}
+
+i.fa-regular.fa-floppy-disk.ApprouveIcon{
+  font-size: 18px;
+  padding-right: 10px;
+  margin: 2px 2px 0px 0px;
+  color: green;
+}
+
+.FooterTable{
+  font-family: auto;
+  border-radius: 3px;
+  font-size: 13px !important;
+  font-weight: bold !important;
+}

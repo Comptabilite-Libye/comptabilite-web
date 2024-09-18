@@ -1,5 +1,5 @@
 
-import { HTTP_INTERCEPTORS, HttpErrorResponse, HttpEvent } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpErrorResponse, HttpEvent, HttpHeaderResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import * as alertifyjs from 'alertifyjs'
@@ -14,21 +14,35 @@ const TOKEN_HEADER_KEY = 'Authorization';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private token: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
-
+  langSession : any;
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+     
     let authReq = req;
     const token = this.token.getToken();
+  this.langSession = sessionStorage.getItem("lang")
+
     if (token != null) {
-      authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) }); 
-    } 
+      authReq = req.clone({ headers: req.headers.set("Authorization", 'Bearer ' + token) }); 
+      authReq = req.clone({ headers: req.headers.set("Accept-Language",this.langSession) }); 
+    }  
+    
     return next.handle(authReq) 
       .pipe(catchError(err => {
-        if ([403].includes(err.status)) {
-          this.LogOut();
-        } else if ([401].includes(err.status)) {
-          alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${err.error?.description}`);
-        } 
+
+        
+          if ([403].includes(err.status)) {
+            this.LogOut();
+          } else if ([401].includes(err.status)) {
+            alertifyjs.set('notifier', 'position', 'top-left');
+            alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${err.error?.error}`);
+            // this.LogOut();
+          }  else if (err.size ==0){
+            console.log("Web Interrompue")
+
+          }
+        
+        
+          
         return throwError(() => err); 
       })
       );

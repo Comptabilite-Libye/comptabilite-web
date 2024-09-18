@@ -18,7 +18,8 @@
                 <span class="tooltip">الإستقبال</span>
             </li>
             <li routerLinkActive="active" (click)="onClick(2)" [ngClass]="{'active': tab2==='tab2'}" class="has-subnav">
-                <a [routerLink]="['/menu_parametrage']">
+                <a  routerLink='/menu_parametrage'   >
+                    <!-- <a [routerLink]="['/menu_parametrage']" routerLink="/menu_parametrage"> -->
                     <i class='bx bx-cog'></i>
                     <span class="links_name">الإعدادات العامة</span>
                 </a>
@@ -54,7 +55,7 @@
                 <span class="tooltip">الترحيل</span>
             </li>
             <li routerLinkActive="active" (click)="onClick(7)" [ngClass]="{'active': tab7==='tab7'}">
-                <a href="#">
+                <a [routerLink]="['/menu_access']">
                     <i class="fa-solid fa-users"></i>
                     <span class="links_name">المستخدمين</span>
                 </a>

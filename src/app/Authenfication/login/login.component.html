@@ -1,25 +1,51 @@
 <app-alert></app-alert>
-<div class="col-md-12"  >
+<div class="col-md-12">
   <div class="card card-container">
     <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" />
     <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
       <div class="form-group">
-        <label for="username">USerName</label>
-        <input type="text" class="form-control" name="username" [(ngModel)]="form.userName" required #userName="ngModel" />
+        <div class="Langage">
+          <p-dropdown [options]="countries" class="dropdown" appendTo="body" [style]="{'width':'30%'}"
+            [(ngModel)]="selectedCountry" optionLabel="name"  >
+            <ng-template pTemplate="selectedItem">
+              <div class="flex align-items-center gap-2" *ngIf="selectedCountry">
+                <img src="../../../assets/files/images/flag_placeholder.png"
+                  [class]="'flag flag-' + selectedCountry.code.toLowerCase()" style="width: 18px" />
+                <div>{{ selectedCountry.name }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-country pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <img src="../../../assets/files/images/flag_placeholder.png"
+                  [class]="'flag flag-' + country.code.toLowerCase()" style="width: 18px" />
+                <div>{{ country.name }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+
+
+
+      </div>
+
+      <div class="form-group">
+        <label for="username" style="float: inline-start; font-size: 13px; font-family: auto;">إسم المستخدم</label>
+        <input type="text" class="form-control" name="username" [(ngModel)]="form.userName" required
+          #userName="ngModel" />
         <div class="alert alert-danger" role="alert" *ngIf="userName.errors && f.submitted">
           Username is required!
         </div>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password" style="float: inline-start; font-size: 13px; font-family: auto; ">كلمة السر</label>
         <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
           #password="ngModel" />
 
 
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-block">
-          Login
+        <button class="btn btn-primary btn-block" style=" font-size: 13px; font-family: auto; ">
+          تسجيل الدخول
         </button>
       </div>
       <!-- <div class="form-group">
@@ -28,8 +54,6 @@
         </div>
       </div> -->
     </form>
- 
+
   </div>
 </div>
-
-

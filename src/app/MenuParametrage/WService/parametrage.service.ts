@@ -23,6 +23,14 @@ export class ParametrageService {
     return this.http.get(`${environment.API_Parametrage}mode_reglement/exp`, { responseType: "blob" });
   }
 
+
+
+  getParams(code:string) {
+    return this.http.get(`${environment.API_Parametrage}param/codeParam?codeParam=`+code);
+  }
+
+
+ 
   
 //caisse
 
@@ -31,6 +39,16 @@ export class ParametrageService {
     return this.http.get(`${environment.API_Parametrage}caisse/all`, {
       headers: this.getAuthorizationHeaders()
     });
+  }
+
+
+  GetCaisseByCode(code : number) {
+
+    return this.http.get(`${environment.API_Parametrage}caisse/`+code)
+  }
+  GetCaisseNotIn(code:number): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}caisse/not_in/`+code)
   }
   PostCaisse(body: any) : Observable<any> {
 
@@ -58,7 +76,7 @@ export class ParametrageService {
       headers: this.getAuthorizationHeaders()
     });
   }
-  GetDeviseByHasTaux(): Observable<any> {
+  GetDeviseByHasNotTaux(): Observable<any> {
     return this.http.get(`${environment.API_Parametrage}devise/hasTaux`)
   }
 
@@ -168,9 +186,13 @@ export class ParametrageService {
   
    GetTypeRecette(): Observable<any> {
 
-    return this.http.get(`${environment.API_Parametrage}type_recette/all`, {
-      headers: this.getAuthorizationHeaders()
-    });
+    return this.http.get(`${environment.API_Parametrage}type_recette/all`);
+  }
+
+
+  GetTypeRecetteByCode(code:number): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}type_recette/`+code);
   }
 
   PostTypeRecette(body: any) {
@@ -251,9 +273,12 @@ export class ParametrageService {
 
   GetTauxDeChange(): Observable<any> {
 
-    return this.http.get(`${environment.API_Parametrage}taux_change/all`, {
-      headers: this.getAuthorizationHeaders()
-    });
+    return this.http.get(`${environment.API_Parametrage}taux_change/all`)
+  }
+
+  GetTauxDeChangeByCodeDevise(codeDevise: number): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}taux_change/code_devise/`+codeDevise)
   }
   PostTauxDeChange(body: any) : Observable<any> {
 
@@ -266,6 +291,34 @@ export class ParametrageService {
   }
 
  
+
+  
+   /// TypeCaisse 
+
+  
+   GetTypeCaisse(): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}type_caisse/all`, {
+      headers: this.getAuthorizationHeaders()
+    });
+  }
+
+  PostTypeCaisse(body: any) {
+
+    return this.http.post(`${environment.API_Parametrage}type_caisse`, body, {
+      headers: this.getAuthorizationHeaders()
+    });
+  } 
+  UpdateTypeCaisse(body: any) {
+
+    return this.http.put(`${environment.API_Parametrage}type_caisse/update`, body);
+  }
+
+  DeleteTypeCaisse(code: any) {
+
+    return this.http.delete(`${environment.API_Parametrage}type_caisse/delete/`+code);
+  }
+
 
 
 

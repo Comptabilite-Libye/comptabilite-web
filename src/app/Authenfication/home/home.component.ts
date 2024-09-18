@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
+import { AuthService } from '../_services/auth.service';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -9,17 +11,13 @@ import { UserService } from '../_services/user.service';
 export class HomeComponent implements OnInit {
   content?: string;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,private authService: AuthService, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
-    // this.userService.getPublicContent().subscribe(
-    //   data => {
-    //     this.content = data;
-    //   },
-    //   err => {
-    //     this.content = JSON.parse(err.error).message;
-    //   }
-    // );
+    if(sessionStorage.length==0){
+      this.logout();
+    }else{ 
+    }
   }
   isHovered11 = false;
   onHover11() {
@@ -59,4 +57,20 @@ export class HomeComponent implements OnInit {
   onLeave15() {
     this.isHovered15 = false;
   }
+
+  
+  logout(): void {
+    this.authService.logout().subscribe({
+      next: res => {
+        console.log(res);
+        this.tokenStorageService.signOut();
+
+        window.location.reload();
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
+
 }

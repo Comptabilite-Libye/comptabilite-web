@@ -3,6 +3,8 @@ import { TokenStorageService } from './Authenfication/_services/token-storage.se
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs'; 
 import { AuthService } from './Authenfication/_services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+// import { BreadcrumbService } from './Authenfication/service/breadcrumb.service';
 
 
 @Component({
@@ -19,16 +21,26 @@ export class AppComponent implements OnInit {
   showModeratorBoard = false;
   username?: string;
 
-  constructor(private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
+  constructor( 
+    // public breadcrumbService: BreadcrumbService,
+     private readonly translate: TranslateService ,private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute)
+   { 
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+   }
 
   ngOnInit(): void {
 
+let x = sessionStorage.getItem("userName");
+ 
+    if(sessionStorage.length == 0 || sessionStorage.getItem("auth-token") == ""){
+      this.tokenStorageService.signOut();
+      // window.location.reload();
+      sessionStorage.clear(); 
+      this.router.navigate(['/login'], { relativeTo: this.route }); 
+    }else{ 
+    }
 
-
-
-    
-    // this.liveClock();
-    // this.MethodeVisbileNavBars();
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
@@ -38,21 +50,8 @@ export class AppComponent implements OnInit {
     } 
   }
 
-
-  logout(): void {
-    this.authService.logout().subscribe({
-      next: res => {
-        console.log(res);
-        this.tokenStorageService.signOut();
-
-        window.location.reload();
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
-  }
-
+  // breadcrumbs$ = this.breadcrumbService.breadcrumbs$;
+  
   disabled: boolean = false;
 
   getvaluesFromLocalStorage() {
@@ -106,8 +105,7 @@ export class AppComponent implements OnInit {
     window.location.reload();
     sessionStorage.clear();
     this.reloadPage();
-    this.router.navigate(['/login'], { relativeTo: this.route });
-
+    this.router.navigate(['/login'], { relativeTo: this.route }); 
 
   }
   VisibleBarTime: boolean = false;

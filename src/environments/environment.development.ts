@@ -4,5 +4,5 @@ export const environment = {
     API_ACCESS: "/auth/",
     API_Parametrage: "/parametrage/",
     API_Recette: "/recette/",
-    // idleTimeInMinutes: 20
+    idleTimeInMinutes: 4
 };

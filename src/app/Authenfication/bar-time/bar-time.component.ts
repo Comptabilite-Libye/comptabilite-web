@@ -18,7 +18,7 @@ export class BarTimeComponent implements OnInit {
   liveClock() {
     setInterval(() => {
       this.liveDateTime = new Date();
-    }, 100);
+    }, 30000);
   }
 
   visibleModalLogOut: boolean = false;

@@ -1,0 +1,212 @@
+<body translate="no" class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
+    <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
+    <app-loading [IsLoading]="IsLoading">
+  </app-loading>
+    <header>
+
+        <label class="header_name">أنواع الخزائن</label>
+
+
+    </header>
+    <aside>
+        <div class="Groupe-Bouton">
+
+        </div>
+    </aside>
+    <section id="main-container">
+
+        <div class="material-table">
+            <div class="card">
+                <p-toast></p-toast>
+                <p-table #dt1 [value]="dataTypeCaisse" [globalFilterFields]="['designationAr', 'designationLt']"
+                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedTypeCaisse"
+                    (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" dataKey="code"
+                    [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
+
+                    <ng-template pTemplate="caption" class="col-md-12">
+
+                        <div class="flex-row-start flex-12">
+                            <fieldset style="padding: 5px;">
+                                <section class="flex-row-start">
+
+                                    <label class="control-label-titer flex-6">البيان :</label>
+                                    <span class="p-input-icon-left ml-auto flex-6">
+                                        <input pInputText class="recherche-value" [(ngModel)]="searchTerm"
+                                            name="zone-recherche" type="text"
+                                            (keyup.enter)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                                            placeholder="البيان ..." />
+                                    </span>
+                                    <button type="button" class="Bouton-rechercher btn  btn-default "
+                                        data-original-title="Add"
+                                        (click)="dt1.filterGlobal($any($event.target).value, 'contains')">
+                                        <div class="bouton_style-2" style="margin: 0px 15px 0px 0px;">بحث</div>
+                                        <mat-icon style="margin: 0px 15px 0px 0px;"
+                                            class="search-icon">search</mat-icon>
+                                    </button>
+                                    <button type="button" class="Bouton-rechercher btn  btn-default "
+                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllTypeCaisse()">
+                                        <div class="bouton_style-2">إعادة تعيين</div>
+                                        <mat-icon class="search-icon">refresh</mat-icon>
+                                    </button>
+                                </section>
+                            </fieldset>
+
+
+                            <section class="flex-row-start flex-5">
+                            </section>
+
+                            <fieldset style="padding: 5px;">
+                                <section class="flex-row-start flex-6">
+                                    <button data-backdrop="false" type="button"
+                                        class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
+                                        data-toggle="modal" data-target="#Modal" (click)="onOpenModal('add')">
+                                        <div class="bouton_style-2">إضافة</div>
+                                        <mat-icon class="add-icon" style="margin: 0px 10px 0px 0px;">add</mat-icon>
+                                    </button>
+                                    <button data-backdrop="false" type="button"
+                                        class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
+                                        data-toggle="modal" data-target="#Modal" (click)="onOpenModal('edit')">
+                                        <div class="bouton_style-2">تعديل</div>
+                                        <mat-icon class="modif-icon" style="margin: 0px 10px 0px 0px;">create</mat-icon>
+                                    </button>
+                                    <button type="button" class="Bouton-add-new2 btn  btn-default "
+                                        data-original-title="Delete" data-toggle="modal" data-target="#ModalDelete"
+                                        (click)="onOpenModal('Delete')">
+                                        <div class="bouton_style-2">حذف</div>
+                                        <mat-icon class="delete-icon"
+                                            style="margin: 0px 10px 0px 0px;">delete</mat-icon>
+                                    </button>
+                                     
+
+                                </section>
+                            </fieldset>
+
+
+                        </div>
+
+
+
+
+                    </ng-template>
+
+                    <ng-template pTemplate="header">
+                        <tr style="font-size: 15px !important;"> 
+                            <th>البيان بالعربي</th>
+                            <th> البيان باللاتيني</th> 
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-fl>
+                        <tr [pSelectableRow]="fl"> 
+                            <td style="font-size: 15px !important;">{{fl.designationAr}}</td>
+                            <td style="font-size: 15px !important;">{{fl.designationLt}}</td>
+
+                             
+
+
+
+
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+
+
+            </div>
+        </div>
+    </section>
+    <!-- <aside>aside</aside> -->
+    <footer>footer
+
+        <!-- <div id="pdfContainer"></div>  -->
+    </footer>
+</body>
+
+
+
+
+
+
+<!-- modal primeNG ADD -->
+<p-dialog id="Modal" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModal"
+    data-backdrop="false" [modal]="true" styleClass="ModalAdd" [draggable]="false">
+
+
+    <ng-template pTemplate="header">
+        <h2 class="text-default headerForm"> {{formHeader}}</h2>
+        <button class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
+            (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+        </button>
+        <button class="btn btn-default save-add-ModalSmall" (click)="PostTypeCaisse()"> <i
+                class="fa-lg fa-fw fa fa-check icon-save"></i>
+            حفظ
+        </button>
+        <p-toast key="toast1"></p-toast>
+    </ng-template>
+
+    <div class="modal-body">
+        <!-- <form> -->
+        <div class="flex-row-start flex-12">
+            <fieldset class="flex-12">
+                
+                <div class="flex-row-start flex-12">
+                    <section class="flex-row-start flex-6">
+                        <label class="control-label ">البيان بالعربي : <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input">
+                            <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
+                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationAr"
+                                [required]="true">
+                            
+                        </div>
+                    </section>
+                    <section class="flex-row-start flex-6">
+                        <label class="control-label  "> البيان باللاتيني :   <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input  ">
+                            <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
+                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationLt"
+                                [required]="true">
+                          
+                        </div>
+                    </section>
+
+                </div>
+
+
+            </fieldset> 
+        </div> 
+    </div>
+
+</p-dialog>
+
+<!-- modal primeNG  Delete-->
+<p-dialog class="modal-delete" id="ModalDelete" data-backdrop="false" header="Header" [(visible)]="visDelete"
+    styleClass="ModalDelete" [modal]="true" [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="header">
+        <h2 class="text-default headerForm"> {{formHeader}}</h2> 
+    </ng-template>
+    <div class="modal-body">
+        <form action="" #addForms="ngForm">
+            <fieldset class="deleteForms">
+                <h4 class="text-delete ">هل أنت متأكد من الحذف ?
+                  
+                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteTypeCaisse(code)"> <i
+                            class="fa-lg fa-fw fa fa-check icon-save"></i>
+                        حذف
+                    </button>
+                    <button class="btn btn-default cancel-add-ModalSmall" style="right: 520px;" :closable="true" data-dismiss="modal"
+                     > <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+                </button>
+                    
+
+
+                </h4>
+            </fieldset>
+            <br>
+        </form>
+    </div>
+</p-dialog>
+<!-- fin modal primeng  -->
+
+
+
+
+ 

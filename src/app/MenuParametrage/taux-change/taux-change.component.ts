@@ -9,6 +9,7 @@ import * as alertifyjs from 'alertifyjs'
 import { Devise, TauxDeChange } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
+import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
 
 
 declare const PDFObject: any;
@@ -23,12 +24,11 @@ export class TauxChangeComponent {
   openModal!: boolean;
 
 
-  constructor(private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private errorHandler: ErrorHandlerService,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }
-  pdfData!: Blob;
-  isLoading = false;
+  pdfData!: Blob; 
   ngOnInit(): void {
 
     this.GelTauxDeChange();
@@ -45,8 +45,7 @@ export class TauxChangeComponent {
       reader.onload = (event: any) => {
         //Here you can do whatever you want with the base64 String
         // console.log("File in Base64: ", event.target.result);
-        this.pdfData = event.target.result;
-        this.isLoading = false;
+        this.pdfData = event.target.result; 
         if (this.pdfData) {
           this.handleRenderPdf(this.pdfData);
         }
@@ -128,7 +127,7 @@ export class TauxChangeComponent {
       this.visibleModal = true;
       this.code == undefined;
 
-      this.GetDeviseByHasTaux();
+      this.GetDeviseByHasNotTaux();
 
     }
     if (mode === 'edit') {
@@ -218,9 +217,7 @@ export class TauxChangeComponent {
         this.param_service.UpdateTauxDeChange(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+            this.errorHandler.handleError(error); 
             return throwError(errorMessage);
           })
 
@@ -246,9 +243,7 @@ export class TauxChangeComponent {
         this.param_service.PostTauxDeChange(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+            this.errorHandler.handleError(error); 
             return throwError(errorMessage);
           })
         ).subscribe(
@@ -297,9 +292,7 @@ export class TauxChangeComponent {
     this.param_service.GetTauxDeChange().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        alertifyjs.set('notifier', 'position', 'top-left');
-        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
 
@@ -320,13 +313,11 @@ export class TauxChangeComponent {
   dataDevise = new Array<Devise>();
   listDevisePushed = new Array<any>();
   listDeviseRslt = new Array<any>();
-  GetDeviseByHasTaux() {
-    this.param_service.GetDeviseByHasTaux().pipe(
+  GetDeviseByHasNotTaux() {
+    this.param_service.GetDeviseByHasNotTaux().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        alertifyjs.set('notifier', 'position', 'top-left');
-        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
     ).subscribe((data: any) => {
@@ -346,9 +337,7 @@ export class TauxChangeComponent {
     this.param_service.GetDeviseByCode(code).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        alertifyjs.set('notifier', 'position', 'top-left');
-        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
     ).subscribe((data: any) => {

@@ -9,6 +9,7 @@ import * as alertifyjs from 'alertifyjs'
 import { Fournisseur } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
+import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
  
 declare const PDFObject: any;
 @Component({
@@ -23,7 +24,7 @@ export class FournisseurComponent {
   openModal!: boolean;
 
 
-  constructor(private loadingComponent : LoadingComponent,private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private errorHandler: ErrorHandlerService,private loadingComponent : LoadingComponent,private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }  
@@ -121,9 +122,7 @@ export class FournisseurComponent {
     this.param_service.DeleteFournisseur(code).pipe(
        catchError((error: HttpErrorResponse) => {
     let errorMessage = '';
-      alertifyjs.set('notifier', 'position', 'top-left');
-      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+    this.errorHandler.handleError(error); 
     return throwError(errorMessage);
   })
 
@@ -233,24 +232,7 @@ export class FournisseurComponent {
   userCreate = "soufien";
   // datecreate !: Date;
   currentDate = new Date(); 
-
-  ajusterHourAndMinutes() {
-    let hour = new Date().getHours();
-    let hours;
-    if (hour < 10) {
-      hours = '0' + hour;
-    } else {
-      hours = hour;
-    }
-    let min = new Date().getMinutes();
-    let mins;
-    if (min < 10) {
-      mins = '0' + min;
-    } else {
-      mins = min;
-    }
-    return hours + ':' + mins
-  }
+ 
   datform = new Date();
   PostFournisseur() {
     
@@ -280,12 +262,7 @@ export class FournisseurComponent {
         this.param_service.UpdateFournisseur(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            if (error.error instanceof ErrorEvent) {
-            } else {
-              alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-
-            }
+            this.errorHandler.handleError(error); 
             return throwError(errorMessage);
           })
 
@@ -311,11 +288,7 @@ export class FournisseurComponent {
         this.param_service.PostFournisseur(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            if (error.error instanceof ErrorEvent) { } else {
-              alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error.description}` );
-
-            }
+            this.errorHandler.handleError(error); 
             return throwError(errorMessage);
           })
         ).subscribe(
@@ -372,11 +345,7 @@ export class FournisseurComponent {
     this.param_service.GetFournisseur().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        if (error.error instanceof ErrorEvent) { } else {
-          alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;"></i>' + ` ${error.error.description}` );
-
-        }
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
 

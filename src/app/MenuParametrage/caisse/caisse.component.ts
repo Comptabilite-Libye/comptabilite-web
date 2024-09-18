@@ -6,9 +6,11 @@ import { catchError, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'
-import { Caisse } from '../domaine/domaine';
+import { Caisse, Devise, TypeCaisse } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
+import { TranslateService } from '@ngx-translate/core';
+import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
 
 
 declare const PDFObject: any;
@@ -21,13 +23,16 @@ declare const PDFObject: any;
 export class CaisseComponent {
   IsLoading = true;
   openModal!: boolean;
-  constructor(private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor( private errorHandler: ErrorHandlerService,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  
   }
   pdfData!: Blob;
-  ngOnInit(): void { 
-    this.GelAllCaisse();   
+  ngOnInit(): void {
+    this.GelAllCaisse();
   }
 
+
+  
   RemplirePrint(): void {
 
     this.param_service.getPDFf().subscribe((blob: Blob) => {
@@ -67,9 +72,39 @@ export class CaisseComponent {
     this.actif = false;
     this.visible = false;
     this.codeSaisie = '';
-    this.onRowUnselect(event);
-
+    this.selectedDevise = '';
+    this.selectedTypeCaisse='';
+    this.onRowUnselect(event); 
   }
+
+  clearSelected(): void {
+    this.code == undefined;
+    this.codeSaisie = '';
+    this.designationAr = '';
+    this.designationLt = '';
+    this.actif = false;
+    this.visible = false;
+    this.selectedDevise = '';
+    this.selectedTypeCaisse='';
+  }
+
+  onRowSelect(event: any) {
+    this.code = event.data.code;
+    this.actif = event.data.actif;
+    this.visible = event.data.visible;
+    this.codeSaisie = event.data.codeSaisie;
+    this.designationAr = event.data.designationAr;
+    this.designationLt = event.data.designationLt;
+    this.selectedDevise = event.data.codeDevise;
+    this.selectedTypeCaisse = event.data.codeTypeCaisse;
+
+    console.log('vtData : ', event);
+  }
+  onRowUnselect(event: any) {
+    console.log('row unselect : ', event);
+    this.code = event.data = null;
+  }
+
   check_actif = false;
   check_inactif = false;
 
@@ -88,37 +123,20 @@ export class CaisseComponent {
   selectedCaisse!: Caisse;
 
 
-  onRowSelect(event: any) {
-    this.code = event.data.code;
-    this.actif = event.data.actif;
-    this.visible = event.data.visible;
-    this.codeSaisie = event.data.codeSaisie;
-    this.designationAr = event.data.designationAr;
-    this.designationLt = event.data.designationLt;
-
-    console.log('vtData : ', event);
-  }
-  onRowUnselect(event: any) {
-    console.log('row unselect : ', event);
-    this.code = event.data = null;
-  }
-
 
 
   DeleteCaisse(code: any) {
     this.param_service.DeleteCaisse(code).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-          alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+        let errorMessage = ''; 
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
 
     ).subscribe(
       (res: any) => {
         alertifyjs.set('notifier', 'position', 'top-left');
-        alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
+        alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "تم الحذف");
 
         this.ngOnInit();
         this.check_actif = true;
@@ -127,15 +145,7 @@ export class CaisseComponent {
       }
     )
   }
-  clearSelected(): void {
-    this.code == undefined;
-    this.codeSaisie = '';
-    this.designationAr = '';
-    this.designationLt = '';
-    this.actif = false;
-    this.visible = false;
-  }
-
+ 
   public onOpenModal(mode: string) {
 
     this.visibleModal = false;
@@ -150,10 +160,12 @@ export class CaisseComponent {
       this.formHeader = "إضافة"
       this.onRowUnselect(event);
       this.clearSelected();
+      this.GetDevise();
+      this.GetlTypeCaisse();
       this.actif = false;
       this.visible = false;
       this.visibleModal = true;
-      this.code == undefined; 
+      this.code == undefined;
 
     }
     if (mode === 'edit') {
@@ -173,8 +185,11 @@ export class CaisseComponent {
         button.setAttribute('data-target', '#Modal');
         this.formHeader = "تعديل"
 
+        this.GetDevise();
         this.visibleModal = true;
         this.onRowSelect;
+        
+      this.GetlTypeCaisse();
 
       }
 
@@ -214,47 +229,25 @@ export class CaisseComponent {
   }
 
 
-  userCreate = "soufien";
-  // datecreate !: Date;
   currentDate = new Date();
 
-  ajusterHourAndMinutes() {
-    let hour = new Date().getHours();
-    let hours;
-    if (hour < 10) {
-      hours = '0' + hour;
-    } else {
-      hours = hour;
-    }
-    let min = new Date().getMinutes();
-    let mins;
-    if (min < 10) {
-      mins = '0' + min;
-    } else {
-      mins = min;
-    }
-    return hours + ':' + mins
-  }
   datform = new Date();
   PostCaisse() {
-
-
-    if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
+    let userSession = sessionStorage.getItem("userName");
+    if (!this.designationAr || !this.designationLt || !this.codeSaisie || !this.selectedTypeCaisse) {
       alertifyjs.set('notifier', 'position', 'top-left');
       alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
-
     } else {
-
-
       let body = {
         codeSaisie: this.codeSaisie,
         designationAr: this.designationAr,
         designationLt: this.designationLt,
-        userCreate: this.userCreate,
-
+        userCreate: userSession,
+        codeDevise: this.selectedDevise,
         dateCreate: new Date().toISOString(), //
         code: this.code,
         actif: this.actif,
+        codeTypeCaisse: this.selectedTypeCaisse
 
       }
       if (this.code != null) {
@@ -263,9 +256,7 @@ export class CaisseComponent {
         this.param_service.UpdateCaisse(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-              alertifyjs.set('notifier', 'position', 'top-left');
-              alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+            this.errorHandler.handleError(error); 
             return throwError(errorMessage);
           })
 
@@ -288,40 +279,38 @@ export class CaisseComponent {
 
       }
       else {
-          this.param_service.PostCaisse(body).pipe(
-            catchError((error: HttpErrorResponse) => {
-              let errorMessage = '';
-                alertifyjs.set('notifier', 'position', 'top-left');
-                alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-  
-              return throwError(errorMessage);
-            })
-          ).subscribe(
-            (res:any) => {
-              alertifyjs.set('notifier', 'position', 'top-left'); 
-              alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
-              this.visibleModal = false;
-              this.clearForm();
-              this.ngOnInit();
-              this.code;
-              this.check_actif = true;
-              this.check_inactif = false;
-              this.onRowUnselect(event);
-              this.clearSelected();
+        this.param_service.PostCaisse(body).pipe(
+          catchError((error: HttpErrorResponse) => {
+            let errorMessage = '';
+            this.errorHandler.handleError(error); 
+            return throwError(errorMessage);
+          })
+        ).subscribe(
+          (res: any) => {
+            alertifyjs.set('notifier', 'position', 'top-left');
+            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+            this.visibleModal = false;
+            this.clearForm();
+            this.ngOnInit();
+            this.code;
+            this.check_actif = true;
+            this.check_inactif = false;
+            this.onRowUnselect(event);
+            this.clearSelected();
 
-            }
-          )
-        }
-
+          }
+        )
       }
-         
-
 
     }
 
 
-    
- 
+
+  }
+
+
+
+
 
 
   public remove(index: number): void {
@@ -347,9 +336,7 @@ export class CaisseComponent {
 
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-          alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${error.error?.detail}`);
-
+        this.errorHandler.handleError(error); 
         return throwError(errorMessage);
       })
 
@@ -362,8 +349,50 @@ export class CaisseComponent {
     })
   }
 
- 
 
+
+  selectedDevise: any;
+  dataDevise = new Array<Devise>();
+  listDevisePushed = new Array<any>();
+  listDeviseRslt = new Array<any>();
+  GetDevise() {
+    this.param_service.GetDevise().pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        this.errorHandler.handleError(error); 
+        return throwError(errorMessage);
+      })
+    ).subscribe((data: any) => {
+      this.dataDevise = data;
+      this.listDevisePushed = [];
+      for (let i = 0; i < this.dataDevise.length; i++) {
+        this.listDevisePushed.push({ label: this.dataDevise[i].designationAr, value: this.dataDevise[i].code })
+      }
+      this.listDeviseRslt = this.listDevisePushed;
+    })
+  }
+
+
+  selectedTypeCaisse: any;
+  dataTypeCaisse = new Array<TypeCaisse>();
+  listTypeCaissePushed = new Array<any>();
+  listTypeCaisseRslt = new Array<any>();
+  GetlTypeCaisse() {
+    this.param_service.GetTypeCaisse().pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        this.errorHandler.handleError(error); 
+        return throwError(errorMessage);
+      })
+    ).subscribe((data: any) => {
+      this.dataTypeCaisse = data;
+      this.listTypeCaissePushed = [];
+      for (let i = 0; i < this.dataTypeCaisse.length; i++) {
+        this.listTypeCaissePushed.push({ label: this.dataTypeCaisse[i].designationAr, value: this.dataTypeCaisse[i].code })
+      }
+      this.listTypeCaisseRslt = this.listTypeCaissePushed;
+    })
+  }
 
 
 
