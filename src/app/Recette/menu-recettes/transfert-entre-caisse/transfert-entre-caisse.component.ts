@@ -5,15 +5,15 @@ import { catchError, take, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'
-import { TransfertCaisse } from '../domaine/domaine';
-import { RecetteServiceService } from '../../WsRecette/recette-service.service';
-import { ParametrageService } from '../../../MenuParametrage/WService/parametrage.service'
-import { Caisse, Devise } from '../../../MenuParametrage/domaine/domaine';
+import { TransfertCaisse } from '../domaine/domaine'; 
+import { ParametrageService } from '../../../MenuParametrage/menu-parametrages/WService/parametrage.service'
+import { Caisse, Devise } from '../../../MenuParametrage/menu-parametrages/domaine/domaine';
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
 import { CompteurService } from 'src/app/Shared/Compteur/CompteurService';
 import { Compteur } from 'src/app/Shared/Compteur/domaine';
 import { EncryptionService } from 'src/app/Shared/EcrypteService/EncryptionService';
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { RecetteServiceService } from '../WsRecette/recette-service.service';
 declare const PDFObject: any;
 @Component({
   selector: 'app-transfert-entre-caisse',

@@ -3,7 +3,7 @@ body {
 }
 
 :host ::ng-deep header {
-  padding: 10px 20px 10px 17px;
+  padding: 5px 20px 0px 0px;
   border: 1px solid #bfbfbf;
   border-radius: 5px;
   display: flex;

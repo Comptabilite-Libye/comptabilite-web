@@ -12,27 +12,27 @@ const routes: Routes = [{ path: '', component: MenuRecettesComponent },
   {
     path: 'mouvemenet_caisse',
     component: MouvementCaisseComponent ,
-    data:{title:'حركة الخزينة'}
+    data:{title:'حركة الخزينة' , icon :'fas fa-right-left'}
   },
   {
     path: 'entree_caisse',
     component: EntreeCaisseComponent ,
-    data:{title:'دخول أموال'}
+    data:{title:'دخول أموال',icon:'fas fa-download'}
   }, {
     path: 'edition',
     component: EditionRecetteComponent ,
-    data:{title:'يبانات',icon:'pi pi-home'},
+    data:{title:'يبانات' ,icon:'fas fa-tablet'},
      
   }
   , {
     path: 'transfert_caisse',
     component: TransfertEntreCaisseComponent ,
-    data:{title:' تحويل بين الخزائن '}
+    data:{title:' تحويل بين الخزائن ' , icon:'fas fa-money-bill-transfer'}
   }
   , {
     path: 'solde_caisse',
     component: SoldeCaisseComponent ,
-    data:{title:'أرصدة الخزائن'}
+    data:{title:'أرصدة الخزائن',icon:'fas fa-bars'}
   }
 
 ];

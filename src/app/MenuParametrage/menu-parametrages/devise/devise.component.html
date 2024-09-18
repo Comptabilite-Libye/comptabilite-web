@@ -1,10 +1,10 @@
-<body translate="no" class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
+<body  class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
     <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
     <app-loading [IsLoading]="IsLoading">
   </app-loading>
     <header>
 
-        <label class="header_name">أنواع الخزائن</label>
+        <label class="header_name">العملة</label>
 
 
     </header>
@@ -18,8 +18,8 @@
         <div class="material-table">
             <div class="card">
                 <p-toast></p-toast>
-                <p-table #dt1 [value]="dataTypeCaisse" [globalFilterFields]="['designationAr', 'designationLt']"
-                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedTypeCaisse"
+                <p-table #dt1 [value]="dataDevise" [globalFilterFields]="['designationAr', 'designationLt']"
+                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedDevise"
                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" dataKey="code"
                     [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
 
@@ -44,7 +44,7 @@
                                             class="search-icon">search</mat-icon>
                                     </button>
                                     <button type="button" class="Bouton-rechercher btn  btn-default "
-                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllTypeCaisse()">
+                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllDevise()">
                                         <div class="bouton_style-2">إعادة تعيين</div>
                                         <mat-icon class="search-icon">refresh</mat-icon>
                                     </button>
@@ -76,7 +76,13 @@
                                         <mat-icon class="delete-icon"
                                             style="margin: 0px 10px 0px 0px;">delete</mat-icon>
                                     </button>
-                                     
+                                    <button data-backdrop="false" type="button" class="Bouton-add-new2 btn btn-default "
+                                        data-original-title="Print" data-toggle="modal" data-target="#ModalPrint"
+                                        (click)="onOpenModal('Print')">
+                                        <div class="bouton_style-2">طباعة</div>
+                                        <mat-icon class="print-icon" style="margin: 0px 10px 0px 0px;">
+                                            local_printshop</mat-icon>
+                                    </button>
 
                                 </section>
                             </fieldset>
@@ -90,17 +96,30 @@
                     </ng-template>
 
                     <ng-template pTemplate="header">
-                        <tr style="font-size: 15px !important;"> 
+                        <tr style="font-size: 15px !important;">
+                            <th>الرمز</th>
                             <th>البيان بالعربي</th>
-                            <th> البيان باللاتيني</th> 
+                            <th> البيان باللاتيني</th>
+                            <th class="act-col">متداول</th>
+                            <th class="act-col">مرئي</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-fl>
-                        <tr [pSelectableRow]="fl"> 
+                        <tr [pSelectableRow]="fl">
+                            <td style="font-size: 15px !important;">{{fl.codeSaisie}}</td>
                             <td style="font-size: 15px !important;">{{fl.designationAr}}</td>
                             <td style="font-size: 15px !important;">{{fl.designationLt}}</td>
 
-                             
+                            <td class="act-col">
+
+                                <p-checkbox [readonly]="true" [(ngModel)]="fl.actif" [binary]="true"
+                                    inputId="binary">{{fl.actif}}</p-checkbox>
+                            </td>
+                            <td class="act-col">
+
+                                <p-checkbox [readonly]="true" [(ngModel)]="fl.visible" [binary]="true"
+                                    inputId="binary">{{fl.visible}}</p-checkbox>
+                            </td>
 
 
 
@@ -136,7 +155,7 @@
         <button class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
             (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
         </button>
-        <button class="btn btn-default save-add-ModalSmall" (click)="PostTypeCaisse()"> <i
+        <button class="btn btn-default save-add-ModalSmall" (click)="PostDevise()"> <i
                 class="fa-lg fa-fw fa fa-check icon-save"></i>
             حفظ
         </button>
@@ -147,7 +166,20 @@
         <!-- <form> -->
         <div class="flex-row-start flex-12">
             <fieldset class="flex-12">
-                
+                <div class="flex-row-start flex-12">
+                    <section class="flex-row-start flex-6">
+                        <label class="control-label ">الرمز : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input  ">
+                            <input   id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
+                                class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="codeSaisie">
+                        </div>
+                    </section>
+                    <section class="flex-row-start flex-6 ">
+                        <p-checkbox [binary]="true" name="actif" value="val3" label="متداول"
+                            [(ngModel)]="actif"></p-checkbox>
+                    </section>
+                </div>
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
                         <label class="control-label ">البيان بالعربي : <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
@@ -171,8 +203,13 @@
                 </div>
 
 
-            </fieldset> 
-        </div> 
+            </fieldset>
+
+        </div>
+
+
+
+
     </div>
 
 </p-dialog>
@@ -188,7 +225,7 @@
             <fieldset class="deleteForms">
                 <h4 class="text-delete ">هل أنت متأكد من الحذف ?
                   
-                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteTypeCaisse(code)"> <i
+                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteDevise(code)"> <i
                             class="fa-lg fa-fw fa fa-check icon-save"></i>
                         حذف
                     </button>
@@ -209,4 +246,46 @@
 
 
 
- 
+
+<!-- modal primeNG Print -->
+<p-dialog id="ModalPrint" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModalPrint"
+    data-backdrop="false" [modal]="true" styleClass="ModalPrint" [draggable]="false" [resizable]="false">
+    <div>
+        <div class="modal-header">
+            <h3 class="footer-dev">
+                <div class="action">
+                    <h2 class="text-default headerForm"> {{formHeader}}</h2>
+
+                    <button class="btn btn-default cancel-add-ModalSmall" :closable="false" data-dismiss="modal"
+                        (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>Fermer
+                    </button>
+
+                    <p-toast key="toast1"></p-toast>
+
+                </div>
+            </h3>
+        </div>
+        <div class="modal-body">
+            <div id="pdfContainer"></div>
+
+
+            <!-- <div id="myContainer">
+                <div id="outerContainer">
+////sidebarContainer
+                    <div id="sidebarContainer"> </div>  
+
+
+                 /// /mainContainer 
+                    <div id="mainContainer"> </div> 
+
+
+                /// overlayContainer
+                    <div id="overlayContainer" class="hidden"> </div> 
+
+                </div>  
+            </div> -->
+
+        </div>
+
+    </div>
+</p-dialog>

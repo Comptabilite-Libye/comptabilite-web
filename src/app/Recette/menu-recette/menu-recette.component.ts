@@ -5,7 +5,7 @@ import { catchError, throwError } from 'rxjs';
 import { EncryptionService } from 'src/app/Shared/EcrypteService/EncryptionService';
 
 import * as alertifyjs from 'alertifyjs'
-import { ParametrageService } from 'src/app/MenuParametrage/WService/parametrage.service';
+import { ParametrageService } from 'src/app/MenuParametrage/menu-parametrages/WService/parametrage.service';
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
 @Component({
   selector: 'app-menu-recette',

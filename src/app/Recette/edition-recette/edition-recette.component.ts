@@ -3,8 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import * as alertifyjs from 'alertifyjs'
 
-import { ParametrageService } from 'src/app/MenuParametrage/WService/parametrage.service';
-import { TypeRecette } from 'src/app/MenuParametrage/domaine/domaine';
+import { ParametrageService } from 'src/app/MenuParametrage/menu-parametrages/WService/parametrage.service';
+import { TypeRecette } from 'src/app/MenuParametrage/menu-parametrages/domaine/domaine';
 import { MessageService, ConfirmationService, PrimeNGConfig, SelectItem } from 'primeng/api';
 import { DatePipe } from '@angular/common'; 
 import { Calendar } from 'primeng/calendar';

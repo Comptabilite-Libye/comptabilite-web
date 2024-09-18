@@ -5,11 +5,11 @@ import { catchError, take, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'
-import { SoldeCaisse } from '../domaine/domaine';
-import { RecetteServiceService } from '../../WsRecette/recette-service.service'; 
+import { SoldeCaisse } from '../domaine/domaine'; 
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { RecetteServiceService } from '../WsRecette/recette-service.service';
 
 declare const PDFObject: any;
 

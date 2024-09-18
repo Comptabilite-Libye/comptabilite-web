@@ -1,10 +1,11 @@
 <ul class="breadcrumb">
     <li *ngFor="let breadcrumb of breadcrumbs"
         class="breadcrumb-item">
-      <a routerLink="{{breadcrumb.url}}">
+        <i class="{{ breadcrumb.icon }}"></i>
+      <a routerLink="{{breadcrumb.url}}" class="nomBreadCrumb">
         {{ breadcrumb.label }}
       </a>
     </li>
   </ul>
 
-  <!-- <p-breadcrumb [home]="home" [model]="menuItems"></p-breadcrumb> -->
+ 

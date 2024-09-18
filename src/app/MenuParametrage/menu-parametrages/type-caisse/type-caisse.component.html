@@ -1,10 +1,10 @@
-<body translate="no" class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
+<body  class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
     <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
     <app-loading [IsLoading]="IsLoading">
   </app-loading>
-    <header> 
+    <header>
 
-        <label class="header_name">المصارف</label>
+        <label class="header_name">أنواع الخزائن</label>
 
 
     </header>
@@ -18,8 +18,8 @@
         <div class="material-table">
             <div class="card">
                 <p-toast></p-toast>
-                <p-table #dt1 [value]="dataBanque" [globalFilterFields]="['designationAr', 'designationLt']"
-                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedBanque"
+                <p-table #dt1 [value]="dataTypeCaisse" [globalFilterFields]="['designationAr', 'designationLt']"
+                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedTypeCaisse"
                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" dataKey="code"
                     [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
 
@@ -44,7 +44,7 @@
                                             class="search-icon">search</mat-icon>
                                     </button>
                                     <button type="button" class="Bouton-rechercher btn  btn-default "
-                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllBanque()">
+                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllTypeCaisse()">
                                         <div class="bouton_style-2">إعادة تعيين</div>
                                         <mat-icon class="search-icon">refresh</mat-icon>
                                     </button>
@@ -76,13 +76,7 @@
                                         <mat-icon class="delete-icon"
                                             style="margin: 0px 10px 0px 0px;">delete</mat-icon>
                                     </button>
-                                    <button data-backdrop="false" type="button" class="Bouton-add-new2 btn btn-default "
-                                        data-original-title="Print" data-toggle="modal" data-target="#ModalPrint"
-                                        (click)="onOpenModal('Print')">
-                                        <div class="bouton_style-2">طباعة</div>
-                                        <mat-icon class="print-icon" style="margin: 0px 10px 0px 0px;">
-                                            local_printshop</mat-icon>
-                                    </button>
+                                     
 
                                 </section>
                             </fieldset>
@@ -96,32 +90,17 @@
                     </ng-template>
 
                     <ng-template pTemplate="header">
-                        <tr style="font-size: 15px !important;">
-                            <th>الرمز</th>
+                        <tr style="font-size: 15px !important;"> 
                             <th>البيان بالعربي</th>
-                            <th> البيان باللاتيني</th>
-                            <th> رقم الحساب</th>
-                            <th class="act-col">متداول</th>
-                            <th class="act-col">مرئي</th>
+                            <th> البيان باللاتيني</th> 
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-fl>
-                        <tr [pSelectableRow]="fl">
-                            <td style="font-size: 15px !important;">{{fl.codeSaisie}}</td>
+                        <tr [pSelectableRow]="fl"> 
                             <td style="font-size: 15px !important;">{{fl.designationAr}}</td>
                             <td style="font-size: 15px !important;">{{fl.designationLt}}</td>
-                            <td style="font-size: 15px !important;">{{fl.rib}}</td>
 
-                            <td class="act-col">
-
-                                <p-checkbox [readonly]="true" [(ngModel)]="fl.actif" [binary]="true"
-                                    inputId="binary">{{fl.actif}}</p-checkbox>
-                            </td>
-                            <td class="act-col">
-
-                                <p-checkbox [readonly]="true" [(ngModel)]="fl.visible" [binary]="true"
-                                    inputId="binary">{{fl.visible}}</p-checkbox>
-                            </td>
+                             
 
 
 
@@ -157,7 +136,7 @@
         <button class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
             (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
         </button>
-        <button class="btn btn-default save-add-ModalSmall" (click)="PostBanque()"> <i
+        <button class="btn btn-default save-add-ModalSmall" (click)="PostTypeCaisse()"> <i
                 class="fa-lg fa-fw fa fa-check icon-save"></i>
             حفظ
         </button>
@@ -168,27 +147,15 @@
         <!-- <form> -->
         <div class="flex-row-start flex-12">
             <fieldset class="flex-12">
-                <div class="flex-row-start flex-12">
-                    <section class="flex-row-start flex-6">
-                        <label class="control-label " style="width: 25%; ">الرمز : <i
-                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input  ">
-                            <input  id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
-                                class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="codeSaisie">
-                        </div>
-                    </section>
-                    <section class="flex-row-start flex-6 ">
-                        <p-checkbox [binary]="true" name="actif" value="val3" label="متداول"
-                            [(ngModel)]="actif"></p-checkbox>
-                    </section>
-                </div>
+                
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
                         <label class="control-label ">البيان بالعربي : <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input">
                             <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationAr"
-                                [required]="true"> 
+                                [required]="true">
+                            
                         </div>
                     </section>
                     <section class="flex-row-start flex-6">
@@ -202,30 +169,10 @@
                     </section>
 
                 </div>
-                <div class="flex-row-start flex-12">
-                    <section class="flex-row-start flex-6">
-                        <label class="control-label "> رقم الحساب : <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input">
-                            <input type="text" id="rib" maxlength="200" name="rib"
-                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="rib"
-                                [required]="true"> 
-                        </div>
-                    </section>
-                    <section class="flex-row-start flex-6">
-                         
-                    </section>
-
-                </div>
 
 
-
-            </fieldset>
-
-        </div>
-
-
-
-
+            </fieldset> 
+        </div> 
     </div>
 
 </p-dialog>
@@ -241,7 +188,7 @@
             <fieldset class="deleteForms">
                 <h4 class="text-delete ">هل أنت متأكد من الحذف ?
                   
-                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteBanque(code)"> <i
+                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteTypeCaisse(code)"> <i
                             class="fa-lg fa-fw fa fa-check icon-save"></i>
                         حذف
                     </button>
@@ -262,23 +209,4 @@
 
 
 
-
-<!-- modal primeNG Print -->  
-<p-dialog id="ModalPrint" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModalPrint"
-    data-backdrop="false" [modal]="true" styleClass="ModalPrint" [draggable]="false">
-    <p-toast key="toast1"></p-toast>
-
-    <ng-template pTemplate="header">
-        <h2 class="text-default headerForm"> {{formHeader}}</h2>
-        <button  style="right: 995px;" class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
-            (click)="clearForm() ; CloseModalPrint()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
-        </button>
-       
-        <p-toast key="toast1"></p-toast>
-    </ng-template>
-    <div class="modal-body">
-        <div id="pdfContainer"></div>
-    </div>
- 
-</p-dialog>
  

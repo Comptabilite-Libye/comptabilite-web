@@ -34,32 +34,32 @@ import { BarTimeComponent } from './Authenfication/bar-time/bar-time.component';
 import { HomeComponent } from './Authenfication/home/home.component';
 import { NavbarComponent } from './Authenfication/navbar/navbar.component';
 import { SmallmodalLoginComponent } from './Authenfication/shared/smallmodal-login/smallmodal-login.component';
-import { BanqueComponent } from './MenuParametrage/banque/banque.component';
-import { BeneficiaireComponent } from './MenuParametrage/beneficiaire/beneficiaire.component';
-import { CaisseComponent } from './MenuParametrage/caisse/caisse.component';
-import { DeviseComponent } from './MenuParametrage/devise/devise.component';
-import { FournisseurComponent } from './MenuParametrage/fournisseur/fournisseur.component';
+import { BanqueComponent } from './MenuParametrage/menu-parametrages/banque/banque.component';
+import { BeneficiaireComponent } from './MenuParametrage/menu-parametrages/beneficiaire/beneficiaire.component';
+import { CaisseComponent } from './MenuParametrage/menu-parametrages/caisse/caisse.component';
+import { DeviseComponent } from './MenuParametrage/menu-parametrages/devise/devise.component';
+import { FournisseurComponent } from './MenuParametrage/menu-parametrages/fournisseur/fournisseur.component';
 import { MenuParametrageComponent } from './MenuParametrage/menu-parametrage/menu-parametrage.component';
-import { TypeDepenseComponent } from './MenuParametrage/type-depense/type-depense.component';
-import { TypeRecetteComponent } from './MenuParametrage/type-recette/type-recette.component';
-import { EntreeCaisseComponent } from './Recette/menu-recettes/entree-caisse/entree-caisse.component';
+import { TypeDepenseComponent } from './MenuParametrage/menu-parametrages/type-depense/type-depense.component';
+ import { EntreeCaisseComponent } from './Recette/menu-recettes/entree-caisse/entree-caisse.component';
 import { MenuRecetteComponent } from './Recette/menu-recette/menu-recette.component';
 import { LoadingComponent } from './Shared/loading/loading.component';
 import { EditionRecetteComponent } from './Recette/edition-recette/edition-recette.component';
 import { EditionListAlimentationCaisseComponent } from './Recette/edition-recette/edition-list-alimentation-caisse/edition-list-alimentation-caisse.component';
 import { DatePipe } from '@angular/common';
-import { ModeReglementComponent } from './MenuParametrage/mode-reglement/mode-reglement.component';
+import { ModeReglementComponent } from './MenuParametrage/menu-parametrages/mode-reglement/mode-reglement.component';
 import { AlertComponent } from './Authenfication/alert/alert.component'; 
-import { TauxChangeComponent } from './MenuParametrage/taux-change/taux-change.component';
+import { TauxChangeComponent } from './MenuParametrage/menu-parametrages/taux-change/taux-change.component';
 import { SignatureUserComponent } from './Authenfication/access/signature-user/signature-user.component';
 import { TransfertEntreCaisseComponent } from './Recette/menu-recettes/transfert-entre-caisse/transfert-entre-caisse.component';
 import { SoldeCaisseComponent } from './Recette/menu-recettes/solde-caisse/solde-caisse.component';
 // import { MouvementCaisseComponent } from './Recette/menu-recettes/mouvement-caisse/mouvement-caisse.component'; 
-import { TypeCaisseComponent } from './MenuParametrage/type-caisse/type-caisse.component';
+import { TypeCaisseComponent } from './MenuParametrage/menu-parametrages/type-caisse/type-caisse.component';
 import { ErrorHandlerService } from './Shared/TranslateError/error-handler-service.service';
   
 import { BreadcrumbComponent } from './Authenfication/breadcrumb/breadcrumb.component';
 import { MouvementCaisseComponent } from './Recette/menu-recettes/mouvement-caisse/mouvement-caisse.component';
+import { TypeRecetteComponent } from './MenuParametrage/menu-parametrages/type-recette/type-recette.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -105,8 +105,7 @@ export function createTranslateLoader(http: HttpClient) {
     CaisseComponent,
     TypeDepenseComponent,
     TypeRecetteComponent,
-    MenuRecetteComponent,
-    EntreeCaisseComponent,
+    MenuRecetteComponent, 
     DeviseComponent,
     BeneficiaireComponent,
     FournisseurComponent,
@@ -116,8 +115,8 @@ export function createTranslateLoader(http: HttpClient) {
     EditionRecetteComponent,
     EditionListAlimentationCaisseComponent,
     ModeReglementComponent,
-    AlertComponent,
-    TauxChangeComponent,SignatureUserComponent, TransfertEntreCaisseComponent, SoldeCaisseComponent, TypeCaisseComponent, BreadcrumbComponent
+    AlertComponent,SoldeCaisseComponent,EntreeCaisseComponent,MouvementCaisseComponent,
+    TauxChangeComponent,SignatureUserComponent, TransfertEntreCaisseComponent, TypeCaisseComponent, BreadcrumbComponent
     
   ],
   

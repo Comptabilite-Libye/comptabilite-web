@@ -6,10 +6,11 @@ import { catchError, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'
-import { TypeRecette } from '../domaine/domaine';
-import { ParametrageService } from '../WService/parametrage.service';
+ 
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { TypeRecette } from '../domaine/domaine';
+import { ParametrageService } from '../WService/parametrage.service';
 
 
 declare const PDFObject: any;

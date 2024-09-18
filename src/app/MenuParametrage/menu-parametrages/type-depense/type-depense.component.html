@@ -1,10 +1,9 @@
-<body translate="no" class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
+<body  class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
     <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
     <app-loading [IsLoading]="IsLoading">
   </app-loading>
     <header>
-
-        <label class="header_name">المستفدين</label>
+        <label class="header_name">أنواع المصروفات</label>
 
 
     </header>
@@ -18,8 +17,8 @@
         <div class="material-table">
             <div class="card">
                 <p-toast></p-toast>
-                <p-table #dt1 [value]="dataBeneficiaire" [globalFilterFields]="['designationAr', 'designationLt']"
-                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedBeneficiaire"
+                <p-table #dt1 [value]="dataTypeDepense" [globalFilterFields]="['designationAr', 'designationLt']"
+                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedTypeDepense"
                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" dataKey="code"
                     [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
 
@@ -44,7 +43,7 @@
                                             class="search-icon">search</mat-icon>
                                     </button>
                                     <button type="button" class="Bouton-rechercher btn  btn-default "
-                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllBeneficiaire()">
+                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllTypeDepense()">
                                         <div class="bouton_style-2">إعادة تعيين</div>
                                         <mat-icon class="search-icon">refresh</mat-icon>
                                     </button>
@@ -147,7 +146,7 @@
 
 <!-- modal primeNG ADD -->
 <p-dialog id="Modal" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModal"
-    data-backdrop="false" [modal]="true" styleClass="ModalAdd" [draggable]="false" [ngStyle]="{'height':  '220px !important'  }" >
+    data-backdrop="false" [modal]="true" styleClass="ModalAdd" [draggable]="false">
 
 
     <ng-template pTemplate="header">
@@ -155,7 +154,7 @@
         <button class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
             (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
         </button>
-        <button class="btn btn-default save-add-ModalSmall" (click)="PostBeneficiaire()"> <i
+        <button class="btn btn-default save-add-ModalSmall" (click)="PostTypeDepense()"> <i
                 class="fa-lg fa-fw fa fa-check icon-save"></i>
             حفظ
         </button>
@@ -171,7 +170,7 @@
                         <label class="control-label ">الرمز : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input  ">
-                            <input id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
+                            <input [disabled]="DisCodeSaisie" id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
                                 class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="codeSaisie">
                         </div>
                     </section>
@@ -182,21 +181,23 @@
                 </div>
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
-                        <label class="control-label ">البيان بالعربي : <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <label class="control-label ">البيان بالعربي : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input">
                             <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationAr"
                                 [required]="true">
-                            
+
                         </div>
                     </section>
                     <section class="flex-row-start flex-6">
-                        <label class="control-label  "> البيان باللاتيني :   <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <label class="control-label  "> البيان باللاتيني : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input  ">
                             <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationLt"
                                 [required]="true">
-                          
+
                         </div>
                     </section>
 
@@ -218,21 +219,21 @@
 <p-dialog class="modal-delete" id="ModalDelete" data-backdrop="false" header="Header" [(visible)]="visDelete"
     styleClass="ModalDelete" [modal]="true" [draggable]="false" [resizable]="false">
     <ng-template pTemplate="header">
-        <h2 class="text-default headerForm"> {{formHeader}}</h2> 
+        <h2 class="text-default headerForm"> {{formHeader}}</h2>
     </ng-template>
     <div class="modal-body">
         <form action="" #addForms="ngForm">
             <fieldset class="deleteForms">
                 <h4 class="text-delete ">هل أنت متأكد من الحذف ?
-                  
-                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteBeneficiaire(code)"> <i
-                            class="fa-lg fa-fw fa fa-check icon-save"></i>
+
+                    <button class="btn btn-default save-add-ModalSmall" style="right: 430px;"
+                        (click)="DeleteTypeDepense(code)"> <i class="fa-lg fa-fw fa fa-check icon-save"></i>
                         حذف
                     </button>
-                    <button class="btn btn-default cancel-add-ModalSmall" style="right: 520px;" :closable="true" data-dismiss="modal"
-                     > <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
-                </button>
-                    
+                    <button class="btn btn-default cancel-add-ModalSmall" style="right: 520px;" :closable="true"
+                        data-dismiss="modal"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+                    </button>
+
 
 
                 </h4>
@@ -246,47 +247,22 @@
 
 
 
-
-
 <!-- modal primeNG Print -->
+<!-- modal primeNG Print -->  
 <p-dialog id="ModalPrint" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModalPrint"
-    data-backdrop="false" [modal]="true" styleClass="ModalPrint" [draggable]="false" [resizable]="false">
-    <div>
-        <div class="modal-header">
-            <h3 class="footer-dev">
-                <div class="action">
-                    <h2 class="text-default headerForm"> {{formHeader}}</h2>
+data-backdrop="false" [modal]="true" styleClass="ModalPrint" [draggable]="false">
+<p-toast key="toast1"></p-toast>
 
-                    <button class="btn btn-default cancel-add-ModalSmall" :closable="false" data-dismiss="modal"
-                        (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>Fermer
-                    </button>
+<ng-template pTemplate="header">
+    <h2 class="text-default headerForm"> {{formHeader}}</h2>
+    <button  style="right: 995px;" class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
+        (click)="clearForm() ; CloseModalPrint()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+    </button>
+   
+    <p-toast key="toast1"></p-toast>
+</ng-template>
+<div class="modal-body">
+    <div id="pdfContainer"></div>
+</div>
 
-                    <p-toast key="toast1"></p-toast>
-
-                </div>
-            </h3>
-        </div>
-        <div class="modal-body">
-            <div id="pdfContainer"></div>
-
-
-            <!-- <div id="myContainer">
-                <div id="outerContainer">
-////sidebarContainer
-                    <div id="sidebarContainer"> </div>  
-
-
-                 /// /mainContainer 
-                    <div id="mainContainer"> </div> 
-
-
-                /// overlayContainer
-                    <div id="overlayContainer" class="hidden"> </div> 
-
-                </div>  
-            </div> -->
-
-        </div>
-
-    </div>
 </p-dialog>

@@ -9,7 +9,7 @@ import { MouvementCaisseComponent } from './mouvement-caisse/mouvement-caisse.co
 import { MatIconModule } from '@angular/material/icon'
 @NgModule({
   declarations: [
-    MenuRecettesComponent,MouvementCaisseComponent
+    MenuRecettesComponent
   ],
   imports: [
     CommonModule,

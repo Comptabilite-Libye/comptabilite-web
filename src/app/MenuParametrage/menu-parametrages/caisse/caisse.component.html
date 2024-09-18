@@ -1,11 +1,11 @@
-<body translate="no" class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
+<body  class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
     <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
     <app-loading [IsLoading]="IsLoading">
   </app-loading>
     <header>
 
-        <label class="header_name">الموردين</label>
-
+        <label class="header_name">الخزائن</label>
+ 
 
     </header>
     <aside>
@@ -18,9 +18,9 @@
         <div class="material-table">
             <div class="card">
                 <p-toast></p-toast>
-                <p-table #dt1 [value]="dataFournisseur" [globalFilterFields]="['designationAr', 'designationLt']"
-                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedFournisseur"
-                    (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" dataKey="code"
+                <p-table #dt1 [value]="dataCaisse" [globalFilterFields]="['designationAr', 'designationLt']"
+                    selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedCaisse"
+                    (onRowSelect)="onRowSelect($event)"   (onRowUnselect)="onRowUnselect($event)" dataKey="code"
                     [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
 
                     <ng-template pTemplate="caption" class="col-md-12">
@@ -44,7 +44,7 @@
                                             class="search-icon">search</mat-icon>
                                     </button>
                                     <button type="button" class="Bouton-rechercher btn  btn-default "
-                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllFournisseur()">
+                                        data-original-title="Add" (click)="clear(dt1)" (click)="GelAllCaisse()">
                                         <div class="bouton_style-2">إعادة تعيين</div>
                                         <mat-icon class="search-icon">refresh</mat-icon>
                                     </button>
@@ -100,8 +100,8 @@
                             <th>الرمز</th>
                             <th>البيان بالعربي</th>
                             <th> البيان باللاتيني</th>
-                            <th class="act-col">متداول</th>
-                            <th class="act-col">مرئي</th>
+                            <th> العملة </th>
+                            <th class="act-col">متداول</th> 
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-fl>
@@ -109,21 +109,11 @@
                             <td style="font-size: 15px !important;">{{fl.codeSaisie}}</td>
                             <td style="font-size: 15px !important;">{{fl.designationAr}}</td>
                             <td style="font-size: 15px !important;">{{fl.designationLt}}</td>
-
-                            <td class="act-col">
-
+                            <td style="font-size: 15px !important;">{{fl.deviseDTO.designationAr}}</td> 
+                            <td class="act-col"> 
                                 <p-checkbox [readonly]="true" [(ngModel)]="fl.actif" [binary]="true"
                                     inputId="binary">{{fl.actif}}</p-checkbox>
-                            </td>
-                            <td class="act-col">
-
-                                <p-checkbox [readonly]="true" [(ngModel)]="fl.visible" [binary]="true"
-                                    inputId="binary">{{fl.visible}}</p-checkbox>
-                            </td>
-
-
-
-
+                            </td> 
                         </tr>
                     </ng-template>
 
@@ -155,7 +145,7 @@
         <button class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
             (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
         </button>
-        <button class="btn btn-default save-add-ModalSmall" (click)="PostFournisseur()"> <i
+        <button class="btn btn-default save-add-ModalSmall" (click)="PostCaisse()"> <i
                 class="fa-lg fa-fw fa fa-check icon-save"></i>
             حفظ
         </button>
@@ -171,7 +161,7 @@
                         <label class="control-label ">الرمز : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input  ">
-                            <input id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
+                            <input  id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
                                 class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="codeSaisie">
                         </div>
                     </section>
@@ -201,55 +191,35 @@
                     </section>
 
                 </div>
-
-
-            </fieldset>
-
-            
-
-        </div>
-        <div class="flex-row-start flex-12">
-            <fieldset class="flex-12">
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
-                        <label class="control-label ">الرمز : <i
+                        <label class="control-label flex-3"> العملة : <i
+                            class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                    <div class="control-input flex-7">
+                        <p-dropdown name="caisseAlimenter" [filter]="true" appendTo="body" class="dropdown"
+                            [options]="listDeviseRslt" [(ngModel)]="selectedDevise" [showClear]="true"
+                            [style]="{'width':'100%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                            [required]="true" [lazy]="true" #caisseAlimenter="ngModel">
+                        </p-dropdown>
+                    </div>
+                    </section>
+                    <section class="flex-row-start flex-6"> 
+                            <label class="control-label flex-3"> نوع الخزينة : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input  ">
-                            <input id="codeSaisie" maxlength="10" name="codeSaisie" type="text"
-                                class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="codeSaisie">
-                        </div>
-                    </section>
-                    <section class="flex-row-start flex-6 ">
-                        <p-checkbox [binary]="true" name="actif" value="val3" label="متداول"
-                            [(ngModel)]="actif"></p-checkbox>
-                    </section>
-                </div>
-                <div class="flex-row-start flex-12">
-                    <section class="flex-row-start flex-6">
-                        <label class="control-label ">البيان بالعربي : <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input">
-                            <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
-                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationAr"
-                                [required]="true">
-                            
-                        </div>
-                    </section>
-                    <section class="flex-row-start flex-6">
-                        <label class="control-label  "> البيان باللاتيني :   <i class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input  ">
-                            <input type="text" id="designation_ar" maxlength="200" name="designation_ar"
-                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="designationLt"
-                                [required]="true">
-                          
+                        <div class="control-input flex-7">
+                            <p-dropdown name="caisseAlimenter" [filter]="true" appendTo="body" class="dropdown"
+                                [options]="listTypeCaisseRslt" [(ngModel)]="selectedTypeCaisse" [showClear]="true"
+                                [style]="{'width':'100%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                                [required]="true" [lazy]="true" #caisseAlimenter="ngModel">
+                            </p-dropdown>
                         </div>
                     </section>
 
                 </div>
+                
 
 
             </fieldset>
-
-            
 
         </div>
 
@@ -271,11 +241,11 @@
             <fieldset class="deleteForms">
                 <h4 class="text-delete ">هل أنت متأكد من الحذف ?
                   
-                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px;" (click)="DeleteFournisseur(code)"> <i
+                        <button class="btn btn-default save-add-ModalSmall"  style="right: 430px ;" (click)="DeleteCaisse(code)"> <i
                             class="fa-lg fa-fw fa fa-check icon-save"></i>
                         حذف
                     </button>
-                    <button class="btn btn-default cancel-add-ModalSmall" style="right: 520px;" :closable="true" data-dismiss="modal"
+                    <button class="btn btn-default cancel-add-ModalSmall" style="right: 520px ;" :closable="true" data-dismiss="modal"
                      > <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
                 </button>
                     
@@ -335,3 +305,5 @@
 
     </div>
 </p-dialog>
+
+ 

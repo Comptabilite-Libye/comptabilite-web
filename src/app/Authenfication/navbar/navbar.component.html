@@ -3,7 +3,7 @@
 
 
 
-        <div class="logo-details"> 
+        <div class="logo-details">
             <img src="/assets/files/logo.ico" alt="image">
             <div class="logo_name" style="padding-right: 25px;">ManagmentRessource</div>
         </div>
@@ -18,8 +18,8 @@
                 <span class="tooltip">الإستقبال</span>
             </li>
             <li routerLinkActive="active" (click)="onClick(2)" [ngClass]="{'active': tab2==='tab2'}" class="has-subnav">
-                <a  routerLink='/menu_parametrage'   >
-                    <!-- <a [routerLink]="['/menu_parametrage']" routerLink="/menu_parametrage"> -->
+                <!-- <a  routerLink='/menu_parametrage'   > -->
+                <a [routerLink]="['/menu_parametrage']">
                     <i class='bx bx-cog'></i>
                     <span class="links_name">الإعدادات العامة</span>
                 </a>

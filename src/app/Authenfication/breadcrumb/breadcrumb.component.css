@@ -16,3 +16,13 @@
 li.breadcrumb-item {
     text-decoration: none;
 }
+
+.fas {
+    color: #616161;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.nomBreadCrumb{
+    color: #343434;
+}

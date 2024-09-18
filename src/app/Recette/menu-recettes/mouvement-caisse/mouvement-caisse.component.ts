@@ -6,8 +6,7 @@ import { Table } from 'primeng/table';
 import * as alertifyjs from 'alertifyjs'  
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
-import { TransfertCaisse } from '../domaine/domaine';
-import { RecetteServiceService } from '../../WsRecette/recette-service.service';
+import { TransfertCaisse } from '../domaine/domaine'; 
 import { TableModule } from 'primeng/table';
 @Component({
   selector: 'app-mouvement-caisse',

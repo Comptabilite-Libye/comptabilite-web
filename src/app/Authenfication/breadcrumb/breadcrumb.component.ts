@@ -21,6 +21,7 @@ export class BreadcrumbComponent  implements OnInit {
     let breadcrumb: Breadcrumb = {
       label: 'الرئيسية',
       url: '',
+      icon: 'fas fa-home' 
     };
 
     this.router.events
@@ -39,6 +40,7 @@ export class BreadcrumbComponent  implements OnInit {
     breadcrumbs: Breadcrumb[] = []
   ): Breadcrumb[] {
     const ROUTE_DATA_BREADCRUMB = 'title';
+    const ROUTE_Icon_BREADCRUMB = 'icon';
     // debugger;
     //get the child routes
     let children: ActivatedRoute[] = route.children;
@@ -74,6 +76,7 @@ export class BreadcrumbComponent  implements OnInit {
       let breadcrumb: Breadcrumb = {
         label: child.snapshot.data[ROUTE_DATA_BREADCRUMB],
         url: url,
+        icon: child.snapshot.data[ROUTE_Icon_BREADCRUMB]
       };
       breadcrumbs.push(breadcrumb);
 
@@ -87,4 +90,5 @@ export class BreadcrumbComponent  implements OnInit {
 export interface Breadcrumb {
   label: string;
   url: string;
+  icon?: string; 
 }
