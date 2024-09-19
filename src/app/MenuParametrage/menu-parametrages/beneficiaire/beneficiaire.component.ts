@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { catchError, delay, retryWhen, take, throwError, timeout } from 'rxjs';
@@ -32,16 +32,15 @@ export class BeneficiaireComponent {
   }
   pdfData!: Blob;
   isLoading = false;
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.GelAllBeneficiaire(); 
+  }
 
-
-    this.GelAllBeneficiaire();
-    this.Voids();
-
-
-
-
-
+  @Output() closed: EventEmitter<string> = new EventEmitter();
+  closeThisComponent() { 
+      const parentUrl = this.router.url.split('/').slice(0, -1).join('/'); 
+      this.closed.emit(parentUrl); 
+      this.router.navigate([parentUrl]);
   }
 
   RemplirePrint(): void {

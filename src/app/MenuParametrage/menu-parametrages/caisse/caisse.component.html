@@ -5,8 +5,8 @@
     <header>
 
         <label class="header_name">الخزائن</label>
- 
-
+        <!-- <button (click)="closeThisComponent()" class="CloseComponent">Close Caisse</button> -->
+        <button class="close-button btn btn-default" (click)="closeThisComponent()">X</button>
     </header>
     <aside>
         <div class="Groupe-Bouton">
@@ -57,6 +57,7 @@
 
                             <fieldset style="padding: 5px;">
                                 <section class="flex-row-start flex-6">
+                                   
                                     <button data-backdrop="false" type="button"
                                         class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
                                         data-toggle="modal" data-target="#Modal" (click)="onOpenModal('add')">

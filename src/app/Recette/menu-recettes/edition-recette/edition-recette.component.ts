@@ -18,7 +18,6 @@ declare const PDFObject: any;
   styleUrls: ['./edition-recette.component.css', '.../../../src/assets/files/css/StyleMenu.css', '.../../../src/assets/files/css/style.css'], providers: [ConfirmationService, MessageService]
 })
 
-
 export class EditionRecetteComponent implements OnInit {
   constructor(private errorHandler: ErrorHandlerService,public primengConfig: PrimeNGConfig, private param_service: ParametrageService, private datePipe: DatePipe) {
     this.setLangAR();

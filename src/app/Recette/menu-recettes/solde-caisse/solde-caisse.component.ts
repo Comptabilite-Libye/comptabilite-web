@@ -1,5 +1,5 @@
  
-import { Component, } from '@angular/core';
+import { Component, EventEmitter, Output, } from '@angular/core';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { catchError, take, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
@@ -10,6 +10,7 @@ import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
 import { RecetteServiceService } from '../WsRecette/recette-service.service';
+import { Router } from '@angular/router';
 
 declare const PDFObject: any;
 
@@ -22,7 +23,7 @@ export class SoldeCaisseComponent {
 
   openModal!: boolean;
   IsLoading = true; 
-  constructor(  private errorHandler: ErrorHandlerService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService) {
+  constructor(private router: Router ,  private errorHandler: ErrorHandlerService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService) {
   } 
   isLoading = false;
  
@@ -32,6 +33,13 @@ export class SoldeCaisseComponent {
    
 
   }  
+  @Output() closed: EventEmitter<string> = new EventEmitter();
+  closeThisComponent() { 
+      const parentUrl = this.router.url.split('/').slice(0, -1).join('/'); 
+      this.closed.emit(parentUrl); 
+      this.router.navigate([parentUrl]);
+  }
+
 
   clear(table: Table) {
     table.clear();
@@ -57,6 +65,10 @@ export class SoldeCaisseComponent {
 
       this.dataSoldeCaisse = data; 
       this.onRowUnselect(event);
+      // let debit = data.debit;
+      // let credit = data.credit;
+      // let sold = +debit + -credit;
+      this.soldeCaisse = data.credit;
 
     })
   }
@@ -64,6 +76,12 @@ export class SoldeCaisseComponent {
   onRowUnselect(event: any) {
     console.log('row unselect : ', event);
     this.code = event.data = null;
+  }
+
+  soldeCaisse:any;
+
+  GetSoldeCaisse(){
+
   }
  
 }

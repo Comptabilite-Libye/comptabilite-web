@@ -17,7 +17,44 @@ body {
 span {
   font-family: auto;
 }
+.close-button {
+  /* Style the close button */
+  margin-right: auto;  
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+  margin: -3px auto 2px 0px;
+  border: 0px ;
+  background-image: none;
+  background-color: white;
+}
+.close-button:focus, .close-button:hover{
+  background-color: #ffffff;
+}
 
+.close-button:hover {
+border: 0px ; 
+}
+
+.close-button:active {
+  border: 0px ; 
+  box-shadow: none;
+  border: 1px solid red;
+  }
+
+.close-button:focus {
+  margin-right: auto;  
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+  margin: -6px auto -1px -1px;
+  border: 0px ;
+
+  }
+.CloseComponent{
+  position: absolute;
+  right: 100px;
+}
 :host ::ng-deep .p-datatable-thead th {
   text-align: right !important;
   color: #333 !important;
@@ -901,22 +938,9 @@ button.btn.btn-danger.cancel-voir {
   direction: ltr;
   font-weight: 500;
   border: 1px solid #adadad;
-  width: 70px;
-  
-  font-weight: bold;
-
+  width: 70px; 
+  font-weight: bold; 
 }
-
-.close-ModalPrint {
-  position: relative;
-  height: 35px;
-  left: 365px;
-  font-size: 13px;
-  direction: ltr;
-  font-weight: 500;
-  width: 70px;
-}
-
 
 .save-add-ModalSmall {
   position: fixed;
@@ -929,6 +953,45 @@ button.btn.btn-danger.cancel-voir {
   font-weight: bold;
 
 }
+
+
+
+.cancel-add-ModalSmalls {
+  position: fixed;
+  height: 35px;
+  right: 310px;
+  font-size: 15px;
+  direction: ltr;
+  font-weight: 500;
+  border: 1px solid #adadad;
+  width: 70px; 
+  font-weight: bold; 
+}
+
+.save-add-ModalSmalls {
+  position: fixed;
+  right: 230px;
+  font-size: 13px;
+  direction: ltr;
+  height: 35px;
+  border: 1px solid #adadad;
+  width: 70px;
+  font-weight: bold;
+
+}
+
+
+.close-ModalPrint {
+  position: relative;
+  height: 35px;
+  left: 365px;
+  font-size: 13px;
+  direction: ltr;
+  font-weight: 500;
+  width: 70px;
+}
+
+
 
 .headerForm {
   padding: 0px 40px 0px 15px;
@@ -1306,13 +1369,17 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
 
 :host ::ng-deep .ModalPassword {
   border-radius: 6px;
-  /* width: 1300px; */
   font-family: auto;
   overflow-y: auto;
   overflow-x: hidden;
   width: 400px;
   top: 5% !important;
-  left: 0% !important;
+  left: 0% !important; 
+}
+ 
+:host ::ng-deep  .p-component-overlay-enter {
+  /* animation: p-component-overlay-enter-animation 150ms forwards; */
+  z-index: 600 !important;
 }
 
 :host ::ng-deep .ng-trigger.ng-trigger-overlayAnimation.ng-tns-c3832276034-6.p-dropdown-panel.p-component.ng-star-inserted {

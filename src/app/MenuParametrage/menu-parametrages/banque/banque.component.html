@@ -1,12 +1,10 @@
 <body  class="tt"  [ngClass]="{ 'disabled': IsLoading }"  >
-    <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
-    <app-loading [IsLoading]="IsLoading">
+     <app-loading [IsLoading]="IsLoading">
   </app-loading>
     <header> 
 
-        <label class="header_name">المصارف</label>
-
-
+        <label class="header_name">المصارف</label> 
+        <button class="close-button btn btn-default" (click)="closeThisComponent()">X</button>
     </header>
     <aside>
         <div class="Groupe-Bouton">

@@ -34,8 +34,8 @@ export class ErrorHandlerService {
 
   playSoundError() {
     let audio = new Audio();
-    // audio.src = "../assets/son/erro.mp3";
-    audio.src = "../assets/son/1080p_hd_1_2.mp3";
+    audio.src = "../assets/son/erro.mp3";
+    // audio.src = "../assets/son/1080p_hd_1_2.mp3";
     audio.load();
     audio.play();
   }

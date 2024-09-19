@@ -39,13 +39,10 @@ import { BeneficiaireComponent } from './MenuParametrage/menu-parametrages/benef
 import { CaisseComponent } from './MenuParametrage/menu-parametrages/caisse/caisse.component';
 import { DeviseComponent } from './MenuParametrage/menu-parametrages/devise/devise.component';
 import { FournisseurComponent } from './MenuParametrage/menu-parametrages/fournisseur/fournisseur.component';
-import { MenuParametrageComponent } from './MenuParametrage/menu-parametrage/menu-parametrage.component';
 import { TypeDepenseComponent } from './MenuParametrage/menu-parametrages/type-depense/type-depense.component';
  import { EntreeCaisseComponent } from './Recette/menu-recettes/entree-caisse/entree-caisse.component';
-import { MenuRecetteComponent } from './Recette/menu-recette/menu-recette.component';
-import { LoadingComponent } from './Shared/loading/loading.component';
-import { EditionRecetteComponent } from './Recette/edition-recette/edition-recette.component';
-import { EditionListAlimentationCaisseComponent } from './Recette/edition-recette/edition-list-alimentation-caisse/edition-list-alimentation-caisse.component';
+import { LoadingComponent } from './Shared/loading/loading.component'; 
+import { EditionListAlimentationCaisseComponent } from './Recette/menu-recettes/edition-recette/edition-list-alimentation-caisse/edition-list-alimentation-caisse.component';
 import { DatePipe } from '@angular/common';
 import { ModeReglementComponent } from './MenuParametrage/menu-parametrages/mode-reglement/mode-reglement.component';
 import { AlertComponent } from './Authenfication/alert/alert.component'; 
@@ -60,6 +57,7 @@ import { ErrorHandlerService } from './Shared/TranslateError/error-handler-servi
 import { BreadcrumbComponent } from './Authenfication/breadcrumb/breadcrumb.component';
 import { MouvementCaisseComponent } from './Recette/menu-recettes/mouvement-caisse/mouvement-caisse.component';
 import { TypeRecetteComponent } from './MenuParametrage/menu-parametrages/type-recette/type-recette.component';
+import { EditionRecetteComponent } from './Recette/menu-recettes/edition-recette/edition-recette.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -101,20 +99,18 @@ export function createTranslateLoader(http: HttpClient) {
     HomeComponent,
     NavbarComponent,
     BarTimeComponent,
-    MenuParametrageComponent,
     CaisseComponent,
     TypeDepenseComponent,
     TypeRecetteComponent,
-    MenuRecetteComponent, 
     DeviseComponent,
     BeneficiaireComponent,
     FournisseurComponent,
     BanqueComponent,
     SmallmodalLoginComponent,
     LoadingComponent,
-    EditionRecetteComponent,
+    
     EditionListAlimentationCaisseComponent,
-    ModeReglementComponent,
+    ModeReglementComponent,EditionRecetteComponent,
     AlertComponent,SoldeCaisseComponent,EntreeCaisseComponent,MouvementCaisseComponent,
     TauxChangeComponent,SignatureUserComponent, TransfertEntreCaisseComponent, TypeCaisseComponent, BreadcrumbComponent
     

@@ -349,7 +349,7 @@ img {
     width: 70px;
     /* background: #30688b; */
     padding: 4px 4px;
-    z-index: 200;
+    z-index: 500;
     transition: all 0.5s ease;
 
     overflow-x: hidden;

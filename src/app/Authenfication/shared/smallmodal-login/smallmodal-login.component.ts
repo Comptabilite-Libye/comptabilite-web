@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
  
 import { TokenStorageService } from '../../_services/token-storage.service';
 import { AuthService } from '../../_services/auth.service';
@@ -20,40 +20,17 @@ export class SmallmodalLoginComponent implements OnInit {
   errorMessage = '';
   roles: string[] = [];
 
+
+  @Input('UserName') userName:any
+  @Input('Password') password:any
+
+  VisibileModalLogin:boolean=false;
   constructor( private modalService: BsModalService,public bsModalRef: BsModalRef,private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router ) { }
 
   ngOnInit(): void {
-    if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      this.roles = this.tokenStorage.getUser().roles;
-      
-    }
+    this.visibleModalLogin=true;
   }
-
-  onSubmit(): void {
-    const { userName, password } = this.form;
-
-    this.authService.login(userName, password).subscribe(
-      (data:any) => {
-        console.log("data", data)
-        this.tokenStorage.saveToken(data.token);
-        this.tokenStorage.saveUser(data);
-        sessionStorage.setItem("userName", userName);
-       
-
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.roles = this.tokenStorage.getUser().roles;
-       
-
-
-      },
-      err => { 
-        this.isLoginFailed = true;
-       this.visibleModalLogin = false;
-      }
-    );
-  }
+ 
 
   CloseModal(){
     this.visibleModalLogin=false;
@@ -77,7 +54,7 @@ export class SmallmodalLoginComponent implements OnInit {
   modalRef!: BsModalRef;
   OpenModalChargement() {
    
-//     this.alerteBac = '';
+    // this.alerteBac = '';
 // this.codeBacTab='';
     this.modalService.onShown.subscribe(() => {
       // this.alerteBac = '';

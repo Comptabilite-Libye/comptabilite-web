@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MenuParametragesRoutingModule } from './menu-parametrages-routing.module';
 import { MenuParametragesComponent } from './menu-parametrages.component';
+ 
 
 
 @NgModule({

@@ -13,7 +13,7 @@ const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private token: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
+  constructor( private token: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
   langSession : any;
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
      
@@ -36,6 +36,7 @@ export class AuthInterceptor implements HttpInterceptor {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` ${err.error?.error}`);
             // this.LogOut();
+      
           }  else if (err.size ==0){
             console.log("Web Interrompue")
 

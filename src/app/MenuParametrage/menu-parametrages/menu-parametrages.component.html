@@ -127,3 +127,7 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="showCaisse">
+    <router-outlet (activate)="closeCaisse()"></router-outlet> 
+  </div>

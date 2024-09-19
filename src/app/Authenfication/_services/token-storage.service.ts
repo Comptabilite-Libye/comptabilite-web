@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -34,5 +35,23 @@ export class TokenStorageService {
     }
 
     return {};
+  }
+
+  private tokenExpirationSubject = new BehaviorSubject<null>(null);
+  tokenExpiration$ = this.tokenExpirationSubject.asObservable();
+
+  // ... other authentication methods
+  token :any ;
+  isTokenExpired(): boolean {
+    this.token = this.getToken(); // Get token
+    if (this.token) {
+      const tokenExpiration = new Date(this.token.exp * 1000); // Assuming exp is in seconds
+      return new Date() >= tokenExpiration;
+    }
+    return true; // Consider token expired if it's not found
+  }
+
+  onTokenExpired(): void {
+    this.tokenExpirationSubject.next(null); // Emit event
   }
 }

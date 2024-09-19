@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component, } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Output, } from '@angular/core';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { catchError, take, throwError, timeout } from 'rxjs';
 import { Table } from 'primeng/table';
@@ -13,6 +13,7 @@ import { Compteur } from 'src/app/Shared/Compteur/domaine';
 import { EncryptionService } from 'src/app/Shared/EcrypteService/EncryptionService';
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
 import { RecetteServiceService } from '../WsRecette/recette-service.service';
+import { Router } from '@angular/router';
 declare const PDFObject: any;
 @Component({
   selector: 'app-entree-caisse',
@@ -24,7 +25,7 @@ export class EntreeCaisseComponent {
   openModal!: boolean;
   IsLoading = true;
   DisPrint: boolean = true;
-  constructor(private changeDetectorRef: ChangeDetectorRef, private errorHandler: ErrorHandlerService, private encryptionService: EncryptionService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService, private CompteurService: CompteurService, private paramService: ParametrageService) {
+  constructor(private router: Router , private errorHandler: ErrorHandlerService, private encryptionService: EncryptionService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService, private CompteurService: CompteurService, private paramService: ParametrageService) {
   }
   pdfData!: Blob;
   isLoading = false;
@@ -54,10 +55,17 @@ export class EntreeCaisseComponent {
     this.getValued();
 
   }
+
+  @Output() closed: EventEmitter<string> = new EventEmitter();
+  closeThisComponent() { 
+      const parentUrl = this.router.url.split('/').slice(0, -1).join('/'); 
+      this.closed.emit(parentUrl); 
+      this.router.navigate([parentUrl]);
+  }
+
   DataCodeSaisie = new Array<Compteur>();
   GetCodeSaisie() {
-    this.CompteurService.GetcompteurCodeSaisie("CodeSaisieAC").pipe(
-      take(2),
+    this.CompteurService.GetcompteurCodeSaisie("CodeSaisieAC").pipe( 
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
 
@@ -69,6 +77,10 @@ export class EntreeCaisseComponent {
         this.DataCodeSaisie = data;
         this.codeSaisie = data.prefixe + data.suffixe;
       })
+      this.GetCaisse();
+      this.GetTypeRecette(); 
+      this.GetModeReglement();
+
   }
 
   RemplirePrint(code: any): void {
@@ -239,11 +251,8 @@ export class EntreeCaisseComponent {
       this.onRowUnselect(event);
       this.clearSelected();
       this.visibleModal = true;
-      this.code == undefined;
-      this.GetCaisse();
-      this.GetTypeRecette();
-      this.GetCodeSaisie();
-      this.GetModeReglement();
+      this.code == undefined; 
+      this.GetCodeSaisie(); 
 
 
     }

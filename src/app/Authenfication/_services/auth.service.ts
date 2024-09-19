@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 // import { AuthClientService } from '../auth-client.service';
 import { Router } from '@angular/router';
@@ -27,6 +27,8 @@ export class AuthService {
   logout(): Observable<any> {
     return this.http.post(`${environment.API_ACCESS}` + 'signout', { }, httpOptions);
   }
+
+ 
   
    
 }

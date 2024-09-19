@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MenuRecettesComponent } from './menu-recettes.component'; 
 import { MouvementCaisseComponent } from './mouvement-caisse/mouvement-caisse.component';
-import { EntreeCaisseComponent } from './entree-caisse/entree-caisse.component';
-import { EditionRecetteComponent } from '../edition-recette/edition-recette.component';
+import { EntreeCaisseComponent } from './entree-caisse/entree-caisse.component'; 
 import { TransfertEntreCaisseComponent } from './transfert-entre-caisse/transfert-entre-caisse.component';
 import { SoldeCaisseComponent } from './solde-caisse/solde-caisse.component';
+import { EditionRecetteComponent } from './edition-recette/edition-recette.component';
 
 const routes: Routes = [{ path: '', component: MenuRecettesComponent },
 

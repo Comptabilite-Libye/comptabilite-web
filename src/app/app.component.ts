@@ -122,4 +122,10 @@ let x = sessionStorage.getItem("userName");
       if (count == 1000) clearInterval(intervalId);
     }, 10);
   }
+
+  showChildComponent: boolean= true;
+
+  handleComponentClose() {
+    this.showChildComponent = false; // Hide the child component
+  }
 }

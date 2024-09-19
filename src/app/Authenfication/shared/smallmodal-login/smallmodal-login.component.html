@@ -1,24 +1,13 @@
 
 
-<!-- modal primeNG ADD -->
+<!--  
 <p-dialog id="Modal" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModalLogin"
-    data-backdrop="false" [modal]="true" styleClass="ModalAdd" [draggable]="false">
-
-
+    data-backdrop="false" [modal]="true" styleClass="ModalAdd" [draggable]="false"> 
     <ng-template pTemplate="header">
-        <h2 class="text-default headerForm"> Login</h2>
-        <!-- <button class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
-            (click)="CloseModal()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
-        </button>
-        <button class="btn btn-default save-add-ModalSmall" (click)="L()"> <i
-                class="fa-lg fa-fw fa fa-check icon-save"></i>
-            حفظ
-        </button> -->
+        <h2 class="text-default headerForm"> Login</h2> 
         <p-toast key="toast1"></p-toast>
-    </ng-template>
-
-    <div class="modal-body">
-        <!-- <form> -->
+    </ng-template> 
+    <div class="modal-body"> 
             <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                 <div class="form-group">
                   <label for="username">USerName</label>
@@ -30,9 +19,7 @@
                 <div class="form-group">
                   <label for="password">Password</label>
                   <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
-                    #password="ngModel" />
-          
-          
+                    #password="ngModel" />  
                 </div>
                 <div class="form-group">
                   <button class="btn btn-primary btn-block">
@@ -44,11 +31,35 @@
                     Login failed: {{ errorMessage }}
                   </div>
                 </div>
-              </form>
+              </form> 
+    </div> 
+</p-dialog> -->
 
 
-
-
+<div *ngIf="VisibileModalLogin" class="modal-header">
+  <h3 class="modal-title pull-center" style="text-transform: uppercase;text-align:center;">Déchargement bac</h3>
+</div>
+<div class="modal-body">
+  <h4 class="firstTitle" style="background: #7b9ddb36;">Liste des boites</h4>
+  <div class="row full-name-inputs">
+    <div class="col-sm-2">
+      <label class="control-label" required>Code bac</label>
     </div>
+    <div class="col-sm-4">
+      <input type="text" id="codeeBacDechargement"  [(ngModel)]="userName"
+         #codeBacDechargement autocomplete="off">
+    </div>
+    <div class="col-sm-6" style="color: red;">
+     ccccccc
+    </div>
+  </div>
 
-</p-dialog>
+  <div class="affichePTableXL">
+    <div class="col-sm-6" style="color: rgb(136, 255, 0);">
+      vvvvvv
+     </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger"  >Annuler</button>
+</div>

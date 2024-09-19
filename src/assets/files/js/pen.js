@@ -87,5 +87,11 @@ function myFunction() {
   } else {
     x.type = "password";
   }
+  var y = document.getElementById("icons");
+  if(x.type === "password"){
+    y.className = "fa fa-eye ";
+  }else {
+    y.className = "fa fa-eye-slash";
+  }
 }
 

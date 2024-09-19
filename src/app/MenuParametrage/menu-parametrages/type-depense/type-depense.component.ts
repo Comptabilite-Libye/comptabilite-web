@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { catchError, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
 
@@ -10,6 +10,7 @@ import { TypeDepense } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { Router } from '@angular/router';
 
 
 declare const PDFObject: any;
@@ -25,7 +26,7 @@ export class TypeDepenseComponent {
   openModal!: boolean;
 
 
-  constructor(private errorHandler: ErrorHandlerService,private loadingComponent : LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private router: Router ,private errorHandler: ErrorHandlerService,private loadingComponent : LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }
@@ -36,6 +37,13 @@ export class TypeDepenseComponent {
     this.GelAllTypeDepense();  
 
 
+  }
+
+  @Output() closed: EventEmitter<string> = new EventEmitter();
+  closeThisComponent() { 
+      const parentUrl = this.router.url.split('/').slice(0, -1).join('/'); 
+      this.closed.emit(parentUrl); 
+      this.router.navigate([parentUrl]);
   }
 
   RemplirePrint(): void {

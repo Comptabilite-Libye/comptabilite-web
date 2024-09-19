@@ -1,11 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, } from '@angular/core';
+import { Component, EventEmitter, Output, } from '@angular/core';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { catchError, take, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'
-import { TransfertCaisse } from '../domaine/domaine'; 
+import { TransfertCaisse } from '../domaine/domaine';
 import { ParametrageService } from '../../../MenuParametrage/menu-parametrages/WService/parametrage.service'
 import { Caisse, Devise } from '../../../MenuParametrage/menu-parametrages/domaine/domaine';
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
@@ -14,6 +14,7 @@ import { Compteur } from 'src/app/Shared/Compteur/domaine';
 import { EncryptionService } from 'src/app/Shared/EcrypteService/EncryptionService';
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
 import { RecetteServiceService } from '../WsRecette/recette-service.service';
+import { Router } from '@angular/router';
 declare const PDFObject: any;
 @Component({
   selector: 'app-transfert-entre-caisse',
@@ -25,7 +26,7 @@ export class TransfertEntreCaisseComponent {
   openModal!: boolean;
   IsLoading = true;
   DisPrint: boolean = true;
-  constructor(private errorHandler: ErrorHandlerService, private encryptionService: EncryptionService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService, private CompteurService: CompteurService, private paramService: ParametrageService) {
+  constructor(private router: Router ,private errorHandler: ErrorHandlerService, private encryptionService: EncryptionService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService, private CompteurService: CompteurService, private paramService: ParametrageService) {
   }
   pdfData!: Blob;
   isLoading = false;
@@ -33,6 +34,19 @@ export class TransfertEntreCaisseComponent {
   DisModif: boolean = false;
   DisApprouv: boolean = false;
   items!: MenuItem[];
+
+  playSoundError() {
+    let audio = new Audio();
+    audio.src = "../assets/son/erro.mp3";
+    audio.load();
+    audio.play();
+  }
+  playSoundSuccess() {
+    let audio = new Audio();
+    audio.src = "../assets/son/success.mp3";
+    audio.load();
+    audio.play();
+  }
   ngOnInit(): void {
     this.items = [
       // { label: 'Validation', icon: 'pi pi-fw pi-check-square', command: () => this.OpenPasswordModal('PasswordModal') },
@@ -42,6 +56,15 @@ export class TransfertEntreCaisseComponent {
     this.getValued();
 
   }
+
+  @Output() closed: EventEmitter<string> = new EventEmitter();
+  closeThisComponent() { 
+      const parentUrl = this.router.url.split('/').slice(0, -1).join('/'); 
+      this.closed.emit(parentUrl); 
+      this.router.navigate([parentUrl]);
+  }
+
+
   DataCodeSaisie = new Array<Compteur>();
   GetCodeSaisie() {
     this.CompteurService.GetcompteurCodeSaisie("CodeSaisieAC").pipe(
@@ -109,9 +132,9 @@ export class TransfertEntreCaisseComponent {
     this.soldeCaisseEntree = '';
     this.selectedDevise = '';
     this.sodleCaisseSortie = '';
-    this.codeDevise=0;
-    this.DeviseCaisse="";
-    this.TauxChange=0;
+    this.codeDevise = 0;
+    this.DeviseCaisse = "";
+    this.TauxChange = 0;
 
     this.onRowUnselect(event);
 
@@ -131,8 +154,8 @@ export class TransfertEntreCaisseComponent {
   montant: any = '0';
   TauxChange: number = 0;
   montantEnDevise: any = 0;
-  soldeCaisseEntree: any;
-  sodleCaisseSortie: any;
+  soldeCaisseEntree: string = "";
+  sodleCaisseSortie: string = "";
 
   selectedTransfertCaisse: any;
 
@@ -169,8 +192,8 @@ export class TransfertEntreCaisseComponent {
     this.soldeCaisseEntree = '';
     this.selectedDevise = '';
     this.sodleCaisseSortie = '';
-    this.soldeCaisseEntree = 0;
-    this.sodleCaisseSortie = 0;
+    this.soldeCaisseEntree = "";
+    this.sodleCaisseSortie = "";
     this.TauxChange = 0;
     this.observation = ""
   }
@@ -178,27 +201,25 @@ export class TransfertEntreCaisseComponent {
 
 
   DeleteTransfertCaisse() {
-    // this.recette_service.DeleteTransfertCaisse(this.selectedTransfertCaisse.code).pipe(
-    //   catchError((error: HttpErrorResponse) => {
-    //     let errorMessage = '';
+    this.recette_service.DeleteTransfertCaisse(this.selectedTransfertCaisse.code).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
 
-    // this.errorHandler.handleError(error); 
-    //     return throwError(errorMessage);
-    //   })
+        this.errorHandler.handleError(error);
+        return throwError(errorMessage);
+      })
 
-    // ).subscribe(
-    //   (res: any) => {
-    //     alertifyjs.set('notifier', 'position', 'top-left');
-    //     alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
+    ).subscribe(
+      (res: any) => {
+        alertifyjs.set('notifier', 'position', 'top-left');
+        alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
+        this.playSoundSuccess();
+        this.ngOnInit();
+        this.visDelete = false;
+        this.clearForm();
 
-    //     this.ngOnInit();
-    //     this.check_actif = true;
-    //     this.check_inactif = false;
-    //     this.visDelete = false;
-    //     this.clearForm();
-
-    //   }
-    // )
+      }
+    )
   }
   clearSelected(): void {
     this.code == undefined;
@@ -331,95 +352,84 @@ export class TransfertEntreCaisseComponent {
   final = new Array<any>();
   PostTransfertCaisse() {
     let userSession = sessionStorage.getItem("userName");
-    if (!this.observation || !this.codeSaisie || !this.selectedCaisseEntree || !this.selectedDevise || !this.selectedCaisseSortie) {
-      alertifyjs.set('notifier', 'position', 'top-left');
-      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
+    // if (!this.observation || !this.codeSaisie || !this.selectedCaisseEntree || !this.codeDevise || !this.selectedCaisseSortie) {
+    //   alertifyjs.set('notifier', 'position', 'top-left');
+    //   alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
 
 
-    } else {
+    // } else {
 
 
-      let body = {
-        codeSaisie: this.codeSaisie,
-        observation: this.observation,
-        userCreate: userSession,
-        dateCreate: new Date().toISOString(), //
-        code: this.code,
-        montant: this.Total,
-        tauxChange: this.TauxChange,
-        montantEnDevise: this.montantEnDevise,
-        codeCaisseTr: this.selectedCaisseSortie,
-        codeDevise: this.selectedDevise,
-        codeCaisse: this.soldeCaisseEntree,
-        codeEtatApprouver: this.selectedValue,
-      }
-      if (this.code != null) {
-        body['code'] = this.code;
-        // this.recette_service.UpdateTransfertCaisse(body).pipe(
-        //   catchError((error: HttpErrorResponse) => {
-        //     this.final = new Array<any>();
-        //     let errorMessage = '';
-
-        // this.errorHandler.handleError(error); 
-        //     return throwError(errorMessage);
-        //   })
-        // ).subscribe(
-        //   (res: any) => {
-        //     alertifyjs.set('notifier', 'position', 'top-left');
-        //     alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
-        //     this.visibleModal = false;
-        //     this.clearForm();
-        //     this.ngOnInit();
-        //     this.check_actif = true;
-        //     this.check_inactif = false;
-        //     this.onRowUnselect(event);
-        //     this.clearSelected();
-        //     this.final = new Array<any>();
-        //   }
-        // );
-      }
-      else {
-        // this.recette_service.PostTransfertCaisse(body).pipe(
-        //   catchError((error: HttpErrorResponse) => {
-        //     this.final = new Array<any>();
-        //     let errorMessage = '';
-
-        // this.errorHandler.handleError(error); 
-        //     return throwError(errorMessage);
-        //   })
-
-        // ).subscribe(
-        //   (res: any) => {
-        //     alertifyjs.set('notifier', 'position', 'top-left');
-        //     alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
-        //     this.visibleModal = false;
-        //     this.clearForm();
-        //     this.ngOnInit();
-        //     this.code;
-        //     this.check_actif = true;
-        //     this.check_inactif = false;
-        //     this.onRowUnselect(event);
-        //     this.clearSelected();
-        //     // let NewCode = res.code;
-        //     // this.RemplirePrint(NewCode);
-        //     // this.visibleModalPrint = true;
-        //     this.final = new Array<any>();
-
-        //   }
-        // )
-      }
+    let body = {
+      codeSaisie: this.codeSaisie,
+      observation: this.observation,
+      userCreate: userSession,
+      dateCreate: new Date().toISOString(), //
+      code: this.code,
+      montant: this.montant,
+      tauxChange: this.TauxChange,
+      montantEnDevise: this.montantEnDevise,
+      codeCaisseTr: this.selectedCaisseSortie,
+      codeDevise: this.codeDevise,
+      codeCaisse: this.selectedCaisseEntree,
+      codeEtatApprouver: this.selectedValue,
+      codeModeReglement: this.selectedModeReglement
     }
+    if (this.code != null) {
+      body['code'] = this.code;
+      this.recette_service.UpdateTransfertCaisse(body).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.final = new Array<any>();
+          let errorMessage = '';
+
+          this.errorHandler.handleError(error);
+          return throwError(errorMessage);
+        })
+      ).subscribe(
+        (res: any) => {
+          alertifyjs.set('notifier', 'position', 'top-left');
+          alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
+          this.visibleModal = false;
+          this.playSoundSuccess();
+          this.clearForm();
+          this.ngOnInit();
+          this.onRowUnselect(event);
+          this.clearSelected();
+          this.final = new Array<any>();
+        }
+      );
+    }
+    else {
+      this.recette_service.PostTransfertCaisse(body).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.final = new Array<any>();
+          let errorMessage = '';
+
+          this.errorHandler.handleError(error);
+          return throwError(errorMessage);
+        })
+
+      ).subscribe(
+        (res: any) => {
+          alertifyjs.set('notifier', 'position', 'top-left');
+          alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+          this.visibleModal = false;
+          this.playSoundSuccess();
+          this.clearForm();
+          this.ngOnInit();
+          this.code;
+          this.onRowUnselect(event);
+          this.clearSelected();
+          this.final = new Array<any>();
+
+        }
+      )
+    }
+    // }
   }
 
 
-  Voids(): void {
-    // this.cars = [
 
-    // ].sort((car1, car2) => {
-    //   return 0;
-    // });
-
-  }
 
 
 
@@ -438,24 +448,24 @@ export class TransfertEntreCaisseComponent {
   dataTransfertCaisse = new Array<TransfertCaisse>();
   codeSaisieSorted: any;
   GelAllTransfertCaisse() {
-    // this.recette_service.GetAllTransfertCaisse().pipe(
-    //   catchError((error: HttpErrorResponse) => {
-    //     let errorMessage = '';
+    this.recette_service.GetAllTransfertCaisse().pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
 
-    // this.errorHandler.handleError(error); 
-    //     return throwError(errorMessage);
-    //   })
+        this.errorHandler.handleError(error);
+        return throwError(errorMessage);
+      })
 
-    // ).subscribe((data: any) => {
+    ).subscribe((data: any) => {
 
-    this.loadingComponent.IsLoading = false;
-    this.IsLoading = false;
+      this.loadingComponent.IsLoading = false;
+      this.IsLoading = false;
 
-    //   this.dataTransfertCaisse = data;
-    //   this.codeSaisieSorted = data.codeSaisie;
-    //   this.onRowUnselect(event);
+      this.dataTransfertCaisse = data;
+      this.codeSaisieSorted = data.codeSaisie;
+      this.onRowUnselect(event);
 
-    // })
+    })
   }
 
   selectedCaisseSortie: any;
@@ -487,15 +497,15 @@ export class TransfertEntreCaisseComponent {
   dataCaisseEntree = new Array<Caisse>();
   listCaisseEntreePushed = new Array<any>();
   listCaisseEntreeRslt = new Array<any>();
-  DeviseCaisse: string="";
-  codeDevise:number=0;
- 
+  DeviseCaisse: string = "";
+  codeDevise: number = 0;
+
   GetCaisseEntree() {
     if (this.selectedCaisseSortie == null) {
-      
+
     } else {
 
- 
+
       this.paramService.GetCaisseNotIn(this.selectedCaisseSortie).pipe(
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
@@ -522,101 +532,79 @@ export class TransfertEntreCaisseComponent {
           return throwError(errorMessage);
         })
 
-      ).subscribe((data: any) => { 
-       
-        this.DeviseCaisse  = data.deviseDTO.designationAr;
+      ).subscribe((data: any) => {
+
+        this.DeviseCaisse = data.deviseDTO.designationAr;
         this.codeDevise = data.deviseDTO.code;
 
 
         this.paramService.GetTauxDeChangeByCodeDevise(data.deviseDTO.code).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-  
+
             this.errorHandler.handleError(error);
             return throwError(errorMessage);
           })
-  
-        ).subscribe((data: any) => { 
-          
+
+        ).subscribe((data: any) => {
+
           this.TauxChange = data.tauxChange;
-  
+
         });
 
-        
+
       });
 
-      
 
 
 
 
 
-  
+
+
     }
   }
 
 
 
-  GetSoldeCaisse(codeCaisse:number){ 
-      this.recette_service.GetSoldeCaisseByCodeCaisse(codeCaisse).pipe(
-        catchError((error: HttpErrorResponse) => {
-          let errorMessage = '';
-  
-          this.errorHandler.handleError(error);
-          return throwError(errorMessage);
-        })
-  
-      ).subscribe((data: any) => { 
-        let debit = data.debit;
-        let credit = data.credit;
-  
-        this.sodleCaisseSortie = debit - credit;
-  
-      });
- 
-    } 
+  GetSoldeCaisse(codeCaisse: number) {
+    this.recette_service.GetSoldeCaisseByCodeCaisse(codeCaisse).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
 
-    
-    GetSoldeCaisseEntree(codeCaisse:number){
- 
-        this.recette_service.GetSoldeCaisseByCodeCaisse(codeCaisse).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-    
-            this.errorHandler.handleError(error);
-            return throwError(errorMessage);
-          })
-    
-        ).subscribe((data: any) => { 
-          let debit = data.debit;
-          let credit = data.credit;
-    
-          this.soldeCaisseEntree = debit - credit;
-    
-        });
-    }
- 
-  // selectedTypeRecette: any;
-  // dataTypeRecetteDde = new Array<Caisse>();
-  // listTypeRecettePushed = new Array<any>();
-  // listTypeRecetteRslt = new Array<any>();
-  // GetTypeRecette() {
-  //   this.paramService.GetTypeRecette().pipe(
-  //     catchError((error: HttpErrorResponse) => {
-  //       let errorMessage = '';
+        this.errorHandler.handleError(error);
+        return throwError(errorMessage);
+      })
 
-  // this.errorHandler.handleError(error); 
-  //       return throwError(errorMessage);
-  //     })
-  //   ).subscribe((data: any) => {
-  //     this.dataTypeRecetteDde = data;
-  //     this.listTypeRecettePushed = [];
-  //     for (let i = 0; i < this.dataTypeRecetteDde.length; i++) {
-  //       this.listTypeRecettePushed.push({ label: this.dataTypeRecetteDde[i].designationAr, value: this.dataTypeRecetteDde[i].code })
-  //     }
-  //     this.listTypeRecetteRslt = this.listTypeRecettePushed;
-  //   })
-  // }
+    ).subscribe((data: any) => {
+      let debit = data.debit;
+      let credit = data.credit;
+
+      this.sodleCaisseSortie = (debit - credit).toString();
+
+    });
+
+  }
+
+
+  GetSoldeCaisseEntree(codeCaisse: number) {
+
+    this.recette_service.GetSoldeCaisseByCodeCaisse(codeCaisse).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+
+        this.errorHandler.handleError(error);
+        return throwError(errorMessage);
+      })
+
+    ).subscribe((data: any) => {
+      let debit = data.debit;
+      let credit = data.credit;
+
+      this.soldeCaisseEntree = (debit - credit).toString();
+
+    });
+  }
 
   selectedDevise: any;
   dataDevise = new Array<Devise>();
@@ -642,24 +630,17 @@ export class TransfertEntreCaisseComponent {
 
 
 
-
   GetTransfertCaisseByCode() {
-    // this.recette_service.GetAllTransfertCaisseByCode(this.selectedTransfertCaisse.code).pipe(
-    //   catchError((error: HttpErrorResponse) => {
-    //     let errorMessage = '';
+    this.recette_service.GetAllTransfertCaisseByCode(this.selectedTransfertCaisse.code).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
 
-    // this.errorHandler.handleError(error); 
-    //     return throwError(errorMessage);
-    //   })
-    // ).subscribe((data: any) => {
-    //   this.listDetailsTypeRecette = data.detailsTransfertCaisseDTOs;
+        this.errorHandler.handleError(error);
+        return throwError(errorMessage);
+      })
+    ).subscribe((data: any) => {
 
-
-    //   for (let i = 0; i < this.listDetailsTypeRecette.length; i++) {
-    //     this.listDetailsTypeRecette[i].code = data.detailsTransfertCaisseDTOs[i].codeTypeRecette;
-    //   }
-    //   this.ValueMntChanged(data);
-    // })
+    })
   }
 
 
@@ -780,7 +761,7 @@ export class TransfertEntreCaisseComponent {
 
       if (this.code != null) {
         body['code'] = this.code;
-        this.recette_service.CancelApprouveAC(body).pipe(
+        this.recette_service.CancelApprouveTc(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
 
@@ -795,7 +776,7 @@ export class TransfertEntreCaisseComponent {
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;"></i>' + "تم التحيين");
-
+            this.playSoundSuccess();
             this.clearForm();
             this.ngOnInit();
             this.onRowUnselect(event);
@@ -822,7 +803,7 @@ export class TransfertEntreCaisseComponent {
 
       if (this.code != null) {
         body['code'] = this.code;
-        this.recette_service.ApprouveAc(body).pipe(
+        this.recette_service.ApprouveTc(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
 
@@ -837,7 +818,7 @@ export class TransfertEntreCaisseComponent {
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;"></i>' + "تم الإعتماد ");
-
+            this.playSoundSuccess();
             this.clearForm();
             this.ngOnInit();
             this.onRowUnselect(event);
@@ -873,7 +854,7 @@ export class TransfertEntreCaisseComponent {
     if (this.password != this.decryptedValue) {
       alertifyjs.set('notifier', 'position', 'top-left');
       alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;"></i>' + " Password Error");
-
+      this.playSoundError();
     } else {
       this.visbileModalPassword = false;
       const container = document.getElementById('main-container');
@@ -923,6 +904,7 @@ export class TransfertEntreCaisseComponent {
       alertifyjs.set('notifier', 'position', 'top-left');
       alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + ` الرجاء إختيار سطر `);
       this.visibleModalApprove = false;
+      this.playSoundError();
     } else {
       this.visbileModalPassword = false;
       const container = document.getElementById('main-container');
@@ -962,6 +944,7 @@ export class TransfertEntreCaisseComponent {
       alertifyjs.set('notifier', 'position', 'top-left');
       alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;"></i>' + "الرجاء إختبار سطر ");
       this.visibleModalApprove = false;
+      this.playSoundError();
       this.visDelete = false;
       this.visibleModal = false;
       this.visibleModalPrint = false;
@@ -972,7 +955,7 @@ export class TransfertEntreCaisseComponent {
       if (this.selectedValue == 1) {
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;"></i>' + "التحويل ليس مأكد");
-
+        this.playSoundError();
       } else {
 
 
@@ -1027,6 +1010,15 @@ export class TransfertEntreCaisseComponent {
       }
       this.listModeReglementRslt = this.listModeReglementPushed;
     })
+  }
+
+  CalculeEnDevise() {
+
+    let mntTransfert = this.montant;
+    let tauxDevise = this.TauxChange;
+
+    let valeurx = +mntTransfert * +tauxDevise;
+    this.montantEnDevise = valeurx.toFixed(3);
   }
 
 }

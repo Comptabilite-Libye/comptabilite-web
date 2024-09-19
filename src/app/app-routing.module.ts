@@ -2,27 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes ,PreloadAllModules } from '@angular/router'; 
 import { HomeComponent } from './Authenfication/home/home.component';
 import { LoginComponent } from './Authenfication/login/login.component'; 
-import { RegisterComponent } from './Authenfication/register/register.component';
-import { MenuParametrageComponent } from './MenuParametrage/menu-parametrage/menu-parametrage.component';
-import { CaisseComponent } from './MenuParametrage/menu-parametrages/caisse/caisse.component';
-import { TypeDepenseComponent } from './MenuParametrage/menu-parametrages/type-depense/type-depense.component';
-// import { TypeRecetteComponent } from './MenuParametrage/type-recette/type-recette.component';
-import { MenuRecetteComponent } from './Recette/menu-recette/menu-recette.component';
-import { EntreeCaisseComponent } from './Recette/menu-recettes/entree-caisse/entree-caisse.component';
-import { DeviseComponent } from './MenuParametrage/menu-parametrages/devise/devise.component';
-import { BeneficiaireComponent } from './MenuParametrage/menu-parametrages/beneficiaire/beneficiaire.component';
-import { FournisseurComponent } from './MenuParametrage/menu-parametrages/fournisseur/fournisseur.component';
-import { BanqueComponent } from './MenuParametrage/menu-parametrages/banque/banque.component';
-import { EditionRecetteComponent } from './Recette/edition-recette/edition-recette.component';
-import { ErrorStatusComponent } from './Shared/error-status/error-status.component';
-import { ModeReglementComponent } from './MenuParametrage/menu-parametrages/mode-reglement/mode-reglement.component';
-import { TauxChangeComponent } from './MenuParametrage/menu-parametrages/taux-change/taux-change.component';
-import { AccessComponent } from './Authenfication/access/access.component';
-import { TransfertEntreCaisseComponent } from './Recette/menu-recettes/transfert-entre-caisse/transfert-entre-caisse.component';
-import { SoldeCaisseComponent } from './Recette/menu-recettes/solde-caisse/solde-caisse.component';
- import { TypeCaisseComponent } from './MenuParametrage/menu-parametrages/type-caisse/type-caisse.component';
-import { MenuRecettesComponent } from './Recette/menu-recettes/menu-recettes.component';
- 
+import { RegisterComponent } from './Authenfication/register/register.component'; 
 const routes: Routes = [
  
   { path: 'home', component: HomeComponent },

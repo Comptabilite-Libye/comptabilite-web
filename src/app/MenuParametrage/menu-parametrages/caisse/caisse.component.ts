@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { catchError, throwError } from 'rxjs';
@@ -11,6 +11,7 @@ import { ParametrageService } from '../WService/parametrage.service';
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { Router } from '@angular/router';
 
 
 declare const PDFObject: any;
@@ -20,19 +21,28 @@ declare const PDFObject: any;
   templateUrl: './caisse.component.html',
   styleUrls: ['./caisse.component.css', '.../../../src/assets/files/css/style.css'], providers: [ConfirmationService, MessageService]
 })
-export class CaisseComponent {
+export class CaisseComponent implements OnInit {
   IsLoading = true;
   openModal!: boolean;
-  constructor( private errorHandler: ErrorHandlerService,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
-  
+  constructor(private router: Router ,private errorHandler: ErrorHandlerService, private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder ) {
+
   }
+
+
+ 
   pdfData!: Blob;
   ngOnInit(): void {
     this.GelAllCaisse();
   }
 
+  @Output() closed: EventEmitter<string> = new EventEmitter();
+  closeThisComponent() { 
+      const parentUrl = this.router.url.split('/').slice(0, -1).join('/'); 
+      this.closed.emit(parentUrl); 
+      this.router.navigate([parentUrl]);
+  }
 
-  
+
   RemplirePrint(): void {
 
     this.param_service.getPDFf().subscribe((blob: Blob) => {
@@ -73,8 +83,8 @@ export class CaisseComponent {
     this.visible = false;
     this.codeSaisie = '';
     this.selectedDevise = '';
-    this.selectedTypeCaisse='';
-    this.onRowUnselect(event); 
+    this.selectedTypeCaisse = '';
+    this.onRowUnselect(event);
   }
 
   clearSelected(): void {
@@ -85,7 +95,7 @@ export class CaisseComponent {
     this.actif = false;
     this.visible = false;
     this.selectedDevise = '';
-    this.selectedTypeCaisse='';
+    this.selectedTypeCaisse = '';
   }
 
   onRowSelect(event: any) {
@@ -128,8 +138,8 @@ export class CaisseComponent {
   DeleteCaisse(code: any) {
     this.param_service.DeleteCaisse(code).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMessage = ''; 
-        this.errorHandler.handleError(error); 
+        let errorMessage = '';
+        this.errorHandler.handleError(error);
         return throwError(errorMessage);
       })
 
@@ -145,7 +155,7 @@ export class CaisseComponent {
       }
     )
   }
- 
+
   public onOpenModal(mode: string) {
 
     this.visibleModal = false;
@@ -188,8 +198,8 @@ export class CaisseComponent {
         this.GetDevise();
         this.visibleModal = true;
         this.onRowSelect;
-        
-      this.GetlTypeCaisse();
+
+        this.GetlTypeCaisse();
 
       }
 
@@ -256,7 +266,7 @@ export class CaisseComponent {
         this.param_service.UpdateCaisse(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            this.errorHandler.handleError(error); 
+            this.errorHandler.handleError(error);
             return throwError(errorMessage);
           })
 
@@ -282,7 +292,7 @@ export class CaisseComponent {
         this.param_service.PostCaisse(body).pipe(
           catchError((error: HttpErrorResponse) => {
             let errorMessage = '';
-            this.errorHandler.handleError(error); 
+            this.errorHandler.handleError(error);
             return throwError(errorMessage);
           })
         ).subscribe(
@@ -336,7 +346,7 @@ export class CaisseComponent {
 
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        this.errorHandler.handleError(error); 
+        this.errorHandler.handleError(error);
         return throwError(errorMessage);
       })
 
@@ -359,7 +369,7 @@ export class CaisseComponent {
     this.param_service.GetDevise().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        this.errorHandler.handleError(error); 
+        this.errorHandler.handleError(error);
         return throwError(errorMessage);
       })
     ).subscribe((data: any) => {
@@ -381,7 +391,7 @@ export class CaisseComponent {
     this.param_service.GetTypeCaisse().pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
-        this.errorHandler.handleError(error); 
+        this.errorHandler.handleError(error);
         return throwError(errorMessage);
       })
     ).subscribe((data: any) => {

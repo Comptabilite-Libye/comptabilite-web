@@ -5,7 +5,7 @@
     <header>
 
         <label class="header_name">دخول أموال</label>
-
+        <button class="close-button" (click)="closeThisComponent()">X</button>
 
     </header>
     <aside>
@@ -450,7 +450,7 @@
 
 
 
-<p-dialog id="ModalPrint" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModalPrint"
+<p-dialog id="ModalPrint" header="Header" [scrollLeft]="true"   [(visible)]="visibleModalPrint"
     data-backdrop="false" [modal]="true" styleClass="ModalPrint" [draggable]="false">
     <p-toast key="toast1"></p-toast>
 
@@ -473,7 +473,7 @@
 
 
 <!-- modal   Approuve -->
-<p-dialog id="ModalApprove" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModalApprove"
+<p-dialog id="ModalApprove" header="Header" [scrollLeft]="true"   [(visible)]="visibleModalApprove"
     data-backdrop="false" [modal]="true" styleClass="ModalAdd" [draggable]="false">
     <p-toast key="toast1"></p-toast>
 

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core'; 
+import { Injectable } from '@angular/core';
 import { catchError, Observable, switchMap, throwError, timeout, timer } from 'rxjs';
 import { ApppComponent } from 'src/app/appp.component';
 import { environment } from 'src/environments/environment.development';
@@ -9,9 +9,9 @@ import { environment } from 'src/environments/environment.development';
 })
 export class RecetteServiceService {
 
- 
-  constructor(private http: HttpClient ) {
-     
+
+  constructor(private http: HttpClient) {
+
   }
 
   getAuthorizationHeaders() {
@@ -30,13 +30,13 @@ export class RecetteServiceService {
   /// AlimentationCaisse 
   GetAllAlimentationCaisse(): Observable<any> {
     return this.http.get(`${environment.API_Recette}alimentation_caisse/all`);
- 
+
   }
- 
 
 
-  GetAllAlimentationCaisseByCode(code : number): Observable<any> {
-    return this.http.get(`${environment.API_Recette}alimentation_caisse/`+code, {
+
+  GetAllAlimentationCaisseByCode(code: number): Observable<any> {
+    return this.http.get(`${environment.API_Recette}alimentation_caisse/` + code, {
       headers: this.getAuthorizationHeaders()
     });
   }
@@ -72,13 +72,50 @@ export class RecetteServiceService {
 
   GetAllSoldeCaisse() {
 
-    return this.http.get(`${environment.API_Recette}solde_caisse/all` );
+    return this.http.get(`${environment.API_Recette}solde_caisse/all`);
   }
 
-  GetSoldeCaisseByCodeCaisse(codeCaisse : number) {
+  GetSoldeCaisseByCodeCaisse(codeCaisse: number) {
 
-    return this.http.get(`${environment.API_Recette}solde_caisse/code_caisse?codeCaisse=`+codeCaisse );
+    return this.http.get(`${environment.API_Recette}solde_caisse/code_caisse?codeCaisse=` + codeCaisse);
   }
+
+
+
+  /// TransfertCaisse 
+  GetAllTransfertCaisse(): Observable<any> {
+    return this.http.get(`${environment.API_Recette}transfert_caisse/all`);
+
+  }
+
+  GetAllTransfertCaisseByCode(code: number): Observable<any> {
+    return this.http.get(`${environment.API_Recette}transfert_caisse/` + code);
+  }
+  GetTransfertByEtatApprouved(codeEtatApprouver: number) {
+
+    return this.http.get(`${environment.API_Recette}transfert_caisse/EtatApprouver/` + codeEtatApprouver);
+  }
+
+  PostTransfertCaisse(body: any) {
+    return this.http.post(`${environment.API_Recette}transfert_caisse`, body)
+  }
+  UpdateTransfertCaisse(body: any) {
+    return this.http.put(`${environment.API_Recette}transfert_caisse/update`, body);
+  }
+
+  DeleteTransfertCaisse(code: any) {
+    return this.http.delete(`${environment.API_Recette}transfert_caisse/delete/` + code);
+  }
+ 
+  ApprouveTc(body: any) {
+    return this.http.put(`${environment.API_Recette}transfert_caisse/approuver`, body);
+  }
+
+  CancelApprouveTc(body: any) {
+    return this.http.put(`${environment.API_Recette}transfert_caisse/cancel_approuver`, body);
+  }
+
+
 
 
 }

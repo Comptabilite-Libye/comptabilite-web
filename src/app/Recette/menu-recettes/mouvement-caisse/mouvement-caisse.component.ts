@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, } from '@angular/core';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { catchError, take, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
@@ -8,6 +8,7 @@ import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
 import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
 import { TransfertCaisse } from '../domaine/domaine'; 
 import { TableModule } from 'primeng/table';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-mouvement-caisse',
   templateUrl: './mouvement-caisse.component.html',
@@ -17,16 +18,20 @@ export class MouvementCaisseComponent implements OnInit {
 
   openModal!: boolean;
   IsLoading = true; 
-  constructor( private errorHandler: ErrorHandlerService, private loadingComponent: LoadingComponent) {
+  constructor( private router: Router , private loadingComponent: LoadingComponent) {
   } 
   isLoading = false;
  
   ngOnInit(): void {
     
-    this.GelAllTransfertCaisse();
-   
-
+    this.GelAllTransfertCaisse(); 
   }  
+  @Output() closed: EventEmitter<string> = new EventEmitter();
+  closeThisComponent() { 
+      const parentUrl = this.router.url.split('/').slice(0, -1).join('/'); 
+      this.closed.emit(parentUrl); 
+      this.router.navigate([parentUrl]);
+  }
 
   clear(table: Table) {
     table.clear();

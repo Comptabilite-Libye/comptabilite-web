@@ -3,6 +3,7 @@
     </app-loading>
     <header>
         <label class="header_name"> أرصدة الخزائن </label>
+        <button class="close-button btn btn-default" (click)="closeThisComponent()">X</button>
     </header>
     <section id="main-container">
 
@@ -70,7 +71,7 @@
                             <td style="font-size: 16px !important;">{{domaine.deviseDTO.designationAr}}</td>
                             <td style="font-size: 16px !important;">{{domaine.debit}}</td>
                             <td style="font-size: 16px !important;">{{domaine.credit}}</td>
-                            <td style="font-size: 16px !important;">solde</td>
+                            <td style="font-size: 16px !important;">{{domaine.debit - domaine.credit}}</td>
                         </tr>
                     </ng-template> 
                 </p-table> 

@@ -4,7 +4,7 @@
     <header>
 
         <label class="header_name">تحويل بين الخزائن </label>
-
+        <button class="close-button btn btn-default" (click)="closeThisComponent()">X</button>
 
     </header>
     <aside>
@@ -151,6 +151,7 @@
                                 style="background-repeat: no-repeat;background-size:25px 25px;background-position-y: 2px;background-position-x: 10px;">
                             </td>
                             <td style="font-size: 16px !important;">{{domaine.codeSaisie}}</td>
+                            <td style="font-size: 16px !important;">{{domaine.caisseTrDTO.designationAr}}</td>
                             <td style="font-size: 16px !important;">{{domaine.caisseDTO.designationAr}}</td>
                             <td style="font-size: 16px !important;">{{domaine.deviseDTO.designationAr}}</td>
 
@@ -206,7 +207,7 @@
         <p-toast key="toast1"></p-toast>
     </ng-template>
 
-    <div class="modal-body">
+    <div class="modal-body" (mousemove)="CalculeEnDevise()">
         <p-toast key="toast1"></p-toast>
         <div class="flex-row-start flex-12">
             <fieldset class="flex-12">
@@ -239,7 +240,7 @@
                         <input readonly disabled=""  type="text" id="DeviseCaisse"  style="max-width: 80%;" maxlength="200" name="sodleCaisseSortie"
                             class="onlyForCentral form-control-dev input-xs" [(ngModel)]="DeviseCaisse"
                             [required]="true">
-                            <input readonly disabled=""  type="text" id="DeviseCaisse"  style="max-width: 0%;display: none;" maxlength="200" name="sodleCaisseSortie"
+                            <input readonly disabled=""  type="text" id="codeDevise"  style="max-width: 0%;display: none;" maxlength="200" name="sodleCaisseSortie"
                             class="onlyForCentral form-control-dev input-xs" [(ngModel)]="codeDevise"
                             [required]="true">
                     </div>
@@ -258,7 +259,7 @@
                         <label class="control-label flex-5">الرصيد:<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-7">
-                            <input readonly disabled="" style="max-width: 40%;" type="number" id="sodleCaisseSortie"
+                            <input readonly disabled=""  type="number" id="sodleCaisseSortie"
                                 maxlength="200" name="sodleCaisseSortie" class="onlyForCentral form-control-dev input-xs"
                                 [(ngModel)]="sodleCaisseSortie" [required]="true">
                         </div>
@@ -291,7 +292,7 @@
                         <label class="control-label flex-5">الصرف:<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-7">
-                            <input readonly disabled="" style="max-width: 40%;" type="number" id="TauxChange"
+                            <input readonly disabled=""  type="number" id="TauxChange"
                                 maxlength="200" name="TauxChange" class="onlyForCentral form-control-dev input-xs"
                                 [(ngModel)]="TauxChange" [required]="true">
                         </div>
@@ -304,7 +305,7 @@
                     <section class="flex-row-start flex-5">
                         <label class="control-label  flex-3" style="max-width: 85px;">طريقة الدفع : <i
                             class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                    <div class="control-input flex-8" style="max-width: 43%;">
+                    <div class="control-input flex-7"  >
                         <p-dropdown name="caisseSorite" [filter]="true" appendTo="body" class="dropdown"
                             [options]="listModeReglementRslt" [(ngModel)]="selectedModeReglement" [showClear]="true"
                             [style]="{'width':'120%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
@@ -314,11 +315,22 @@
                     </section>
                     <section class="flex-row-start flex-5">
 
-                        <label class="control-label flex-3">القيمة :<i
+                        <label class="control-label flex-5">القيمة :<i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input flex-7">
+                            <input type="number" id="montant"    maxlength="200" min="0" name="montant"
+                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="montant"
+                                [required]="true">
+                        </div>
+ 
+                    </section>
+                    <section class="flex-row-start flex-5">
+
+                        <label class="control-label flex-7">الفيمة بالعملة المحلية :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-5">
-                            <input type="number" id="montant" maxlength="200" min="0" name="montant"
-                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="montant"
+                            <input type="number" id="montantEnDevise" maxlength="200" min="0" name="montantEnDevise"
+                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="montantEnDevise"
                                 [required]="true">
                         </div>
 
@@ -573,55 +585,40 @@
     <!-- </div> -->
 </p-dialog>
 
+ 
 
-
-
-<!-- modal password update -->
-<!-- <p-dialog id="ModalPassword" header="Header" data-bs-display="static" [contentStyle]="{'overflow':'visible'}"
-    [scrollLeft]="true" [(visible)]="visbileModalPassword" data-backdrop="false" [modal]="true"
-    styleClass="ModalPassword" [draggable]="false" [resizable]="false"> -->
-
-<p-dialog id="ModalPassword" header="Header" [scrollLeft]="true" [closeOnEscape]="true"
-    [(visible)]="visbileModalPassword" data-backdrop="false" [modal]="true" styleClass="ModalPassword"
-    [draggable]="false">
-
-
-    <ng-template pTemplate="header">
-        <h2 class="text-default headerForm"> {{formHeader}}</h2>
-        <button class="btn btn-default cancel-add-ModalSmalls" :closable="true" data-dismiss="modal"
-            (click)="CloseModalPassWord()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
-        </button>
-        <button class="  btn btn-default save-add-ModalSmalls" (click)="approveAC('CancelApproveModal')">
-            <i class="fa-lg fa-fw fa fa-check icon-save"></i>
-            حفظ
-        </button>
-        <p-toast key="toast1"></p-toast>
-    </ng-template>
+    
+<p-dialog id="ModalPassword" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visbileModalPassword"
+data-backdrop="false" [modal]="true" styleClass="ModalPassword" [draggable]="false">
+ <ng-template pTemplate="header">
+    <h2 class="text-default headerForm"> {{formHeader}}</h2>
+    <button class="btn btn-default cancel-add-ModalSmalls" :closable="true" data-dismiss="modal"
+        (click)="CloseModalPassWord()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+    </button>
+    <button class="btn btn-default save-add-ModalSmalls" (click)="approveAC('CancelApproveModal')"> <i
+            class="fa-lg fa-fw fa fa-check icon-save"></i>
+        حفظ
+    </button> 
+</ng-template> 
     <div class="modal-body">
         <fieldset class="flex-12">
             <div class="flex-row-start flex-6">
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-12">
                         <label class="control-label flex-6">كلمة السر : </label>
-                        <!-- <i class="fa-lg fa-fw fa fa-times icon-required" style="bottom: 0px; top:10px"></i> -->
-                        <div class="dop control-input flex-10" style="display: flex;">
+                         <div class="dop control-input flex-10" style="display: flex;">
                             <input type="password" id="myInput" maxlength="200" name="password"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="password"
-                                [required]="true">
-                            <!-- <input class="ShowPassword" type="checkbox" onclick="myFunction()">عرض -->
-                            <span onclick="myFunction()" class="fa fa-fw fa-eye field-icon toggle-password"
-                                style="position: absolute; top: 47px; right: 164px; font-size: 12px; "></span>
+                                [required]="true"> 
+                            <!-- <span onclick="myFunction()" class="fa fa-fw fa-eye field-icon toggle-password"
+                                style="position: absolute; top: 47px; right: 164px; font-size: 12px; "></span> -->
+                                <i class="fa fa-eye" id="icons" onclick="myFunction()"  
+                                style="position: absolute; top: 47px; right: 164px; font-size: 12px; " aria-hidden="true"></i>
+
                         </div>
                     </section>
-                </div>
-
+                </div> 
             </div>
-        </fieldset>
-
-
-
-
-    </div>
-
-    <!-- </div> -->
+        </fieldset> 
+    </div> 
 </p-dialog>
