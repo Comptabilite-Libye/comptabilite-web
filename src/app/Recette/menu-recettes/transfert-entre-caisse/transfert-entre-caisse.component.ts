@@ -26,7 +26,7 @@ export class TransfertEntreCaisseComponent {
   openModal!: boolean;
   IsLoading = true;
   DisPrint: boolean = true;
-  constructor(private router: Router ,private errorHandler: ErrorHandlerService, private encryptionService: EncryptionService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService, private CompteurService: CompteurService, private paramService: ParametrageService) {
+  constructor(private router: Router, private errorHandler: ErrorHandlerService, private encryptionService: EncryptionService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService, private CompteurService: CompteurService, private paramService: ParametrageService) {
   }
   pdfData!: Blob;
   isLoading = false;
@@ -58,10 +58,10 @@ export class TransfertEntreCaisseComponent {
   }
 
   @Output() closed: EventEmitter<string> = new EventEmitter();
-  closeThisComponent() { 
-      const parentUrl = this.router.url.split('/').slice(0, -1).join('/'); 
-      this.closed.emit(parentUrl); 
-      this.router.navigate([parentUrl]);
+  closeThisComponent() {
+    const parentUrl = this.router.url.split('/').slice(0, -1).join('/');
+    this.closed.emit(parentUrl);
+    this.router.navigate([parentUrl]);
   }
 
 
@@ -757,7 +757,7 @@ export class TransfertEntreCaisseComponent {
         codeSaisie: this.codeSaisie
       }
 
-
+console.log("this.selectedValue == 1", this.selectedValue == 1)
 
       if (this.code != null) {
         body['code'] = this.code;
@@ -791,16 +791,57 @@ export class TransfertEntreCaisseComponent {
           }
         );
       }
-    } else {
+    } else if (this.selectedValue == 2){
       let body = {
         code: this.code,
         codeUserApprouver: "1",
-        codeEtatApprouver: this.selectedValue,
+
+        codeEtatApprouver: "2",
         codeSaisie: this.codeSaisie
       }
+      console.log("this.selectedValue == 2", this.selectedValue == 2)
+      if (this.code != null) {
+        body['code'] = this.code;
+        this.recette_service.ApprouveTc(body).pipe(
+          catchError((error: HttpErrorResponse) => {
+            let errorMessage = '';
 
 
+            this.errorHandler.handleError(error);
 
+            return throwError(errorMessage);
+          })
+
+        ).subscribe(
+
+          (res: any) => {
+            alertifyjs.set('notifier', 'position', 'top-left');
+            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;"></i>' + "تم الإعتماد ");
+            this.playSoundSuccess();
+            this.clearForm();
+            this.ngOnInit();
+            this.onRowUnselect(event);
+            this.clearSelected();
+            this.visDelete = false;
+            this.visibleModalPrint = false;
+            this.clearSelected();
+            this.visibleModal = false;
+            this.visibleModalApprove = false;
+            this.visbileModalPassword = false;
+            this.visibleModalPrint = false;
+
+          }
+        );
+      }
+
+    }else if (this.selectedValue == 3){
+      let body = {
+        code: this.code,
+        codeUserApprouver: "1",
+        codeEtatApprouver: "3",
+        codeSaisie: this.codeSaisie
+      }
+      console.log("this.selectedValue == 3", this.selectedValue == 3)
       if (this.code != null) {
         body['code'] = this.code;
         this.recette_service.ApprouveTc(body).pipe(
@@ -1019,6 +1060,10 @@ export class TransfertEntreCaisseComponent {
 
     let valeurx = +mntTransfert * +tauxDevise;
     this.montantEnDevise = valeurx.toFixed(3);
+  }
+
+  CloseModalApprouve(){
+    this.visibleModalApprove= false;
   }
 
 }

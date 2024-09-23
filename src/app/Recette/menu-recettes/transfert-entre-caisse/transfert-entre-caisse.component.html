@@ -420,8 +420,8 @@
     <ng-template pTemplate="header">
         <h2 class="text-default headerForm"> {{formHeader}}</h2>
         <button class="btn btn-default cancel-add-ModalSmall" :closable="true" data-dismiss="modal"
-            (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
-        </button>
+        (click)="clearForm(); CloseModalApprouve()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+    </button>
         <button class="btn btn-default save-add-ModalSmall" (click)="ApprouveTransfertCaisse()"> <i
                 class="fa-lg fa-fw fa fa-check icon-save"></i>
             حفظ
