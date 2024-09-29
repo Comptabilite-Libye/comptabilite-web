@@ -6,9 +6,7 @@ import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'
 import { SoldeCaisse } from '../domaine/domaine'; 
-import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
-import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component';  
 import { RecetteServiceService } from '../WsRecette/recette-service.service';
 import { Router } from '@angular/router';
 
@@ -23,7 +21,7 @@ export class SoldeCaisseComponent {
 
   openModal!: boolean;
   IsLoading = true; 
-  constructor(private router: Router ,  private errorHandler: ErrorHandlerService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService) {
+  constructor(private router: Router  , private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService) {
   } 
   isLoading = false;
  
@@ -50,15 +48,7 @@ export class SoldeCaisseComponent {
   
   searchTerm = '';
   GelAllSoldeCaisse() {
-    this.recette_service.GetAllSoldeCaisse().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.recette_service.GetAllSoldeCaisse() .subscribe((data: any) => {
 
       this.loadingComponent.IsLoading = false;
       this.IsLoading = false;

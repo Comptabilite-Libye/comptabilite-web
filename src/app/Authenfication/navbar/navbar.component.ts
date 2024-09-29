@@ -24,13 +24,7 @@ export class NavbarComponent implements OnInit {
     } 
     count=count+1;
     if (count==100) clearInterval(intervalId);
-    }, 10);
-
-   
-
- 
-
-    
+    }, 10); 
   }
 
   step:any;

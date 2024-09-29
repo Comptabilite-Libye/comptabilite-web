@@ -11,10 +11,10 @@ import { Caisse, Devise } from '../../../MenuParametrage/menu-parametrages/domai
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
 import { CompteurService } from 'src/app/Shared/Compteur/CompteurService';
 import { Compteur } from 'src/app/Shared/Compteur/domaine';
-import { EncryptionService } from 'src/app/Shared/EcrypteService/EncryptionService';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { EncryptionService } from 'src/app/Shared/EcrypteService/EncryptionService'; 
 import { RecetteServiceService } from '../WsRecette/recette-service.service';
 import { Router } from '@angular/router';
+import { IdleService } from 'src/app/idle.service';
 declare const PDFObject: any;
 @Component({
   selector: 'app-transfert-entre-caisse',
@@ -22,11 +22,11 @@ declare const PDFObject: any;
   styleUrls: ['./transfert-entre-caisse.component.css', '.../../../src/assets/files/css/style.css'], providers: [ConfirmationService, MessageService]
 })
 export class TransfertEntreCaisseComponent {
-
+  backendDown = false;
   openModal!: boolean;
   IsLoading = true;
   DisPrint: boolean = true;
-  constructor(private router: Router, private errorHandler: ErrorHandlerService, private encryptionService: EncryptionService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService, private CompteurService: CompteurService, private paramService: ParametrageService) {
+  constructor( private router: Router, private encryptionService: EncryptionService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService, private CompteurService: CompteurService, private paramService: ParametrageService) {
   }
   pdfData!: Blob;
   isLoading = false;
@@ -54,8 +54,9 @@ export class TransfertEntreCaisseComponent {
     ];
     this.GelAllTransfertCaisse();
     this.getValued();
-
+    
   }
+ 
 
   @Output() closed: EventEmitter<string> = new EventEmitter();
   closeThisComponent() {
@@ -67,15 +68,7 @@ export class TransfertEntreCaisseComponent {
 
   DataCodeSaisie = new Array<Compteur>();
   GetCodeSaisie() {
-    this.CompteurService.GetcompteurCodeSaisie("CodeSaisieAC").pipe(
-      take(2),
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-    ).
+    this.CompteurService.GetcompteurCodeSaisie("CodeSaisieAC").
       subscribe((data: any) => {
         this.DataCodeSaisie = data;
         this.codeSaisie = data.prefixe + data.suffixe;
@@ -167,12 +160,12 @@ export class TransfertEntreCaisseComponent {
     this.observation = event.data.observation;
     this.montant = event.data.montant;
     this.selectedDevise = event.data.codeDevise;
-    this.soldeCaisseEntree = event.data.codeCaisseTr;
+    this.selectedCaisseSortie = event.data.codeCaisseTr;
     this.DisPrint = false;
-    this.sodleCaisseSortie = event.data.codeCaisse;
+    this.selectedCaisseEntree = event.data.codeCaisse;
     this.selectedValue = event.data.codeEtatApprouver;
     this.TauxChange = event.data.tauxChange
-
+    this.selectedModeReglement = event.data.codeModeReglement
     if (event.data.codeEtatApprouver == 2 || event.data.codeEtatApprouver == 3) {
       this.DisDelete = true;
       this.DisModif = true;
@@ -184,6 +177,7 @@ export class TransfertEntreCaisseComponent {
       this.DisModif = false;
       this.DisApprouv = false;
     }
+    console.log("data selcted", event.data)
   }
   onRowUnselect(event: any) {
     this.code = event.data = null;
@@ -201,15 +195,7 @@ export class TransfertEntreCaisseComponent {
 
 
   DeleteTransfertCaisse() {
-    this.recette_service.DeleteTransfertCaisse(this.selectedTransfertCaisse.code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-
-    ).subscribe(
+    this.recette_service.DeleteTransfertCaisse(this.selectedTransfertCaisse.code).subscribe(
       (res: any) => {
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
@@ -275,6 +261,8 @@ export class TransfertEntreCaisseComponent {
         this.GetDevise();
         this.GetModeReglement();
         this.GetTransfertCaisseByCode();
+        this.GetSoldeCaisseEntree(this.selectedCaisseEntree);
+        this.GetSoldeCaisse(this.selectedCaisseSortie);
       }
 
     }
@@ -377,15 +365,7 @@ export class TransfertEntreCaisseComponent {
     }
     if (this.code != null) {
       body['code'] = this.code;
-      this.recette_service.UpdateTransfertCaisse(body).pipe(
-        catchError((error: HttpErrorResponse) => {
-          this.final = new Array<any>();
-          let errorMessage = '';
-
-          this.errorHandler.handleError(error);
-          return throwError(errorMessage);
-        })
-      ).subscribe(
+      this.recette_service.UpdateTransfertCaisse(body).subscribe(
         (res: any) => {
           alertifyjs.set('notifier', 'position', 'top-left');
           alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
@@ -400,16 +380,7 @@ export class TransfertEntreCaisseComponent {
       );
     }
     else {
-      this.recette_service.PostTransfertCaisse(body).pipe(
-        catchError((error: HttpErrorResponse) => {
-          this.final = new Array<any>();
-          let errorMessage = '';
-
-          this.errorHandler.handleError(error);
-          return throwError(errorMessage);
-        })
-
-      ).subscribe(
+      this.recette_service.PostTransfertCaisse(body).subscribe(
         (res: any) => {
           alertifyjs.set('notifier', 'position', 'top-left');
           alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
@@ -448,15 +419,7 @@ export class TransfertEntreCaisseComponent {
   dataTransfertCaisse = new Array<TransfertCaisse>();
   codeSaisieSorted: any;
   GelAllTransfertCaisse() {
-    this.recette_service.GetAllTransfertCaisse().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.recette_service.GetAllTransfertCaisse().subscribe((data: any) => {
 
       this.loadingComponent.IsLoading = false;
       this.IsLoading = false;
@@ -473,15 +436,7 @@ export class TransfertEntreCaisseComponent {
   listCaisseSortiePushed = new Array<any>();
   listCaisseSortieRslt = new Array<any>();
   GetCaisseSortie() {
-    this.paramService.GetCaisse().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.paramService.GetCaisse().subscribe((data: any) => {
       this.dataCaisseSortie = data;
       this.listCaisseSortiePushed = [];
       for (let i = 0; i < this.dataCaisseSortie.length; i++) {
@@ -502,58 +457,42 @@ export class TransfertEntreCaisseComponent {
 
   GetCaisseEntree() {
     if (this.selectedCaisseSortie == null) {
-
+      this.codeDevise = 0;
+      this.DeviseCaisse = "";
+      this.sodleCaisseSortie = "";
+      this.soldeCaisseEntree = "";
+      this.selectedCaisseSortie = "";
+      this.TauxChange = 0;
+      console.log("dddd");
     } else {
+      this.paramService.GetCaisseByCode(this.selectedCaisseSortie)
+        .subscribe((data: any) => {
+
+          this.DeviseCaisse = data.deviseDTO.designationAr;
+          this.codeDevise = data.deviseDTO.code;
 
 
-      this.paramService.GetCaisseNotIn(this.selectedCaisseSortie).pipe(
-        catchError((error: HttpErrorResponse) => {
-          let errorMessage = '';
+          this.paramService.GetTauxDeChangeByCodeDevise(data.deviseDTO.code).subscribe((data: any) => {
 
-          this.errorHandler.handleError(error);
-          return throwError(errorMessage);
-        })
+            this.TauxChange = data.tauxChange;
 
-      ).subscribe((data: any) => {
-        this.dataCaisseEntree = data;
-        this.listCaisseEntreePushed = [];
-        for (let i = 0; i < this.dataCaisseEntree.length; i++) {
-          this.listCaisseEntreePushed.push({ label: this.dataCaisseEntree[i].designationAr, value: this.dataCaisseEntree[i].code })
-        }
-        this.listCaisseEntreeRslt = this.listCaisseEntreePushed;
-      });
-
-
-      this.paramService.GetCaisseByCode(this.selectedCaisseSortie).pipe(
-        catchError((error: HttpErrorResponse) => {
-          let errorMessage = '';
-
-          this.errorHandler.handleError(error);
-          return throwError(errorMessage);
-        })
-
-      ).subscribe((data: any) => {
-
-        this.DeviseCaisse = data.deviseDTO.designationAr;
-        this.codeDevise = data.deviseDTO.code;
-
-
-        this.paramService.GetTauxDeChangeByCodeDevise(data.deviseDTO.code).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-
-            this.errorHandler.handleError(error);
-            return throwError(errorMessage);
-          })
-
-        ).subscribe((data: any) => {
-
-          this.TauxChange = data.tauxChange;
+          });
+          this.paramService.GetCaisseNotIn(this.selectedCaisseSortie, data.deviseDTO.code)
+            .subscribe((data: any) => {
+              this.dataCaisseEntree = data;
+              this.listCaisseEntreePushed = [];
+              for (let i = 0; i < this.dataCaisseEntree.length; i++) {
+                this.listCaisseEntreePushed.push({ label: this.dataCaisseEntree[i].designationAr, value: this.dataCaisseEntree[i].code })
+              }
+              this.listCaisseEntreeRslt = this.listCaisseEntreePushed;
+            });
 
         });
 
 
-      });
+
+
+
 
 
 
@@ -567,43 +506,38 @@ export class TransfertEntreCaisseComponent {
 
 
 
-  GetSoldeCaisse(codeCaisse: number) {
-    this.recette_service.GetSoldeCaisseByCodeCaisse(codeCaisse).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
+  GetSoldeCaisse(selectedCaisseSortie: any) {
+    if (selectedCaisseSortie == "") {
 
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
+    } else {
 
-    ).subscribe((data: any) => {
-      let debit = data.debit;
-      let credit = data.credit;
+      this.recette_service.GetSoldeCaisseByCodeCaisse(selectedCaisseSortie).subscribe((data: any) => {
+        let debit = data.debit;
+        let credit = data.credit;
 
-      this.sodleCaisseSortie = (debit - credit).toString();
+        this.sodleCaisseSortie = (debit - credit).toString();
 
-    });
-
+      });
+    }
   }
 
 
   GetSoldeCaisseEntree(codeCaisse: number) {
 
-    this.recette_service.GetSoldeCaisseByCodeCaisse(codeCaisse).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
 
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
+    if (codeCaisse == null) {
+console.log("codeCaisse == null");
+    } else {
+      this.recette_service.GetSoldeCaisseByCodeCaisse(codeCaisse).subscribe((data: any) => {
+        let debit = data.debit;
+        let credit = data.credit;
 
-    ).subscribe((data: any) => {
-      let debit = data.debit;
-      let credit = data.credit;
+        this.soldeCaisseEntree = (debit - credit).toString();
 
-      this.soldeCaisseEntree = (debit - credit).toString();
+      });
 
-    });
+    }
+
   }
 
   selectedDevise: any;
@@ -611,14 +545,7 @@ export class TransfertEntreCaisseComponent {
   listDevisePushed = new Array<any>();
   listDeviseRslt = new Array<any>();
   GetDevise() {
-    this.paramService.GetDevise().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-    ).subscribe((data: any) => {
+    this.paramService.GetDevise().subscribe((data: any) => {
       this.dataDevise = data;
       this.listDevisePushed = [];
       for (let i = 0; i < this.dataDevise.length; i++) {
@@ -631,14 +558,8 @@ export class TransfertEntreCaisseComponent {
 
 
   GetTransfertCaisseByCode() {
-    this.recette_service.GetAllTransfertCaisseByCode(this.selectedTransfertCaisse.code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-    ).subscribe((data: any) => {
+    this.recette_service.GetAllTransfertCaisseByCode(this.selectedTransfertCaisse.code)
+    .subscribe((data: any) => {
 
     })
   }
@@ -670,14 +591,7 @@ export class TransfertEntreCaisseComponent {
     if (this.selectedEtatApprouve == undefined) {
 
     } else {
-      // this.recette_service.GetTransfertCaisseByEtatApprouved(this.selectedEtatApprouve.code).pipe(
-      //   catchError((error: HttpErrorResponse) => {
-      //     let errorMessage = '';
-
-      // this.errorHandler.handleError(error); 
-      //     return throwError(errorMessage);
-      //   })
-      // ).subscribe((data: any) => {
+      // this.recette_service.GetTransfertCaisseByEtatApprouved(this.selectedEtatApprouve.code).subscribe((data: any) => {
       //   this.loadingComponent.IsLoading = false;
       //   this.IsLoading = false;
 
@@ -728,7 +642,7 @@ export class TransfertEntreCaisseComponent {
         } else {
 
 
-          this.errorHandler.handleError(error);
+          // this.errorHandler.handleError(error);
         }
 
         return throwError(errorMessage);
@@ -757,21 +671,11 @@ export class TransfertEntreCaisseComponent {
         codeSaisie: this.codeSaisie
       }
 
-console.log("this.selectedValue == 1", this.selectedValue == 1)
+      console.log("this.selectedValue == 1", this.selectedValue == 1)
 
       if (this.code != null) {
         body['code'] = this.code;
-        this.recette_service.CancelApprouveTc(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-
-
-            this.errorHandler.handleError(error);
-
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.recette_service.CancelApprouveTc(body).subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
@@ -791,7 +695,7 @@ console.log("this.selectedValue == 1", this.selectedValue == 1)
           }
         );
       }
-    } else if (this.selectedValue == 2){
+    } else if (this.selectedValue == 2) {
       let body = {
         code: this.code,
         codeUserApprouver: "1",
@@ -802,17 +706,7 @@ console.log("this.selectedValue == 1", this.selectedValue == 1)
       console.log("this.selectedValue == 2", this.selectedValue == 2)
       if (this.code != null) {
         body['code'] = this.code;
-        this.recette_service.ApprouveTc(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-
-
-            this.errorHandler.handleError(error);
-
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.recette_service.ApprouveTc(body).subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
@@ -834,7 +728,7 @@ console.log("this.selectedValue == 1", this.selectedValue == 1)
         );
       }
 
-    }else if (this.selectedValue == 3){
+    } else if (this.selectedValue == 3) {
       let body = {
         code: this.code,
         codeUserApprouver: "1",
@@ -844,17 +738,7 @@ console.log("this.selectedValue == 1", this.selectedValue == 1)
       console.log("this.selectedValue == 3", this.selectedValue == 3)
       if (this.code != null) {
         body['code'] = this.code;
-        this.recette_service.ApprouveTc(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-
-
-            this.errorHandler.handleError(error);
-
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.recette_service.ApprouveTc(body).subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
@@ -968,6 +852,8 @@ console.log("this.selectedValue == 1", this.selectedValue == 1)
         this.GetCaisseSortie();
         this.GetDevise();
         this.GetTransfertCaisseByCode();
+        this.GetSoldeCaisse(this.selectedCaisseSortie);
+        this.GetSoldeCaisseEntree(this.selectedCaisseEntree);
 
       }
     }
@@ -1035,15 +921,7 @@ console.log("this.selectedValue == 1", this.selectedValue == 1)
   listModeReglementPushed = new Array<any>();
   listModeReglementRslt = new Array<any>();
   GetModeReglement() {
-    this.paramService.GetModeReglement().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.paramService.GetModeReglement().subscribe((data: any) => {
       this.dataModeReglement = data;
       this.listModeReglementPushed = [];
       for (let i = 0; i < this.dataModeReglement.length; i++) {
@@ -1062,8 +940,18 @@ console.log("this.selectedValue == 1", this.selectedValue == 1)
     this.montantEnDevise = valeurx.toFixed(3);
   }
 
-  CloseModalApprouve(){
-    this.visibleModalApprove= false;
+  CloseModalApprouve() {
+    this.visibleModalApprove = false;
+  }
+
+  ClearForm() {
+    this.selectedCaisseEntree == "";
+    this.selectedCaisseSortie == "";
+    this.DeviseCaisse = "";
+    this.codeDevise = 0;
+    this.TauxChange = 0;
+    this.soldeCaisseEntree = "";
+    this.sodleCaisseSortie = "";
   }
 
 }

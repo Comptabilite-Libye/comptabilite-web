@@ -1,0 +1,22 @@
+ 
+<div class="form-group">
+    <div class="modal-header">
+        <h4 class="modal-title pull-center" style="text-transform: uppercase;text-align:center;">Expiration de session
+        </h4>
+    </div>
+    <div class="modal-body text-center">
+        <!-- <p [innerHTML]="message"></p> -->
+        <div class="input-group" *ngIf="afficheInput==true">
+            <!--   <input id="password" type="password"  [(ngModel)]="pass" class="form-control" placeholder="Password" (keyUp.enter)="login()"> -->
+            <!-- <input class="form-control with-success-addon aff"   id="passwordd"  [(ngModel)]="password" placeholder="Mot de passe" (keyUp.enter)="login()" type="password" #password> -->
+            <input type="password" class="form-control" id="passwordd" name="password" [(ngModel)]="form.password"
+                required #password="ngModel" />
+        </div>
+        <p [innerHTML]="alerte" style="color:red"></p>
+        <div class="text-center">
+            <a (click)="routing()" routerLink="/login" style="text-decoration: none !important;cursor: pointer">
+                <p [innerHTML]="mess" class="text-white opacity-90"></p>
+            </a>
+        </div>
+    </div>
+</div>

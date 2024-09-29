@@ -7,8 +7,7 @@ import { ParametrageService } from 'src/app/MenuParametrage/menu-parametrages/WS
 import { TypeRecette } from 'src/app/MenuParametrage/menu-parametrages/domaine/domaine';
 import { MessageService, ConfirmationService, PrimeNGConfig, SelectItem } from 'primeng/api';
 import { DatePipe } from '@angular/common'; 
-import { Calendar } from 'primeng/calendar';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { Calendar } from 'primeng/calendar'; 
    
 declare const PDFObject: any;
 
@@ -19,7 +18,7 @@ declare const PDFObject: any;
 })
 
 export class EditionRecetteComponent implements OnInit {
-  constructor(private errorHandler: ErrorHandlerService,public primengConfig: PrimeNGConfig, private param_service: ParametrageService, private datePipe: DatePipe) {
+  constructor( public primengConfig: PrimeNGConfig, private param_service: ParametrageService, private datePipe: DatePipe) {
     this.setLangAR();
     this.primengConfig.translationObserver.subscribe(res => console.log(res));
   }
@@ -129,15 +128,7 @@ export class EditionRecetteComponent implements OnInit {
   listTypeRecettePushed = new Array<any>();
   listTypeRecette = new Array<any>();
   GetTypeRecette() {
-    this.param_service.GetTypeRecette().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.param_service.GetTypeRecette() .subscribe((data: any) => {
       this.dataTypeRecetteDde = data;
       this.listTypeRecettePushed = [];
       for (let i = 0; i < this.dataTypeRecetteDde.length; i++) {

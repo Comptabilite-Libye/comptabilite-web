@@ -7,8 +7,7 @@ import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'
  
-import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
 import { TypeRecette } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
 import { Router } from '@angular/router';
@@ -27,7 +26,7 @@ export class TypeRecetteComponent {
   openModal!: boolean;
 
 
-  constructor(private router: Router ,private errorHandler: ErrorHandlerService,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private router: Router ,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }
@@ -124,14 +123,7 @@ export class TypeRecetteComponent {
 
 
   DeleteTypeRecette(code: any) {
-    this.param_service.DeleteTypeRecette(code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe(
+    this.param_service.DeleteTypeRecette(code) .subscribe(
       (res: any) => {
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
@@ -262,14 +254,7 @@ export class TypeRecetteComponent {
       if (this.code != null) {
         body['code'] = this.code;
 
-        this.param_service.UpdateTypeRecette(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error); 
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.param_service.UpdateTypeRecette(body) .subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
@@ -288,13 +273,7 @@ export class TypeRecetteComponent {
 
       }
       else {
-        this.param_service.PostTypeRecette(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error); 
-            return throwError(errorMessage);
-          })
-        ).subscribe(
+        this.param_service.PostTypeRecette(body) .subscribe(
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
@@ -332,14 +311,7 @@ export class TypeRecetteComponent {
   listDesig = new Array<any>(); 
   dataTypeRecette = new Array<TypeRecette>();
   GelAllTypeRecette() {
-    this.param_service.GetTypeRecette().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.param_service.GetTypeRecette() .subscribe((data: any) => {
 
       this.loadingComponent.IsLoading = false;
       this.IsLoading = false;

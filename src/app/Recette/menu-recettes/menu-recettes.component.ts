@@ -3,8 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { catchError, throwError } from 'rxjs';
 import { ParametrageService } from 'src/app/MenuParametrage/menu-parametrages/WService/parametrage.service';
-import { EncryptionService } from 'src/app/Shared/EcrypteService/EncryptionService';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { EncryptionService } from 'src/app/Shared/EcrypteService/EncryptionService'; 
 
 @Component({
   selector: 'app-menu-recettes',
@@ -14,7 +13,7 @@ import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler
 export class MenuRecettesComponent implements OnInit {
   items: MenuItem[] | undefined;
   encryptedValue: string = '';
-  constructor(private errorHandler: ErrorHandlerService,private encryptionService: EncryptionService, private paramServie: ParametrageService) {
+  constructor(private encryptionService: EncryptionService, private paramServie: ParametrageService) {
 
   }
   ngOnInit(): void {
@@ -28,15 +27,7 @@ export class MenuRecettesComponent implements OnInit {
 
 
   PasswordAnnulApprouvAC() {
-    this.paramServie.getParams("PassAnnullApprouveAC").pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe(
+    this.paramServie.getParams("PassAnnullApprouveAC") .subscribe(
 
       (res: any) => {
         let pass = res.valeur;
@@ -48,15 +39,7 @@ export class MenuRecettesComponent implements OnInit {
 
 
   PasswordAnnulApprouvTc() {
-    this.paramServie.getParams("PassAnnullApprouveTC").pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe(
+    this.paramServie.getParams("PassAnnullApprouveTC") .subscribe(
 
       (res: any) => {
         let pass = res.valeur;
@@ -65,9 +48,5 @@ export class MenuRecettesComponent implements OnInit {
       }
     )
   }
-
-  handleComponentClose() {
-    // Logic to perform when the child component closes
-    console.log("Child component closed");
-  }
+  
 }

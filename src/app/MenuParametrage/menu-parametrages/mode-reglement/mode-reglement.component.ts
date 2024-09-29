@@ -8,8 +8,7 @@ import { Table } from 'primeng/table';
 import * as alertifyjs from 'alertifyjs'
 import { ModeReglement } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
-import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
 import { Router } from '@angular/router';
 
 
@@ -24,7 +23,7 @@ export class ModeReglementComponent {
 
   IsLoading = true;
   openModal!: boolean;
-  constructor(private router: Router ,private errorHandler: ErrorHandlerService,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private router: Router  ,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
   }
   pdfData!: Blob;
   ngOnInit(): void {
@@ -120,14 +119,7 @@ export class ModeReglementComponent {
 
 
   DeleteModeReglement(code: any) {
-    this.param_service.DeleteModeReglement(code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe(
+    this.param_service.DeleteModeReglement(code) .subscribe(
       (res: any) => {
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
@@ -253,14 +245,7 @@ export class ModeReglementComponent {
       if (this.code != null) {
         body['code'] = this.code;
 
-        this.param_service.UpdateModeReglement(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error); 
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.param_service.UpdateModeReglement(body) .subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
@@ -279,13 +264,7 @@ export class ModeReglementComponent {
 
       }
       else {
-        this.param_service.PostModeReglement(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error); 
-            return throwError(errorMessage);
-          })
-        ).subscribe(
+        this.param_service.PostModeReglement(body).subscribe(
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
@@ -332,15 +311,7 @@ export class ModeReglementComponent {
   dataModeReglement = new Array<ModeReglement>();
   content?: string;
   GelAllModeReglement() {
-    this.param_service.GetModeReglement().pipe(
-
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.param_service.GetModeReglement() .subscribe((data: any) => {
       this.loadingComponent.IsLoading = false;
       this.IsLoading = false;
       this.dataModeReglement = data;

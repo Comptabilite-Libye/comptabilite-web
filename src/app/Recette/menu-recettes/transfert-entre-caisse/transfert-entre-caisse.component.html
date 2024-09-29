@@ -228,7 +228,7 @@
                         <div class="dop control-input flex-8">
                             <p-dropdown name="caisseSorite"   [filter]="true" appendTo="body" class="dropdown"
                                 [options]="listCaisseSortieRslt" [(ngModel)]="selectedCaisseSortie" [showClear]="true"
-                                [style]="{'width':'100%'}" (onChange)="GetCaisseEntree();GetSoldeCaisse(selectedCaisseSortie)" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                                [style]="{'width':'100%'}" (onClear)="ClearForm()" (ngModelChange)="GetCaisseEntree();GetSoldeCaisse(selectedCaisseSortie)" [autoDisplayFirst]="true" placeholder="&nbsp;"
                                 [required]="true" [lazy]="true" #caisseSorite="ngModel">
                             </p-dropdown>
                         </div>
@@ -237,10 +237,10 @@
                         <label class="control-label  flex-4">العملة : <i
                             class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                     <div class="control-input flex-8">
-                        <input readonly disabled=""  type="text" id="DeviseCaisse"  style="max-width: 80%;" maxlength="200" name="sodleCaisseSortie"
+                        <input readonly disabled=""  type="text" id="DeviseCaisse"   style="max-width: 80%;" maxlength="200" name="sodleCaisseSortie"
                             class="onlyForCentral form-control-dev input-xs" [(ngModel)]="DeviseCaisse"
                             [required]="true">
-                            <input readonly disabled=""  type="text" id="codeDevise"  style="max-width: 0%;display: none;" maxlength="200" name="sodleCaisseSortie"
+                            <input readonly disabled=""  type="text" id="codeDevise"   style="max-width: 0%;display: none;" maxlength="200" name="sodleCaisseSortie"
                             class="onlyForCentral form-control-dev input-xs" [(ngModel)]="codeDevise"
                             [required]="true">
                     </div>
@@ -283,7 +283,7 @@
                         <label class="control-label  flex-4">الرصيد : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-8" >
-                            <input type="text" id="soldeCaisseEntree"  style="max-width: 80%;" maxlength="200" name="soldeCaisseEntree"
+                            <input readonly disabled="" type="text" id="soldeCaisseEntree"  style="max-width: 80%;" maxlength="200" name="soldeCaisseEntree"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="soldeCaisseEntree"
                                 [required]="true">
                         </div>
@@ -329,7 +329,7 @@
                         <label class="control-label flex-7">الفيمة بالعملة المحلية :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-5">
-                            <input type="number" id="montantEnDevise" maxlength="200" min="0" name="montantEnDevise"
+                            <input readonly disabled="" type="number" id="montantEnDevise" maxlength="200" min="0" name="montantEnDevise"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="montantEnDevise"
                                 [required]="true">
                         </div>
@@ -342,10 +342,7 @@
 
                         <label class="control-label flex-3">الملاحظة :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input flex-7">
-                            <!-- <input type="text" id="observation" name="observation"
-                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="observation"
-                                [required]="true"> -->
+                        <div class="control-input flex-7"> 
                             <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="observation"></textarea>
                         </div>
 
@@ -358,6 +355,8 @@
         </div>
     </div>
 </p-dialog>
+
+ 
 
 <!-- modal primeNG  Delete-->
 <p-dialog class="modal-delete" id="ModalDelete" data-backdrop="false" header="Header" [(visible)]="visDelete"
@@ -429,43 +428,8 @@
         <p-toast key="toast1"></p-toast>
     </ng-template>
 
-    <div class="modal-body">
-
-        <fieldset class="flex-12">
-            <div class="flex-row-start flex-12">
-                <section class="flex-row-start flex-8" disabled="">
-                    <label class="control-label flex-6" style="padding: 0px 15px 0px 0px;"> مرحلة الإعتماد : </label>
-                    <div class="control-input  flex-5">
-
-                        <label for="Encours"
-                            style="padding: 0px 10px 0px 10px;margin: 0px;font-size: 13px;font-weight: 500;">
-                            في طور التأكيد</label>
-                        <p-radioButton name="selectedValue" value=1 [(ngModel)]="selectedValue"
-                            inputId="Encours"></p-radioButton>
-
-                    </div>
-                    <div class="control-input  flex-4">
-                        <label for="Valider"
-                            style="padding: 0px 10px 0px 10px;margin: 0px;font-size: 13px;font-weight: 500;">
-                            إعتماد</label>
-                        <p-radioButton name="groupname" value=2 [(ngModel)]="selectedValue"
-                            inputId="Valider"></p-radioButton>
-
-                    </div>
-                    <div class="control-input  flex-4">
-                        <label for="Refuser"
-                            style="padding: 0px 10px 0px 10px;margin: 0px;;font-size: 13px;font-weight: 500;">
-                            رفض</label>
-                        <p-radioButton name="groupname" value=3 [(ngModel)]="selectedValue"
-                            inputId="Refuser"></p-radioButton>
-
-                    </div>
-
-                </section>
-
-            </div>
-        </fieldset>
-
+    <div class="modal-body" (mousemove)="CalculeEnDevise()">
+        <p-toast key="toast1"></p-toast>
         <div class="flex-row-start flex-12">
             <fieldset class="flex-12">
                 <div class="flex-row-start flex-12">
@@ -483,32 +447,44 @@
                         <label class="control-label flex-4">من خزينة :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="dop control-input flex-8">
-                            <p-dropdown name="caisseSorite" [filter]="true" appendTo="body" class="dropdown"
+                            <p-dropdown name="caisseSorite"   [filter]="true" appendTo="body" class="dropdown"
                                 [options]="listCaisseSortieRslt" [(ngModel)]="selectedCaisseSortie" [showClear]="true"
-                                [style]="{'width':'100%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                                [style]="{'width':'100%'}" (onClear)="ClearForm()" (ngModelChange)="GetCaisseEntree();GetSoldeCaisse(selectedCaisseSortie)" [autoDisplayFirst]="true" placeholder="&nbsp;"
                                 [required]="true" [lazy]="true" #caisseSorite="ngModel">
                             </p-dropdown>
                         </div>
                     </section>
                     <section class="flex-row-start flex-5" style="padding-right: 10px;">
-                        <label class="control-label  flex-4" style="max-width: 40%;">طريقة الدفع : <i
-                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input flex-8" style="max-width: 65%;">
-                            <p-dropdown name="caisseSorite" [filter]="true" appendTo="body" class="dropdown"
-                                [options]="listModeReglementRslt" [(ngModel)]="selectedModeReglement" [showClear]="true"
-                                [style]="{'width':'100%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
-                                [required]="true" [lazy]="true" #caisseSorite="ngModel">
-                            </p-dropdown>
-                        </div>
+                        <label class="control-label  flex-4">العملة : <i
+                            class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                    <div class="control-input flex-8">
+                        <input readonly disabled=""  type="text" id="DeviseCaisse"   style="max-width: 80%;" maxlength="200" name="sodleCaisseSortie"
+                            class="onlyForCentral form-control-dev input-xs" [(ngModel)]="DeviseCaisse"
+                            [required]="true">
+                            <input readonly disabled=""  type="text" id="codeDevise"   style="max-width: 0%;display: none;" maxlength="200" name="sodleCaisseSortie"
+                            class="onlyForCentral form-control-dev input-xs" [(ngModel)]="codeDevise"
+                            [required]="true">
+                    </div>
                     </section>
-                    <section class="flex-row-start flex-5" style="padding-right: 10px;">
+                    <!-- <section class="flex-row-start flex-5" style="padding-right: 10px;">
                         <label class="control-label  flex-4">الرصيد : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-8">
-                            <input type="text" id="sodleCaisseSortie" maxlength="200" name="sodleCaisseSortie"
+                            <input type="text" id="sodleCaisseSortie"  style="max-width: 40%;" maxlength="200" name="sodleCaisseSortie"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="sodleCaisseSortie"
                                 [required]="true">
                         </div>
+                    </section> -->
+
+                    <section class="flex-row-start flex-5" style="padding-right: 10px;">
+                        <label class="control-label flex-5">الرصيد:<i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input flex-7">
+                            <input readonly disabled=""  type="number" id="sodleCaisseSortie"
+                                maxlength="200" name="sodleCaisseSortie" class="onlyForCentral form-control-dev input-xs"
+                                [(ngModel)]="sodleCaisseSortie" [required]="true">
+                        </div>
+
                     </section>
                 </div>
                 <div class="flex-row-start flex-12">
@@ -517,8 +493,8 @@
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="dop control-input flex-8">
                             <p-dropdown name="caisseAlimenter" [filter]="true" appendTo="body" class="dropdown"
-                                [options]="listCaisseEntreeRslt" [(ngModel)]="selectedCaisseEntree" [showClear]="true"
-                                [style]="{'width':'100%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                                [options]="listCaisseEntreeRslt"  [(ngModel)]="selectedCaisseEntree" [showClear]="true"
+                                [style]="{'width':'100%'}" (onChange)="GetSoldeCaisseEntree(selectedCaisseEntree)" [autoDisplayFirst]="true" placeholder="&nbsp;"
                                 [required]="true" [lazy]="true" #caisseAlimenter="ngModel">
                             </p-dropdown>
                         </div>
@@ -527,50 +503,68 @@
 
                         <label class="control-label  flex-4">الرصيد : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input flex-8">
-                            <input type="text" id="soldeCaisseEntree" maxlength="200" name="soldeCaisseEntree"
+                        <div class="control-input flex-8" >
+                            <input readonly disabled="" type="text" id="soldeCaisseEntree"  style="max-width: 80%;" maxlength="200" name="soldeCaisseEntree"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="soldeCaisseEntree"
                                 [required]="true">
                         </div>
                     </section>
                     <section class="flex-row-start flex-5" style="padding-right: 10px;">
-
                         <label class="control-label flex-5">الصرف:<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-7">
-                            <input readonly disabled="" style="max-width: 25%;" type="number" id="TauxChange"
+                            <input readonly disabled=""  type="number" id="TauxChange"
                                 maxlength="200" name="TauxChange" class="onlyForCentral form-control-dev input-xs"
                                 [(ngModel)]="TauxChange" [required]="true">
                         </div>
+
                     </section>
                 </div>
 
 
                 <div class="flex-row-start flex-12">
-                    <section class="flex-row-start flex-6">
+                    <section class="flex-row-start flex-5">
+                        <label class="control-label  flex-3" style="max-width: 85px;">طريقة الدفع : <i
+                            class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                    <div class="control-input flex-7"  >
+                        <p-dropdown name="caisseSorite" [filter]="true" appendTo="body" class="dropdown"
+                            [options]="listModeReglementRslt" [(ngModel)]="selectedModeReglement" [showClear]="true"
+                            [style]="{'width':'120%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                            [required]="true" [lazy]="true" #caisseSorite="ngModel">
+                        </p-dropdown>
+                    </div>
+                    </section>
+                    <section class="flex-row-start flex-5">
 
-                        <label class="control-label flex-3">القيمة :<i
+                        <label class="control-label flex-5">القيمة :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-7">
-                            <input type="number" id="montant" maxlength="200" min="0" name="montant"
+                            <input type="number" id="montant"    maxlength="200" min="0" name="montant"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="montant"
+                                [required]="true">
+                        </div>
+ 
+                    </section>
+                    <section class="flex-row-start flex-5">
+
+                        <label class="control-label flex-7">الفيمة بالعملة المحلية :<i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input flex-5">
+                            <input readonly disabled="" type="number" id="montantEnDevise" maxlength="200" min="0" name="montantEnDevise"
+                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="montantEnDevise"
                                 [required]="true">
                         </div>
 
                     </section>
-                    <section class="flex-row-start flex-6">
-
-                    </section>
+                    
                 </div>
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
 
                         <label class="control-label flex-3">الملاحظة :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input flex-7">
-                            <input type="text" id="observation" name="observation"
-                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="observation"
-                                [required]="true">
+                        <div class="control-input flex-7"> 
+                            <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="observation"></textarea>
                         </div>
 
                     </section>

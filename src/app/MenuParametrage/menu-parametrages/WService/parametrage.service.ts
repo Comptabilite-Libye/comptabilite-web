@@ -46,9 +46,9 @@ export class ParametrageService {
 
     return this.http.get(`${environment.API_Parametrage}caisse/`+code)
   }
-  GetCaisseNotIn(code:number): Observable<any> {
+  GetCaisseNotIn(code:number,codeDevise:number): Observable<any> {
 
-    return this.http.get(`${environment.API_Parametrage}caisse/not_in/`+code)
+    return this.http.get(`${environment.API_Parametrage}caisse/not_in?code=`+code +`&codeDevise=`+codeDevise)  
   }
   PostCaisse(body: any) : Observable<any> {
 

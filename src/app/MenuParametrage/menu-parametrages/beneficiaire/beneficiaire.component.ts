@@ -9,8 +9,7 @@ import * as alertifyjs from 'alertifyjs'
 import { Beneficiaire } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
 
 
 declare const PDFObject: any;
@@ -26,7 +25,7 @@ export class BeneficiaireComponent {
   openModal!: boolean;
 
 
-  constructor(private errorHandler: ErrorHandlerService,private loadingComponent : LoadingComponent,private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor( private loadingComponent : LoadingComponent,private router: Router, private route: ActivatedRoute, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }
@@ -121,14 +120,7 @@ export class BeneficiaireComponent {
 
 
   DeleteBeneficiaire(code: any) {
-    this.param_service.DeleteBeneficiaire(code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe(
+    this.param_service.DeleteBeneficiaire(code) .subscribe(
       (res: any) => {
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
@@ -259,14 +251,7 @@ export class BeneficiaireComponent {
       if (this.code != null) {
         body['code'] = this.code;
 
-        this.param_service.UpdateBeneficiaire(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error); 
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.param_service.UpdateBeneficiaire(body) .subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
@@ -285,13 +270,7 @@ export class BeneficiaireComponent {
 
       }
       else {
-        this.param_service.PostBeneficiaire(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error); 
-            return throwError(errorMessage);
-          })
-        ).subscribe(
+        this.param_service.PostBeneficiaire(body) .subscribe(
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
@@ -342,14 +321,7 @@ export class BeneficiaireComponent {
   // clonedCars: { [s: string]: Matiere } = {}; 
   dataBeneficiaire = new Array<Beneficiaire>();
   GelAllBeneficiaire() {
-    this.param_service.GetBeneficiaire().pipe( 
-        catchError((error: HttpErrorResponse) => {
-          let errorMessage = '';
-          this.errorHandler.handleError(error); 
-          return throwError(errorMessage);
-        }) 
-    
-    ).subscribe((data: any) => {
+    this.param_service.GetBeneficiaire().subscribe((data: any) => {
 
 
       this.loadingComponent.IsLoading = false;

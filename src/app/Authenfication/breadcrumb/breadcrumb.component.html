@@ -1,4 +1,4 @@
-<ul class="breadcrumb">
+<ul class="breadcrumb" *ngIf="VisibleBreadCrmb">
     <li *ngFor="let breadcrumb of breadcrumbs"
         class="breadcrumb-item">
         <i class="{{ breadcrumb.icon }}"></i>

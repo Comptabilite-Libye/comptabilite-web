@@ -21,7 +21,7 @@
                 <p-contextMenu #cm [model]="items" data-original-title="ModalPassword" data-toggle="modal" appendTo="body"
                 data-target="#ModalPassword"></p-contextMenu>
 
-                <p-table #dt1   [contextMenu]="cm" [value]="dataAlimentationCaisse" [globalFilterFields]="['designationAr', 'designationLt']"
+                <p-table  [paginator]="true"  [rows]="10"        #dt1   [contextMenu]="cm" [value]="dataAlimentationCaisse" [globalFilterFields]="['designationAr', 'designationLt']"
                     selectionMode="single" [metaKeySelection]="false" [(selection)]="selectedAlimentationCaisse"
                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" dataKey="code"
                     [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
@@ -179,6 +179,7 @@
 
                         </tr>
                     </ng-template>
+                    
 
                 </p-table>
 
@@ -275,8 +276,8 @@
                             [required]="true" [lazy]="true" #caisseAlimenter="ngModel">
                         </p-dropdown> -->
 
-                        <input readonly disabled=""   type="text" id="montantDevise" maxlength="200"
-                        name="montantDevise" class="onlyForCentral form-control-dev input-xs"
+                        <input readonly disabled=""   type="text" id="DesigDevise" maxlength="200"
+                        name="DesigDevise" class="onlyForCentral form-control-dev input-xs"
                         [(ngModel)]="DesigDevise" [required]="true">
 
                 
@@ -295,8 +296,8 @@
                         <label class="control-label flex-5">القيمة بالعملة المحلية :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-7">
-                            <input readonly disabled="" style="max-width: 65%;" type="text" id="montantDevise" maxlength="200"
-                                name="montantDevise" class="onlyForCentral form-control-dev input-xs"
+                            <input readonly disabled="" style="max-width: 65%;" type="text" id="montantEnDevise" maxlength="200"
+                                name="montantEnDevise" class="onlyForCentral form-control-dev input-xs"
                                 [(ngModel)]="montantEnDevise" [required]="true">
                         </div>
 
@@ -582,8 +583,8 @@
                         <label class="control-label flex-3"> العملة : <i
                             class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                     <div class="control-input flex-7">
-                        <input readonly disabled=""   type="text" id="montantDevise" maxlength="200"
-                        name="montantDevise" class="onlyForCentral form-control-dev input-xs"
+                        <input readonly disabled=""   type="text" id="DesigDevise" maxlength="200"
+                        name="DesigDevise" class="onlyForCentral form-control-dev input-xs"
                         [(ngModel)]="DesigDevise" [required]="true">
 
                 
@@ -602,8 +603,8 @@
                         <label class="control-label flex-5">القيمة بالعملة المحلية :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-7">
-                            <input readonly disabled="" style="max-width: 65%;" type="text" id="montantDevise" maxlength="200"
-                                name="montantDevise" class="onlyForCentral form-control-dev input-xs"
+                            <input readonly disabled="" style="max-width: 65%;" type="text" id="montantEnDevise" maxlength="200"
+                                name="montantEnDevise" class="onlyForCentral form-control-dev input-xs"
                                 [(ngModel)]="montantEnDevise" [required]="true">
                         </div>
 
@@ -686,7 +687,7 @@
                                                 <td style="width: 50px !important;">
                                                     <input  disabled=""   [(ngModel)]="domaine.montantDevise " style="width: 100%;border: 0px;"
                                                         class="InputQte" type="number" id="montantDevise" name="montantDevise" required
-                                                        minlength="4" maxlength="8" size="6" min="0"
+                                                        minlength="4" maxlength="8" size="10" min="0"
                                                           />
                                                 </td>
 

@@ -8,8 +8,7 @@ import { Table } from 'primeng/table';
 import * as alertifyjs from 'alertifyjs'
 import { TypeCaisse } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
-import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
 import { Router } from '@angular/router';
 
 declare const PDFObject: any;
@@ -25,7 +24,7 @@ export class TypeCaisseComponent {
   openModal!: boolean;
 
 
-  constructor(private router: Router ,private errorHandler: ErrorHandlerService, private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private router: Router  , private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }
@@ -119,14 +118,7 @@ export class TypeCaisseComponent {
 
 
   DeleteTypeCaisse(code: any) {
-    this.param_service.DeleteTypeCaisse(code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-
-    ).subscribe(
+    this.param_service.DeleteTypeCaisse(code) .subscribe(
       (res: any) => {
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
@@ -259,14 +251,7 @@ export class TypeCaisseComponent {
       if (this.code != null) {
         body['code'] = this.code;
 
-        this.param_service.UpdateTypeCaisse(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error); 
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.param_service.UpdateTypeCaisse(body) .subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
@@ -285,13 +270,7 @@ export class TypeCaisseComponent {
 
       }
       else {
-        this.param_service.PostTypeCaisse(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error); 
-            return throwError(errorMessage);
-          })
-        ).subscribe(
+        this.param_service.PostTypeCaisse(body) .subscribe(
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
@@ -342,14 +321,7 @@ export class TypeCaisseComponent {
   // clonedCars: { [s: string]: Matiere } = {}; 
   dataTypeCaisse = new Array<TypeCaisse>();
   GelAllTypeCaisse() {
-    this.param_service.GetTypeCaisse().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.param_service.GetTypeCaisse() .subscribe((data: any) => {
       this.loadingComponent.IsLoading = false;
       this.IsLoading = false;
 

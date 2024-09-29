@@ -10,11 +10,17 @@ import { Caisse, Devise } from '../../../MenuParametrage/menu-parametrages/domai
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
 import { CompteurService } from 'src/app/Shared/Compteur/CompteurService';
 import { Compteur } from 'src/app/Shared/Compteur/domaine';
-import { EncryptionService } from 'src/app/Shared/EcrypteService/EncryptionService';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { EncryptionService } from 'src/app/Shared/EcrypteService/EncryptionService'; 
 import { RecetteServiceService } from '../WsRecette/recette-service.service';
 import { Router } from '@angular/router';
 declare const PDFObject: any;
+interface PageEvent {
+  first: number;
+  rows: number;
+  page: number;
+  pageCount: number;
+}
+
 @Component({
   selector: 'app-entree-caisse',
   templateUrl: './entree-caisse.component.html',
@@ -25,7 +31,7 @@ export class EntreeCaisseComponent {
   openModal!: boolean;
   IsLoading = true;
   DisPrint: boolean = true;
-  constructor(private router: Router , private errorHandler: ErrorHandlerService, private encryptionService: EncryptionService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService, private CompteurService: CompteurService, private paramService: ParametrageService) {
+  constructor(private router: Router  , private encryptionService: EncryptionService, private loadingComponent: LoadingComponent, private recette_service: RecetteServiceService, private CompteurService: CompteurService, private paramService: ParametrageService) {
   }
   pdfData!: Blob;
   isLoading = false;
@@ -46,6 +52,15 @@ export class EntreeCaisseComponent {
     audio.load();
     audio.play();
   }
+
+  first: number = 0;
+
+  rows: number = 10;
+
+  onPageChange(event: PageEvent) {
+      this.first = event.first;
+      this.rows = event.rows;
+  }
   ngOnInit(): void {
     this.items = [
       // { label: 'Validation', icon: 'pi pi-fw pi-check-square', command: () => this.OpenPasswordModal('PasswordModal') },
@@ -65,14 +80,7 @@ export class EntreeCaisseComponent {
 
   DataCodeSaisie = new Array<Compteur>();
   GetCodeSaisie() {
-    this.CompteurService.GetcompteurCodeSaisie("CodeSaisieAC").pipe( 
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-    ).
+    this.CompteurService.GetcompteurCodeSaisie("CodeSaisieAC") .
       subscribe((data: any) => {
         this.DataCodeSaisie = data;
         this.codeSaisie = data.prefixe + data.suffixe;
@@ -205,17 +213,7 @@ export class EntreeCaisseComponent {
 
 
   DeleteAlimentationCaisse() {
-    this.recette_service.DeleteAlimentationCaisse(this.selectedAlimentationCaisse.code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-
-        return throwError(errorMessage);
-
-      })
-
-    ).subscribe(
+    this.recette_service.DeleteAlimentationCaisse(this.selectedAlimentationCaisse.code) .subscribe(
       (res: any) => {
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Deleted");
@@ -399,16 +397,7 @@ export class EntreeCaisseComponent {
       }
       if (this.code != null) {
         body['code'] = this.code;
-        this.recette_service.UpdateAlimentationCaisse(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            this.final = new Array<any>();
-            let errorMessage = '';
-
-            this.errorHandler.handleError(error);
-
-            return throwError(errorMessage);
-          })
-        ).subscribe(
+        this.recette_service.UpdateAlimentationCaisse(body).subscribe(
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
@@ -425,17 +414,7 @@ export class EntreeCaisseComponent {
         );
       }
       else {
-        this.recette_service.PostAlimentationCaisse(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            this.final = new Array<any>();
-            let errorMessage = '';
-
-            this.errorHandler.handleError(error);
-
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.recette_service.PostAlimentationCaisse(body) .subscribe(
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
@@ -491,17 +470,7 @@ export class EntreeCaisseComponent {
   codeSaisieSorted: any;
   GelAllAlimentationCaisse() {
 
-    this.recette_service.GetAllAlimentationCaisse().pipe(
-
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.recette_service.GetAllAlimentationCaisse() .subscribe((data: any) => {
       this.loadingComponent.IsLoading = false;
       this.IsLoading = false;
       this.dataAlimentationCaisse = data;
@@ -517,15 +486,7 @@ export class EntreeCaisseComponent {
   listCaissePushed = new Array<any>();
   listCaisseRslt = new Array<any>();
   GetCaisse() {
-    this.paramService.GetCaisse().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.paramService.GetCaisse().subscribe((data: any) => {
       this.dataCaisseDde = data;
       this.listCaissePushed = [];
       for (let i = 0; i < this.dataCaisseDde.length; i++) {
@@ -540,14 +501,7 @@ export class EntreeCaisseComponent {
   listTypeRecettePushed = new Array<any>();
   listTypeRecetteRslt = new Array<any>();
   GetTypeRecette() {
-    this.paramService.GetTypeRecette().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-    ).subscribe((data: any) => {
+    this.paramService.GetTypeRecette().subscribe((data: any) => {
       this.dataTypeRecetteDde = data;
       this.listTypeRecettePushed = [];
       for (let i = 0; i < this.dataTypeRecetteDde.length; i++) {
@@ -565,15 +519,7 @@ export class EntreeCaisseComponent {
   listModeReglementPushed = new Array<any>();
   listModeReglementRslt = new Array<any>();
   GetModeReglement() {
-    this.paramService.GetModeReglement().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.paramService.GetModeReglement().subscribe((data: any) => {
       this.dataModeReglement = data;
       this.listModeReglementPushed = [];
       for (let i = 0; i < this.dataModeReglement.length; i++) {
@@ -585,14 +531,7 @@ export class EntreeCaisseComponent {
 
 
   GetAlimentationCaisseByCode() {
-    this.recette_service.GetAllAlimentationCaisseByCode(this.selectedAlimentationCaisse.code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-    ).subscribe((data: any) => {
+    this.recette_service.GetAllAlimentationCaisseByCode(this.selectedAlimentationCaisse.code).subscribe((data: any) => {
       this.listDetailsTypeRecette = data.detailsAlimentationCaisseDTOs;
 
 
@@ -635,14 +574,7 @@ export class EntreeCaisseComponent {
     if (this.selectedEtatApprouve == undefined) {
 
     } else {
-      this.recette_service.GetAlimentationCaisseByEtatApprouved(this.selectedEtatApprouve.code).pipe(
-        catchError((error: HttpErrorResponse) => {
-          let errorMessage = '';
-
-          this.errorHandler.handleError(error);
-          return throwError(errorMessage);
-        })
-      ).subscribe((data: any) => {
+      this.recette_service.GetAlimentationCaisseByEtatApprouved(this.selectedEtatApprouve.code).subscribe((data: any) => {
         this.loadingComponent.IsLoading = false;
         this.IsLoading = false;
 
@@ -756,7 +688,7 @@ export class EntreeCaisseComponent {
         } else {
 
 
-          this.errorHandler.handleError(error);
+         
         }
 
         return throwError(errorMessage);
@@ -776,16 +708,7 @@ export class EntreeCaisseComponent {
 
 
   LoadDeviseCaisse() {
-    this.paramService.GetCaisseByCode(this.selectedCaisse).pipe(
-
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.paramService.GetCaisseByCode(this.selectedCaisse) .subscribe((data: any) => {
 
       this.DesigDevise = data.deviseDTO.designationAr;
       this.selectedDevise = data.deviseDTO.code;
@@ -822,17 +745,7 @@ export class EntreeCaisseComponent {
 
       if (this.code != null) {
         body['code'] = this.code;
-        this.recette_service.CancelApprouveAC(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-
-
-            this.errorHandler.handleError(error);
-
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.recette_service.CancelApprouveAC(body).subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
@@ -867,16 +780,7 @@ export class EntreeCaisseComponent {
 
       if (this.code != null) {
         body['code'] = this.code;
-        this.recette_service.ApprouveAc(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-
-
-            this.errorHandler.handleError(error);
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.recette_service.ApprouveAc(body) .subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');

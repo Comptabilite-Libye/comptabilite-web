@@ -8,8 +8,7 @@ import { Table } from 'primeng/table';
 import * as alertifyjs from 'alertifyjs'
 import { Devise, TauxDeChange } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
-import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
 import { Router } from '@angular/router';
 
 
@@ -25,7 +24,7 @@ export class TauxChangeComponent {
   openModal!: boolean;
 
 
-  constructor(private router: Router ,private errorHandler: ErrorHandlerService,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private router: Router  ,private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }
@@ -222,14 +221,7 @@ export class TauxChangeComponent {
       if (this.code != null) {
         body['code'] = this.code;
 
-        this.param_service.UpdateTauxDeChange(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error); 
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.param_service.UpdateTauxDeChange(body) .subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
@@ -248,13 +240,7 @@ export class TauxChangeComponent {
 
       }
       else {
-        this.param_service.PostTauxDeChange(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error); 
-            return throwError(errorMessage);
-          })
-        ).subscribe(
+        this.param_service.PostTauxDeChange(body) .subscribe(
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
@@ -297,14 +283,7 @@ export class TauxChangeComponent {
   // clonedCars: { [s: string]: Matiere } = {}; 
   dataTauxDeChange = new Array<TauxDeChange>();
   GelTauxDeChange() {
-    this.param_service.GetTauxDeChange().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.param_service.GetTauxDeChange() .subscribe((data: any) => {
 
       this.loadingComponent.IsLoading = false;
       this.IsLoading = false;
@@ -322,13 +301,7 @@ export class TauxChangeComponent {
   listDevisePushed = new Array<any>();
   listDeviseRslt = new Array<any>();
   GetDeviseByHasNotTaux() {
-    this.param_service.GetDeviseByHasNotTaux().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-    ).subscribe((data: any) => {
+    this.param_service.GetDeviseByHasNotTaux() .subscribe((data: any) => {
       this.dataDevise = data;
       this.listDevisePushed = [];
       for (let i = 0; i < this.dataDevise.length; i++) {
@@ -342,13 +315,7 @@ export class TauxChangeComponent {
   // dataDeviseByCode = new Array<Devise>();
   // listDeviseByCodePushed = new Array<any>();
   GetDeviseByCode(code: number) {
-    this.param_service.GetDeviseByCode(code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error); 
-        return throwError(errorMessage);
-      })
-    ).subscribe((data: any) => {
+    this.param_service.GetDeviseByCode(code) .subscribe((data: any) => {
       this.dataDevise = data;
       this.listDevisePushed = [];
         this.listDevisePushed.push({ label: data.designationAr, value: data.code })

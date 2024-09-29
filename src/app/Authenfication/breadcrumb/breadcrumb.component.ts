@@ -9,15 +9,12 @@ import { filter } from 'rxjs';
 })
 export class BreadcrumbComponent  implements OnInit {
   public breadcrumbs!: Breadcrumb[];
-
-  /**
-  /*.filter(event => event instanceof NavigationEnd)
- .distinctUntilChanged()
- .map(event =>  this.buildBreadCrumb(this.activatedRoute.root)); */
-
-  constructor(private router: Router, private route: ActivatedRoute) {}
+ 
+  VisibleBreadCrmb : boolean = false; 
+  constructor(private router: Router, private route: ActivatedRoute ) {}
 
   ngOnInit() {
+    this.  MethodeVisbileBreadCrumb();
     let breadcrumb: Breadcrumb = {
       label: 'الرئيسية',
       url: '',
@@ -35,6 +32,20 @@ export class BreadcrumbComponent  implements OnInit {
       });
   }
 
+
+  MethodeVisbileBreadCrumb(){   
+    var count=0;
+    console.log(sessionStorage.getItem("auth-user"));
+    var intervalId = setInterval(() =>{if(sessionStorage.getItem("auth-user") == '' ||  sessionStorage.getItem("auth-user") === null ){ 
+      this.VisibleBreadCrmb = false;
+    }else{
+      this.VisibleBreadCrmb = true; 
+    } 
+    count=count+1;
+    if (count==100) clearInterval(intervalId);
+    }, 10); 
+  }
+
   private getBreadcrumbs(
     route: ActivatedRoute,
     url: string = '',
@@ -45,8 +56,8 @@ export class BreadcrumbComponent  implements OnInit {
     // debugger;
     //get the child routes
     let children: ActivatedRoute[] = route.children;
-    console.log(route);
-    console.log(route.children);
+    // console.log(route);
+    // console.log(route.children);
 
     //return if there are no more children
     if (children.length === 0) {

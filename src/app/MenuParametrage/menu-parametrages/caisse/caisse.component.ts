@@ -8,9 +8,7 @@ import { Table } from 'primeng/table';
 import * as alertifyjs from 'alertifyjs'
 import { Caisse, Devise, TypeCaisse } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
-import { LoadingComponent } from 'src/app/Shared/loading/loading.component';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
 import { Router } from '@angular/router';
 
 
@@ -24,7 +22,7 @@ declare const PDFObject: any;
 export class CaisseComponent implements OnInit {
   IsLoading = true;
   openModal!: boolean;
-  constructor(private router: Router ,private errorHandler: ErrorHandlerService, private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder ) {
+  constructor(private router: Router  , private loadingComponent: LoadingComponent, private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder ) {
 
   }
 
@@ -136,14 +134,7 @@ export class CaisseComponent implements OnInit {
 
 
   DeleteCaisse(code: any) {
-    this.param_service.DeleteCaisse(code).pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-
-    ).subscribe(
+    this.param_service.DeleteCaisse(code) .subscribe(
       (res: any) => {
         alertifyjs.set('notifier', 'position', 'top-left');
         alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "تم الحذف");
@@ -263,14 +254,7 @@ export class CaisseComponent implements OnInit {
       if (this.code != null) {
         body['code'] = this.code;
 
-        this.param_service.UpdateCaisse(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error);
-            return throwError(errorMessage);
-          })
-
-        ).subscribe(
+        this.param_service.UpdateCaisse(body) .subscribe(
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
@@ -289,13 +273,7 @@ export class CaisseComponent implements OnInit {
 
       }
       else {
-        this.param_service.PostCaisse(body).pipe(
-          catchError((error: HttpErrorResponse) => {
-            let errorMessage = '';
-            this.errorHandler.handleError(error);
-            return throwError(errorMessage);
-          })
-        ).subscribe(
+        this.param_service.PostCaisse(body) .subscribe(
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
             alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
@@ -342,15 +320,7 @@ export class CaisseComponent implements OnInit {
   dataCaisse = new Array<Caisse>();
   content?: string;
   GelAllCaisse() {
-    this.param_service.GetCaisse().pipe(
-
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-
-    ).subscribe((data: any) => {
+    this.param_service.GetCaisse() .subscribe((data: any) => {
       this.loadingComponent.IsLoading = false;
       this.IsLoading = false;
       this.dataCaisse = data;
@@ -366,13 +336,7 @@ export class CaisseComponent implements OnInit {
   listDevisePushed = new Array<any>();
   listDeviseRslt = new Array<any>();
   GetDevise() {
-    this.param_service.GetDevise().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-    ).subscribe((data: any) => {
+    this.param_service.GetDevise() .subscribe((data: any) => {
       this.dataDevise = data;
       this.listDevisePushed = [];
       for (let i = 0; i < this.dataDevise.length; i++) {
@@ -388,13 +352,7 @@ export class CaisseComponent implements OnInit {
   listTypeCaissePushed = new Array<any>();
   listTypeCaisseRslt = new Array<any>();
   GetlTypeCaisse() {
-    this.param_service.GetTypeCaisse().pipe(
-      catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
-        this.errorHandler.handleError(error);
-        return throwError(errorMessage);
-      })
-    ).subscribe((data: any) => {
+    this.param_service.GetTypeCaisse() .subscribe((data: any) => {
       this.dataTypeCaisse = data;
       this.listTypeCaissePushed = [];
       for (let i = 0; i < this.dataTypeCaisse.length; i++) {

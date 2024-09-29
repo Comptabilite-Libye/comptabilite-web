@@ -1,9 +1,10 @@
-import { Component, OnInit,ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TokenStorageService } from './Authenfication/_services/token-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs'; 
+import { Subscription } from 'rxjs';
 import { AuthService } from './Authenfication/_services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
+import { IdleService } from './idle.service';
 // import { BreadcrumbService } from './Authenfication/service/breadcrumb.service';
 
 
@@ -21,37 +22,38 @@ export class AppComponent implements OnInit {
   showModeratorBoard = false;
   username?: string;
 
-  constructor( 
+  constructor(private idleService: IdleService,
     // public breadcrumbService: BreadcrumbService,
-     private readonly translate: TranslateService ,private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute)
-   { 
+    private readonly translate: TranslateService, private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) {
     this.translate.setDefaultLang('en');
     this.translate.use('en');
-   }
+  }
 
   ngOnInit(): void {
 
-let x = sessionStorage.getItem("userName");
- 
-    if(sessionStorage.length == 0 || sessionStorage.getItem("auth-token") == ""){
+
+    if (sessionStorage.length == 0 || sessionStorage.getItem("auth-token") == "") {
       this.tokenStorageService.signOut();
       // window.location.reload();
-      sessionStorage.clear(); 
-      this.router.navigate(['/login'], { relativeTo: this.route }); 
-    }else{ 
+      sessionStorage.clear();
+      this.router.navigate(['/login'], { relativeTo: this.route });
+    } else {
     }
 
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
-      this.roles = user.roles; 
+      this.roles = user.roles;
       this.username = user.username;
-    } 
+    } this.idleService.startWatching();
+  }
+  ngOnDestroy(): void {
+    this.idleService.stopWatching();
   }
 
   // breadcrumbs$ = this.breadcrumbService.breadcrumbs$;
-  
+
   disabled: boolean = false;
 
   getvaluesFromLocalStorage() {
@@ -105,7 +107,7 @@ let x = sessionStorage.getItem("userName");
     window.location.reload();
     sessionStorage.clear();
     this.reloadPage();
-    this.router.navigate(['/login'], { relativeTo: this.route }); 
+    this.router.navigate(['/login'], { relativeTo: this.route });
 
   }
   VisibleBarTime: boolean = false;
@@ -123,9 +125,14 @@ let x = sessionStorage.getItem("userName");
     }, 10);
   }
 
-  showChildComponent: boolean= true;
+  showChildComponent: boolean = true;
 
   handleComponentClose() {
     this.showChildComponent = false; // Hide the child component
   }
+
+
+
 }
+
+

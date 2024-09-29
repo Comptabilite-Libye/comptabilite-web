@@ -4,8 +4,7 @@ import { catchError, take, throwError } from 'rxjs';
 import { Table } from 'primeng/table';
 
 import * as alertifyjs from 'alertifyjs'  
-import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
-import { ErrorHandlerService } from 'src/app/Shared/TranslateError/error-handler-service.service';
+import { LoadingComponent } from 'src/app/Shared/loading/loading.component';  
 import { TransfertCaisse } from '../domaine/domaine'; 
 import { TableModule } from 'primeng/table';
 import { Router } from '@angular/router';
@@ -25,7 +24,9 @@ export class MouvementCaisseComponent implements OnInit {
   ngOnInit(): void {
     
     this.GelAllTransfertCaisse(); 
-  }  
+  } 
+  
+  
   @Output() closed: EventEmitter<string> = new EventEmitter();
   closeThisComponent() { 
       const parentUrl = this.router.url.split('/').slice(0, -1).join('/'); 
@@ -42,15 +43,7 @@ export class MouvementCaisseComponent implements OnInit {
   
   searchTerm = '';
   GelAllTransfertCaisse() {
-    // this.recette_service.GetAllTransfertCaisse().pipe(
-    //   catchError((error: HttpErrorResponse) => {
-    //     let errorMessage = '';
-
-    // this.errorHandler.handleError(error); 
-    //     return throwError(errorMessage);
-    //   })
-
-    // ).subscribe((data: any) => {
+    // this.recette_service.GetAllTransfertCaisse() .subscribe((data: any) => {
 
       this.loadingComponent.IsLoading = false;
       this.IsLoading = false;

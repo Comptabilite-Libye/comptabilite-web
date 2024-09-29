@@ -1,7 +1,7 @@
 <app-alert></app-alert>
 <div class="col-md-12">
   <div class="card card-container">
-    <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" />
+    <img id="profile-img" src="../../../assets/files/images/avatar_2x.png" class="profile-img-card" />
     <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
       <div class="form-group">
         <div class="Langage">
@@ -47,12 +47,7 @@
         <button class="btn btn-primary btn-block" style=" font-size: 13px; font-family: auto; ">
           تسجيل الدخول
         </button>
-      </div>
-      <!-- <div class="form-group">
-        <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
-          Login failed: {{ errorMessage }}
-        </div>
-      </div> -->
+      </div> 
     </form>
 
   </div>
