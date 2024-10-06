@@ -116,6 +116,16 @@ export class RecetteServiceService {
   }
 
 
+  /// mouvement Caisse 
+  GetAllMouvementCaisse(): Observable<any> {
+    return this.http.get(`${environment.API_Recette}mouvement_caisse/all`);
 
+  }
+
+
+  GetMouvementCaisseByCodeCaisse( codeCaisse : number ): Observable<any> {
+    return this.http.get(`${environment.API_Recette}mouvement_caisse/caisse/`+codeCaisse);
+
+  }
 
 }

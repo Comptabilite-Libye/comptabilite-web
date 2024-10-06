@@ -30,11 +30,11 @@ export class ModalComponent implements AfterViewInit {
   overlayLeaveAnimation!: string;
   overlayAnimationEnd!: Observable<Event>;
   modalLeaveTiming!: number;
-  overlayLeaveTiming!: number; 
+  overlayLeaveTiming!: number;
   constructor(private authService: AuthService, private router: Router, private tokenStorage: TokenStorageService,
     private modalService: ModalService,
     private element: ElementRef
-  ) {}
+  ) { }
 
   @HostListener('document:keydown.escape')
   onEscape() {
@@ -72,6 +72,11 @@ export class ModalComponent implements AfterViewInit {
       this.options?.size?.height || '215px';
     this.modal.nativeElement.style.maxHeight =
       this.options?.size?.maxHeight || 'auto';
+    this.modal.nativeElement.style.border =
+      this.options?.border || '1px solid #ff0000';
+      this.modal.nativeElement.style.borderRadius =
+      this.options?.borderRadius || '6px';
+
 
     this.modalLeaveAnimation = this.options?.animations?.modal?.leave || '';
     this.overlayLeaveAnimation = this.options?.animations?.overlay?.leave || '';

@@ -123,10 +123,10 @@
             <fieldset class="flex-12">
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
-                        <label class="control-label ">الرمز : <i
+                        <label class="control-label flex-3 ">الرمز : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input  ">
-                            <input oninput="this.value = this.value.toUpperCase()"  style="text-transform:uppercase" [disabled]="DisCodeSaisie" id="codeSaisie" maxlength="10" name="codeSaisie"
+                        <div class="control-input flex-7 ">
+                            <input oninput="this.value = this.value.toUpperCase()"  style="text-transform:uppercase ; max-width: 84%;" [disabled]="DisCodeSaisie" id="codeSaisie" maxlength="10" name="codeSaisie"
                                 type="text" class="onlyForCentral form-control-dev input-xs" required
                                 [(ngModel)]="codeSaisie">
                         </div>
@@ -142,7 +142,7 @@
                         <div class="control-input flex-7">
                             <p-dropdown name="caisseAlimenter" [filter]="true" appendTo="body" class="dropdown"
                                 [options]="listDeviseRslt" [(ngModel)]="selectedDevise" [showClear]="true"
-                                [style]="{'width':'100%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                                [style]="{'width':'85%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
                                 [required]="true" [lazy]="true" #caisseAlimenter="ngModel">
                             </p-dropdown>
                         </div>

@@ -31,10 +31,10 @@
                         <div class="flex-row-start flex-12">
                             <fieldset style="padding: 5px;">
                                 <section class="flex-row-start">
-                                    <div style="width: 130px;">
+                                    <div style="width: 160px;">
                                         <p-dropdown (onChange)="GetCodeEtatApprouver()" (onClear)="ngOnInit()"
                                             [options]="EtatApprouve" [(ngModel)]="selectedEtatApprouve"
-                                            [style]="{'width':'120px '}" optionLabel="name" [showClear]="true"
+                                            [style]="{'width':'160px '}" optionLabel="name" [showClear]="true"
                                             placeholder="التأكيد.">
                                             <ng-template pTemplate="selectedItem">
                                                 <div class="flex align-items-center gap-2" *ngIf="selectedEtatApprouve"
@@ -42,6 +42,8 @@
                                                     <img src={{selectedEtatApprouve.url}}
                                                         [class]="'flag flag-' + selectedEtatApprouve.code.toLowerCase()"
                                                         style="width: 18px" />
+                                                        <div style="padding-left: 20px;"> {{ selectedEtatApprouve.name }}</div>
+
                                                 </div>
                                             </ng-template>
                                             <ng-template let-EtatApprouve pTemplate="item">
@@ -55,7 +57,7 @@
                                             </ng-template>
                                         </p-dropdown>
                                     </div>
-                                    <label class="control-label-titer flex-6">البيان :</label>
+                                    <label class="control-label-titer flex-6"  style="padding-right: 20px;">البيان :</label>
                                     <span class="p-input-icon-left ml-auto flex-6">
                                         <input pInputText class="recherche-value" [(ngModel)]="searchTerm"
                                             name="zone-recherche" type="text"
@@ -229,63 +231,62 @@
                 </div>
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
-                        <label class="control-label  flex-3">ملاحظة : <i
-                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input flex-7">
-                            <input type="text" id="observation" maxlength="200" name="observation"
-                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="observation"
-                                [required]="true">
-                        </div>
-                    </section>
-                    <section class="flex-row-start flex-6">
+                       
 
+                        
                         <label class="control-label flex-3">الخزينة :<i
                             class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                     <div class="dop control-input flex-7">
                         <p-dropdown name="caisseAlimenter" [filter]="true" appendTo="body" class="dropdown"
                             [options]="listCaisseRslt" [(ngModel)]="selectedCaisse" [showClear]="true"
-                            [style]="{'width':'100%'}" (onChange)="LoadDeviseCaisse()" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                            [style]="{'width':'85%'}" (onChange)="LoadDeviseCaisse()" [autoDisplayFirst]="true" placeholder="&nbsp;"
                             [required]="true" [lazy]="true" #caisseAlimenter="ngModel">
                         </p-dropdown>
                     </div>
+                    </section>
+                    <section class="flex-row-start flex-6">
 
 
+                    <label class="control-label flex-3">طريقة الدفع :<i
+                        class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                <div class="dop control-input flex-7">
+                    <p-dropdown name="caisseAlimenter" [filter]="true" appendTo="body" class="dropdown"
+                        [options]="listModeReglementRslt" [(ngModel)]="selectedModeReglement" [showClear]="true"
+                        [style]="{'width':'85%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                        [required]="true" [lazy]="true" #caisseAlimenter="ngModel">
+                    </p-dropdown>
+                </div>
                     
                     </section>
                 </div>
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
-                        <label class="control-label flex-3">طريقة الدفع :<i
-                            class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                    <div class="dop control-input flex-7">
-                        <p-dropdown name="caisseAlimenter" [filter]="true" appendTo="body" class="dropdown"
-                            [options]="listModeReglementRslt" [(ngModel)]="selectedModeReglement" [showClear]="true"
-                            [style]="{'width':'100%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
-                            [required]="true" [lazy]="true" #caisseAlimenter="ngModel">
-                        </p-dropdown>
-                    </div>
+                   
+                    <label class="control-label flex-3"> العملة : <i
+                        class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                <div class="control-input flex-7">
+                    
+                    <input readonly disabled=""   type="text" id="DesigDevise" maxlength="200"
+                    name="DesigDevise" class="onlyForCentral form-control-dev input-xs"
+                    [(ngModel)]="DesigDevise" [required]="true">
+
+            
+                    <input   style="display: none; width: 1px;" type="text" id="selectedDevise" maxlength="200"
+                    name="selectedDevise" class="onlyForCentral form-control-dev input-xs"
+                    [(ngModel)]="selectedDevise" [required]="true">
+
+                </div>
                     </section>
                     <section class="flex-row-start flex-6">
-                       
-                        <label class="control-label flex-3"> العملة : <i
+                        <label class="control-label flex-5">الصرف:<i
                             class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                     <div class="control-input flex-7">
-                        <!-- <p-dropdown name="caisseAlimenter" (onChange)="GetTauxDeChange()" [filter]="true" appendTo="body" class="dropdown"
-                            [options]="listDeviseRslt" [(ngModel)]="selectedDevise" [showClear]="true"
-                            [style]="{'width':'100%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
-                            [required]="true" [lazy]="true" #caisseAlimenter="ngModel">
-                        </p-dropdown> -->
-
-                        <input readonly disabled=""   type="text" id="DesigDevise" maxlength="200"
-                        name="DesigDevise" class="onlyForCentral form-control-dev input-xs"
-                        [(ngModel)]="DesigDevise" [required]="true">
-
-                
-                        <input   style="display: none; width: 1px;" type="text" id="selectedDevise" maxlength="200"
-                        name="selectedDevise" class="onlyForCentral form-control-dev input-xs"
-                        [(ngModel)]="selectedDevise" [required]="true">
-
+                        <input readonly disabled="" style="max-width: 25%;" type="text" id="TauxChange" maxlength="200"
+                            name="TauxChange" class="onlyForCentral form-control-dev input-xs"
+                            [(ngModel)]="TauxChange" [required]="true">
                     </div>
+
+                       
                     </section>
                 </div>
 
@@ -303,13 +304,15 @@
 
                     </section>
                     <section class="flex-row-start flex-6">
-                        <label class="control-label flex-5">الصرف:<i
-                            class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                    <div class="control-input flex-7">
-                        <input readonly disabled="" style="max-width: 25%;" type="text" id="TauxChange" maxlength="200"
-                            name="TauxChange" class="onlyForCentral form-control-dev input-xs"
-                            [(ngModel)]="TauxChange" [required]="true">
-                    </div>
+                       
+                    <label class="control-label  flex-3">ملاحظة : <i
+                        class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                <div class="control-input flex-7">
+                    <input type="text" id="observation" maxlength="200" name="observation"
+                        class="onlyForCentral form-control-dev input-xs" [(ngModel)]="observation"
+                        [required]="true">
+                </div>
+
                     </section>
                 </div>
 
@@ -323,11 +326,11 @@
 
                                     <p-dropdown [resetFilterOnHide]=true class="dropdown" appendTo="body"
                                         [options]="listTypeRecetteRslt" [(ngModel)]="selectedTypeRecette"
-                                        [filter]="true" [showClear]="true" [style]="{minWidth: '50px', width: '120%' }"
+                                        [filter]="true" [showClear]="true" [style]="{minWidth: '50px', width: '95%' }"
                                         filterBy="label,value" [autoDisplayFirst]="true" placeholder="&nbsp;"
                                         [required]="true" [lazy]="true" id="dropDownLists"
                                         (onClick)="clickDropDownUp(dropDownListss)" #dropDownListss
-                                        (onChange)="PushTableData()">
+                                        (ngModelChange)="PushTableData()" (onClear)="NoAction()"> 
                                     </p-dropdown>
 
                                     <br />

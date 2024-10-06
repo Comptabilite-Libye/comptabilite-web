@@ -565,9 +565,9 @@ export class EntreeCaisseComponent {
   selectedEtatApprouve: any;
   getValued() {
     this.EtatApprouve = [
-      { name: 'EnCours', code: '1', url: 'assets/files/images/etat_RCPPartiel.png' },
-      { name: 'Refuser', code: '3', url: 'assets/files/images/etat_NRCP.png' },
-      { name: 'Valider', code: '2', url: 'assets/files/images/etat_RCTotal.png' },
+      { name: 'غير ماكد', code: '1', url: 'assets/files/images/etat_RCPPartiel.png' },
+      { name: 'مرفوض', code: '3', url: 'assets/files/images/etat_NRCP.png' },
+      { name: 'مأكد', code: '2', url: 'assets/files/images/etat_RCTotal.png' },
     ];
   }
   GetCodeEtatApprouver() {
@@ -601,17 +601,23 @@ export class EntreeCaisseComponent {
   }
   listDetailsTypeRecette = new Array<any>();
   Newcompteur: number = 0;
+  NoAction(){
+
+  }
+
   PushTableData() {
     var exist = false;
 
     for (var y = 0; y < this.listDetailsTypeRecette.length; y++) {
-      if (this.selectedTypeRecette != this.listDetailsTypeRecette[y].codeTypeRecette) {
+      if (this.selectedTypeRecette != this.listDetailsTypeRecette[y].codeTypeRecette  && this.selectedTypeRecette != this.listDetailsTypeRecette[y].code  ) {
         exist = false;
       } else {
         exist = true;
 
-        alertifyjs.set('notifier', 'position', 'top-right');
-        alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;"></i>' + " Item Used");
+        alertifyjs.set('notifier', 'position', 'top-left');
+      
+        alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/error.gif" alt="image" >' + ` Item Used`);
+      
         this.playSoundError();
         break;
       }
@@ -631,6 +637,7 @@ export class EntreeCaisseComponent {
 
         // console.log(" PushTableData articles", this.ListMatiere);
         // this.disp = true;
+       
       })
     }
 

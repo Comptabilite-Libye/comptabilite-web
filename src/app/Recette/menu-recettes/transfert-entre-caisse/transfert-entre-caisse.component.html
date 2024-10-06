@@ -31,10 +31,10 @@
                         <div class="flex-row-start flex-12">
                             <fieldset style="padding: 5px;">
                                 <section class="flex-row-start">
-                                    <div style="width: 130px;">
+                                    <div style="width: 160px;">
                                         <p-dropdown (onChange)="GetCodeEtatApprouver()" (onClear)="ngOnInit()"
                                             [options]="EtatApprouve" [(ngModel)]="selectedEtatApprouve"
-                                            [style]="{'width':'120px '}" optionLabel="name" [showClear]="true"
+                                            [style]="{'width':'160px '}" optionLabel="name" [showClear]="true"
                                             placeholder="التأكيد.">
                                             <ng-template pTemplate="selectedItem">
                                                 <div class="flex align-items-center gap-2" *ngIf="selectedEtatApprouve"
@@ -42,6 +42,7 @@
                                                     <img src={{selectedEtatApprouve.url}}
                                                         [class]="'flag flag-' + selectedEtatApprouve.code.toLowerCase()"
                                                         style="width: 18px" />
+                                                        <div style="padding-left: 20px;"> {{ selectedEtatApprouve.name }}</div>
                                                 </div>
                                             </ng-template>
                                             <ng-template let-EtatApprouve pTemplate="item">
@@ -55,7 +56,7 @@
                                             </ng-template>
                                         </p-dropdown>
                                     </div>
-                                    <label class="control-label-titer flex-6">البيان :</label>
+                                    <label class="control-label-titer flex-6" style="padding-right: 20px;">البيان :</label>
                                     <span class="p-input-icon-left ml-auto flex-6">
                                         <input pInputText class="recherche-value" [(ngModel)]="searchTerm"
                                             name="zone-recherche" type="text"
@@ -303,19 +304,19 @@
 
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-5">
-                        <label class="control-label  flex-3" style="max-width: 85px;">طريقة الدفع : <i
+                        <label class="control-label  flex-3" style="max-width: 86px;">طريقة الدفع : <i
                             class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                     <div class="control-input flex-7"  >
                         <p-dropdown name="caisseSorite" [filter]="true" appendTo="body" class="dropdown"
                             [options]="listModeReglementRslt" [(ngModel)]="selectedModeReglement" [showClear]="true"
-                            [style]="{'width':'120%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                            [style]="{'width':'125%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
                             [required]="true" [lazy]="true" #caisseSorite="ngModel">
                         </p-dropdown>
                     </div>
                     </section>
                     <section class="flex-row-start flex-5">
 
-                        <label class="control-label flex-5">القيمة :<i
+                        <label class="control-label flex-4">القيمة :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-7">
                             <input type="number" id="montant"    maxlength="200" min="0" name="montant"
@@ -429,7 +430,41 @@
     </ng-template>
 
     <div class="modal-body" (mousemove)="CalculeEnDevise()">
-        <p-toast key="toast1"></p-toast>
+        <fieldset class="flex-12">
+            <div class="flex-row-start flex-12">
+                <section class="flex-row-start flex-8" disabled="">
+                    <label class="control-label flex-6" style="padding: 0px 15px 0px 0px;"> مرحلة الإعتماد : </label>
+                    <div class="control-input  flex-5">
+                        
+                        <label for="Encours"
+                        style="padding: 0px 10px 0px 10px;margin: 0px;font-size: 13px;font-weight: 500;">
+                            في طور التأكيد</label>
+                            <p-radioButton name="selectedValue" value=1 [(ngModel)]="selectedValue"
+                            inputId="Encours"></p-radioButton>
+                       
+                    </div>
+                    <div class="control-input  flex-4">
+                        <label for="Valider"
+                        style="padding: 0px 10px 0px 10px;margin: 0px;font-size: 13px;font-weight: 500;">
+                        إعتماد</label>
+                        <p-radioButton name="groupname"  value=2 [(ngModel)]="selectedValue"
+                            inputId="Valider"></p-radioButton>
+                       
+                    </div>
+                    <div class="control-input  flex-4">
+                        <label for="Refuser"
+                        style="padding: 0px 10px 0px 10px;margin: 0px;;font-size: 13px;font-weight: 500;">
+                            رفض</label>
+                        <p-radioButton  name="groupname" value=3 [(ngModel)]="selectedValue"
+                            inputId="Refuser"></p-radioButton>
+                       
+                    </div>
+                   
+                </section>
+
+            </div>
+        </fieldset>
+ 
         <div class="flex-row-start flex-12">
             <fieldset class="flex-12">
                 <div class="flex-row-start flex-12">
@@ -524,19 +559,19 @@
 
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-5">
-                        <label class="control-label  flex-3" style="max-width: 85px;">طريقة الدفع : <i
+                        <label class="control-label  flex-3" style="max-width: 86px;">طريقة الدفع : <i
                             class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                     <div class="control-input flex-7"  >
                         <p-dropdown name="caisseSorite" [filter]="true" appendTo="body" class="dropdown"
                             [options]="listModeReglementRslt" [(ngModel)]="selectedModeReglement" [showClear]="true"
-                            [style]="{'width':'120%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                            [style]="{'width':'125%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
                             [required]="true" [lazy]="true" #caisseSorite="ngModel">
                         </p-dropdown>
                     </div>
                     </section>
                     <section class="flex-row-start flex-5">
 
-                        <label class="control-label flex-5">القيمة :<i
+                        <label class="control-label flex-4">القيمة :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                         <div class="control-input flex-7">
                             <input type="number" id="montant"    maxlength="200" min="0" name="montant"

@@ -59,6 +59,7 @@ import { EditionRecetteComponent } from './Recette/menu-recettes/edition-recette
 import { ModalContentComponent } from './Authenfication/shared/modal-content/modal-content.component';
 import { SessionComponent } from './Shared/Session/Session.component';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ApppComponent } from './appp.component';
  
 
 
@@ -118,7 +119,7 @@ export function createTranslateLoader(http: HttpClient) {
     
   ],
   
-  providers: [DatePipe, LoadingComponent, HttpClient,MessageService,BsModalRef,SessionComponent,
+  providers: [DatePipe, LoadingComponent, ApppComponent,HttpClient,MessageService,BsModalRef,SessionComponent,
     authInterceptorProviders,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, 
     provideAnimationsAsync(), 

@@ -722,6 +722,11 @@ fieldset[disabled] .form-control-dev {
   padding-right: 5px;
   padding-left: 0px;
   float: right;
+  font-family: auto;
+}
+
+:host ::ng-deep .dop {
+  padding: 7px 0px 0px 0px ;
 }
 
 
@@ -814,6 +819,12 @@ textarea {
 .flex-5 {
   flex: 5;
   max-width: 41.67%;
+  text-align: right;
+}
+
+.flex-5-45 {
+  flex: 5;
+  max-width: 45.67%;
   text-align: right;
 }
 
@@ -1538,7 +1549,7 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
   position: absolute;
   top: 50%;
   margin-top: -.5rem;
-  right: 150px ;
+  right: 123px ;
 }
 
 .ligneDuOu{
@@ -1559,8 +1570,10 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
   overflow: hidden;
   flex: 1 1 auto;
   width: 1%;
+  font-family: auto;
   text-overflow: ellipsis;
-  cursor: pointer
+  cursor: pointer;
+  color: #000000;
 }
 
 :host ::ng-deep .p-dropdown-label-empty {

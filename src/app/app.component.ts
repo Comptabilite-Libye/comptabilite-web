@@ -5,6 +5,9 @@ import { Subscription } from 'rxjs';
 import { AuthService } from './Authenfication/_services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { IdleService } from './idle.service';
+import { environment } from 'src/environments/environment.development';
+import { ModalContentComponent } from './Authenfication/shared/modal-content/modal-content.component';
+import { ModalService } from './Authenfication/shared/modal/modal.service';
 // import { BreadcrumbService } from './Authenfication/service/breadcrumb.service';
 
 
@@ -21,12 +24,14 @@ export class AppComponent implements OnInit {
   showAdminBoard = false;
   showModeratorBoard = false;
   username?: string;
-
+  sessionExpired: boolean = false;
+  inactivityTimeout!: number;
   constructor(private idleService: IdleService,
-    // public breadcrumbService: BreadcrumbService,
+    private modalService: ModalService,
     private readonly translate: TranslateService, private authService: AuthService, private tokenStorageService: TokenStorageService, private router: Router, private route: ActivatedRoute) {
     this.translate.setDefaultLang('en');
     this.translate.use('en');
+ 
   }
 
   ngOnInit(): void {
@@ -46,12 +51,30 @@ export class AppComponent implements OnInit {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
       this.username = user.username;
-    } this.idleService.startWatching();
+    } 
+ this.initialIdleSettings();
   }
-  ngOnDestroy(): void {
-    this.idleService.stopWatching();
+  private initialIdleSettings() {
+    const idleTimeoutInSeconds: number = environment.idleTimeInMinutes * 60;
+    this.idleService.startWatching(idleTimeoutInSeconds).subscribe((isTimeOut: boolean) => {
+       if (isTimeOut) {
+        console.log("isTimeOut");
+        if(!window.location.hash.includes('login')){
+        // this.openModalComponent();
+        }
+      } 
+    });
   }
-
+  openModalComponent() {
+    this.modalService.open(ModalContentComponent, {  
+      ignoreBackdropClick: true,
+      backdrop: 'static',
+      keyboard: false,
+      focus: true,
+      disableClose: true,
+    });
+    
+  }
   // breadcrumbs$ = this.breadcrumbService.breadcrumbs$;
 
   disabled: boolean = false;

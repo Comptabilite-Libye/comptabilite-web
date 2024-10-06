@@ -17,3 +17,10 @@ export interface SoldeCaisse{
     designation: string,
     actif: boolean,
 }
+
+ 
+export interface MouvementCaisse{
+    code: number, 
+    designation: string,
+    actif: boolean,
+}

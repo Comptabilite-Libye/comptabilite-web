@@ -68,7 +68,7 @@ export class TransfertEntreCaisseComponent {
 
   DataCodeSaisie = new Array<Compteur>();
   GetCodeSaisie() {
-    this.CompteurService.GetcompteurCodeSaisie("CodeSaisieAC").
+    this.CompteurService.GetcompteurCodeSaisie("CodeSaisieTR").
       subscribe((data: any) => {
         this.DataCodeSaisie = data;
         this.codeSaisie = data.prefixe + data.suffixe;
@@ -212,6 +212,12 @@ export class TransfertEntreCaisseComponent {
     this.codeSaisie = '';
     this.observation = '';
     this.montant = '';
+    this.selectedCaisseEntree="";
+    this.selectedCaisseSortie="";
+    this.selectedModeReglement="";
+    this.montantDevise=0;
+    this.montantEnDevise=0
+
   }
 
   public onOpenModal(mode: string) {
@@ -591,14 +597,14 @@ console.log("codeCaisse == null");
     if (this.selectedEtatApprouve == undefined) {
 
     } else {
-      // this.recette_service.GetTransfertCaisseByEtatApprouved(this.selectedEtatApprouve.code).subscribe((data: any) => {
-      //   this.loadingComponent.IsLoading = false;
-      //   this.IsLoading = false;
+      this.recette_service.GetTransfertByEtatApprouved(this.selectedEtatApprouve.code).subscribe((data: any) => {
+        this.loadingComponent.IsLoading = false;
+        this.IsLoading = false;
 
-      //   this.dataTransfertCaisse = data;
-      //   this.onRowUnselect(event);
+        this.dataTransfertCaisse = data;
+        this.onRowUnselect(event);
 
-      // })
+      })
 
     }
   }
@@ -668,7 +674,10 @@ console.log("codeCaisse == null");
         codeUserApprouver: null,
         codeEtatApprouver: 1,
         dateApprouve: null,
-        codeSaisie: this.codeSaisie
+        codeSaisie: this.codeSaisie,
+        codeCaisseTr: this.selectedCaisseSortie,
+        montant:this.montant
+
       }
 
       console.log("this.selectedValue == 1", this.selectedValue == 1)
@@ -692,6 +701,7 @@ console.log("codeCaisse == null");
             this.visibleModalApprove = false;
             this.visbileModalPassword = false;
             this.visibleModalPrint = false;
+            this.selectedValue=1;
           }
         );
       }
@@ -701,7 +711,9 @@ console.log("codeCaisse == null");
         codeUserApprouver: "1",
 
         codeEtatApprouver: "2",
-        codeSaisie: this.codeSaisie
+        codeSaisie: this.codeSaisie,
+        codeCaisseTr: this.selectedCaisseSortie,
+        montant:this.montant
       }
       console.log("this.selectedValue == 2", this.selectedValue == 2)
       if (this.code != null) {
@@ -724,6 +736,7 @@ console.log("codeCaisse == null");
             this.visbileModalPassword = false;
             this.visibleModalPrint = false;
 
+            this.selectedValue=1;
           }
         );
       }
@@ -733,7 +746,10 @@ console.log("codeCaisse == null");
         code: this.code,
         codeUserApprouver: "1",
         codeEtatApprouver: "3",
-        codeSaisie: this.codeSaisie
+        codeSaisie: this.codeSaisie,
+        codeCaisseTr: this.selectedCaisseSortie,
+        montant:this.montant
+
       }
       console.log("this.selectedValue == 3", this.selectedValue == 3)
       if (this.code != null) {
@@ -756,6 +772,7 @@ console.log("codeCaisse == null");
             this.visbileModalPassword = false;
             this.visibleModalPrint = false;
 
+            this.selectedValue=1;
           }
         );
       }
@@ -854,6 +871,7 @@ console.log("codeCaisse == null");
         this.GetTransfertCaisseByCode();
         this.GetSoldeCaisse(this.selectedCaisseSortie);
         this.GetSoldeCaisseEntree(this.selectedCaisseEntree);
+        this.GetModeReglement();
 
       }
     }

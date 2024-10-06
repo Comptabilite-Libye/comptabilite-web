@@ -123,7 +123,7 @@ export class AuthInterceptor implements HttpInterceptor {
       this.lastNotificationTime = currentTime;
       alertifyjs.set('notifier', 'position', 'top-left');
       alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/error.gif" alt="image" >' + errorResp.error.description);
-  
+    
     }
   }
 

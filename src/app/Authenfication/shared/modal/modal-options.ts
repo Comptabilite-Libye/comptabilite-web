@@ -22,5 +22,8 @@ export interface Options {
   keyboard? : boolean;
   focus? : boolean;
   disableClose ? : boolean;
+  border? :string;
+  borderRadius?:string;
+ 
 
 }
