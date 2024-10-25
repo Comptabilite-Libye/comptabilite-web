@@ -1,0 +1,10 @@
+frontend:
+    path: ./
+    publish: ""
+    scripts:
+        build: ""
+        deploy: ""
+    subdomain: comptabilite-web
+name: comptabilite-web
+region: us-east-1
+yamlVersion: 2
