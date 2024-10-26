@@ -1,0 +1,57 @@
+body {
+    /* font-family: Cairo !important;  */
+    display: grid;
+    grid-template-areas: "header header header" "nav section aside" "footer footer footer";
+    grid-template-rows: 45px 1fr 0px;
+    grid-template-columns: 0% 1fr 142px; 
+    /* font-size: 15px; */
+}
+ 
+header {
+    background: #f3f3f3;
+    grid-area: header;
+}
+
+.header_name {
+    font-weight: bold;
+    font-size: 18px;
+    padding-right: 30px;
+}
+
+nav {
+    background: #ebeaea;
+    grid-area: nav;
+}
+
+section {
+    background: #ffffff;
+    grid-area: section;
+}
+
+aside {
+    background: #e6e6e6;
+    grid-area: aside;
+}
+
+
+
+header,
+nav,
+section,
+aside,
+footer {
+    padding: 5px;
+}
+ 
+
+
+
+
+
+
+:host ::ng-deep .p-dropdown-clear-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -.5rem;
+    right: 160px !important;
+  }

@@ -348,7 +348,7 @@ export class TransfertEntreCaisseComponent {
     let userSession = sessionStorage.getItem("userName");
     // if (!this.observation || !this.codeSaisie || !this.selectedCaisseEntree || !this.codeDevise || !this.selectedCaisseSortie) {
     //   alertifyjs.set('notifier', 'position', 'top-left');
-    //   alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
+    //   alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/required.gif" alt="image" >' + "Field Required");
 
 
     // } else {
@@ -374,7 +374,8 @@ export class TransfertEntreCaisseComponent {
       this.recette_service.UpdateTransfertCaisse(body).subscribe(
         (res: any) => {
           alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
+                      alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم التحيين");
+
           this.visibleModal = false;
           this.playSoundSuccess();
           this.clearForm();
@@ -389,7 +390,7 @@ export class TransfertEntreCaisseComponent {
       this.recette_service.PostTransfertCaisse(body).subscribe(
         (res: any) => {
           alertifyjs.set('notifier', 'position', 'top-left');
-          alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+          alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم الحفظ بنجاح");
           this.visibleModal = false;
           this.playSoundSuccess();
           this.clearForm();

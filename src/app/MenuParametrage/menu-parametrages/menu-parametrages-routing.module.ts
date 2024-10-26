@@ -11,6 +11,8 @@ import { FournisseurComponent } from './fournisseur/fournisseur.component';
 import { ModeReglementComponent } from './mode-reglement/mode-reglement.component';
 import { TauxChangeComponent } from './taux-change/taux-change.component';
 import { TypeCaisseComponent } from './type-caisse/type-caisse.component';
+import { TypeCostCentreComponent } from './type-cost-centre/type-cost-centre.component';
+import { CostCentreComponent } from './cost-centre/cost-centre.component';
 
 const routes: Routes = [{ path: '', component: MenuParametragesComponent },
 
@@ -64,8 +66,17 @@ const routes: Routes = [{ path: '', component: MenuParametragesComponent },
     path: 'type_caisse',
     component: TypeCaisseComponent ,
     data:{title:'أنواع الخزائن  ',icon:'fas fa-bars'}
+  },
+  {
+    path: 'type_cost_centre',
+    component: TypeCostCentreComponent ,
+    data:{title:' أنواع مراكز التكلفة',icon:'fas fa-align-center'}
+  }, {
+    path: 'cost_centre',
+    component: CostCentreComponent ,
+    data:{title:' مراكز التكلفة ' ,icon:'fa-brands fa-sourcetree'},
+     
   }
-
 
 
 

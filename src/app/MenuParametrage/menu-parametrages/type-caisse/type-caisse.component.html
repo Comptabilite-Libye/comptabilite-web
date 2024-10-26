@@ -40,13 +40,12 @@
                                         data-original-title="Add"
                                         (click)="dt1.filterGlobal($any($event.target).value, 'contains')">
                                         <div class="bouton_style-2" style="margin: 0px 15px 0px 0px;">بحث</div>
-                                        <mat-icon style="margin: 0px 15px 0px 0px;"
-                                            class="search-icon">search</mat-icon>
+                                        <i class="fa-solid fa-magnifying-glass search-icon" style="font-size: 18px ;padding-top:2px ;margin: 0px 15px 0px 0px;"></i>
                                     </button>
                                     <button type="button" class="Bouton-rechercher btn  btn-default "
                                         data-original-title="Add" (click)="clear(dt1)" (click)="GelAllTypeCaisse()">
                                         <div class="bouton_style-2">إعادة تعيين</div>
-                                        <mat-icon class="search-icon">refresh</mat-icon>
+                                        <i class="fa-solid fa-arrows-rotate search-icon" style="padding-top: 2px; padding-right: 3px; font-size: 18px;"></i>
                                     </button>
                                 </section>
                             </fieldset>
@@ -61,20 +60,19 @@
                                         class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
                                         data-toggle="modal" data-target="#Modal" (click)="onOpenModal('add')">
                                         <div class="bouton_style-2">إضافة</div>
-                                        <mat-icon class="add-icon" style="margin: 0px 10px 0px 0px;">add</mat-icon>
+                                        <i class="fa-solid fa-plus add-icon" style=" font-size:18px ;padding-top:2px ;margin: 0px 10px 0px 0px;"></i>
                                     </button>
                                     <button data-backdrop="false" type="button"
                                         class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
                                         data-toggle="modal" data-target="#Modal" (click)="onOpenModal('edit')">
                                         <div class="bouton_style-2">تعديل</div>
-                                        <mat-icon class="modif-icon" style="margin: 0px 10px 0px 0px;">create</mat-icon>
+                                        <i class="fa-solid fa-pen modif-icon"style=" font-size:18px ;padding-top:2px ;margin: 0px 10px 0px 0px;" ></i>
                                     </button>
                                     <button type="button" class="Bouton-add-new2 btn  btn-default "
                                         data-original-title="Delete" data-toggle="modal" data-target="#ModalDelete"
                                         (click)="onOpenModal('Delete')">
                                         <div class="bouton_style-2">حذف</div>
-                                        <mat-icon class="delete-icon"
-                                            style="margin: 0px 10px 0px 0px;">delete</mat-icon>
+<i class="fa-solid fa-trash-can delete-icon"></i>
                                     </button>
                                      
 

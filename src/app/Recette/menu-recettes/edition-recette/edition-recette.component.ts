@@ -23,7 +23,7 @@ export class EditionRecetteComponent implements OnInit {
     this.primengConfig.translationObserver.subscribe(res => console.log(res));
   }
 
-  @ViewChild('calendar') calendar!: Calendar;
+  // @ViewChild('calendar') calendar!: Calendar;
   ngOnInit(): void {
   }  
   setLangAR() {

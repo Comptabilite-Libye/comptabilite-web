@@ -286,7 +286,7 @@
 }
 
 .sidebar.open {
-  width: 250px;
+  width: 255px;
 }
 
 .sidebar.open .logo-details .icon {
@@ -321,7 +321,7 @@
 }
 
 .sidebar.open li.profile {
-  width: 250px;
+  width: 255px;
 }
 
 .sidebar.open .profile #log_out {
@@ -958,7 +958,7 @@ nav .user {
 }
 
 .sidebar.open {
-  width: 250px;
+  width: 255px;
 }
 
 .sidebar.open .logo-details .icon {
@@ -993,7 +993,7 @@ nav .user {
 }
 
 .sidebar.open li.profile {
-  width: 250px;
+  width: 255px;
 }
 
 .sidebar.open .profile #log_out {
@@ -1148,7 +1148,7 @@ nav .user {
 
 @media (min-width: 992px) {
   #mainNav .navbar-brand {
-    width: 250px;
+    width: 255px;
   }
 
   #mainNav .navbar-collapse {
@@ -1168,7 +1168,7 @@ nav .user {
   }
 
   #mainNav .navbar-collapse .navbar-sidenav>.nav-item {
-    width: 250px;
+    width: 255px;
     padding: 0;
   }
 
@@ -1184,7 +1184,7 @@ nav .user {
 
   #mainNav .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level>li,
   #mainNav .navbar-collapse .navbar-sidenav>.nav-item .sidenav-third-level>li {
-    width: 250px;
+    width: 255px;
   }
 
   #mainNav .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level>li>a,

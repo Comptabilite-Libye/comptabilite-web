@@ -204,7 +204,7 @@ export class TauxChangeComponent {
 
     if (!this.tauxChange || !this.codeSaisie) {
       alertifyjs.set('notifier', 'position', 'top-left');
-      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
+      alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/required.gif" alt="image" >' + "Field Required");
 
     } else {
 
@@ -225,7 +225,8 @@ export class TauxChangeComponent {
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
+                        alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم التحيين");
+
             this.visibleModal = false;
             this.clearForm();
             this.ngOnInit();
@@ -243,7 +244,7 @@ export class TauxChangeComponent {
         this.param_service.PostTauxDeChange(body) .subscribe(
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+            alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم الحفظ بنجاح");
             this.visibleModal = false;
             this.clearForm();
             this.ngOnInit();

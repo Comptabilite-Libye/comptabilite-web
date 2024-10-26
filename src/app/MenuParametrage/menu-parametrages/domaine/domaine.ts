@@ -6,6 +6,25 @@ export interface Caisse{
     actif: boolean,
 }
 
+export interface TypeCostCentre{
+    code: number,
+    codeSaisie: string,
+    designationAr: string,
+    designationLt: string,
+    actif: boolean,
+}
+
+export interface CostCentre{
+    code: number,
+    codeSaisie: string,
+    designationAr: string,
+    designationLt: string,
+    actif: boolean,
+    nodes:{ 
+    }
+}
+
+
 export interface TypeCaisse{
     code: number,
     codeSaisie: string,

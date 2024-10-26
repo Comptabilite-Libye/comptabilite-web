@@ -10,6 +10,7 @@ import { Devise } from '../domaine/domaine';
 import { ParametrageService } from '../WService/parametrage.service';
 import { LoadingComponent } from 'src/app/Shared/loading/loading.component'; 
 import { Router } from '@angular/router';
+import { ExchangeRateService } from '../../ExchangeRateService/exchange-rate.service';
  
 declare const PDFObject: any;
 
@@ -22,9 +23,9 @@ export class DeviseComponent {
   IsLoading = true; 
 
   openModal!: boolean;
+  rates: { USD: number; EUR: number } = { USD: 0, EUR: 0 };
 
-
-  constructor(private router: Router  , private loadingComponent : LoadingComponent,private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
+  constructor(private exchangeRateService: ExchangeRateService,private router: Router  , private loadingComponent : LoadingComponent,private confirmationService: ConfirmationService, private param_service: ParametrageService, private messageService: MessageService, private http: HttpClient, private fb: FormBuilder, private cdr: ChangeDetectorRef) {
 
 
   }  
@@ -33,6 +34,11 @@ export class DeviseComponent {
   ngOnInit(): void {
 
     this.GelAllDevise();  
+
+    this.exchangeRateService.getLYDExchangeRates()
+    .subscribe(rates => {
+      this.rates = rates; 
+    });
   }
   @Output() closed: EventEmitter<string> = new EventEmitter();
   closeThisComponent() { 
@@ -246,7 +252,7 @@ export class DeviseComponent {
 
     if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
       alertifyjs.set('notifier', 'position', 'top-left');
-      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
+      alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/required.gif" alt="image" >' + "Field Required");
 
     } else {
 
@@ -270,7 +276,8 @@ export class DeviseComponent {
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
+                        alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم التحيين");
+
             this.visibleModal = false;
             this.clearForm();
             this.ngOnInit();
@@ -288,7 +295,7 @@ export class DeviseComponent {
         this.param_service.PostDevise(body) .subscribe(
           (res:any) => {
             alertifyjs.set('notifier', 'position', 'top-left'); 
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+            alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم الحفظ بنجاح");
             this.visibleModal = false;
             this.clearForm();
             this.ngOnInit();

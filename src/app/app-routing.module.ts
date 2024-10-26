@@ -39,7 +39,9 @@ const routes: Routes = [
  
   { path: 'menu_recette', loadChildren: () => import('./Recette/menu-recettes/menu-recettes.module').then(m => m.MenuRecettesModule), data:{title:'الإيرادات',icon:'fas fa-square-caret-down'}},
  
-  { path: 'menu_parametrage', loadChildren: () => import('./MenuParametrage/menu-parametrages/menu-parametrages.module').then(m => m.MenuParametragesModule) , data:{title:'الإعدادات العامة',icon:'fas fa-gear'}}, 
+  { path: 'menu_parametrage', loadChildren: () => import('./MenuParametrage/menu-parametrages/menu-parametrages.module').then(m => m.MenuParametragesModule) , data:{title:'الإعدادات العامة',icon:'fas fa-gear'}},
+ 
+  { path: 'menu_depense', loadChildren: () => import('./menu-depenses/menu-depenses.module').then(m => m.MenuDepensesModule) , data:{title:' المصروفات',icon:'fas fa-square-caret-up'}}, 
  
 
 ];

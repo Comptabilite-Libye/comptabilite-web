@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
     this.selectedCountry = this.countries[0];
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
-      this.roles = this.tokenStorage.getUser().roles;
       this.reloadCurrentRoute();
     }
 
@@ -51,9 +50,11 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(userName, password).subscribe(
       data => {
-        console.log("data", data);
+        // console.log("data", data);
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data);
+        // this.tokenStorage.saveUserID(data.userid);
+        // this.tokenStorage.SaveRefreshToken(data.refreshToken);
 
         sessionStorage.setItem("userName", userName);
 

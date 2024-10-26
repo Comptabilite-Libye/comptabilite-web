@@ -1,0 +1,797 @@
+<body class="tt" [ngClass]="{ 'disabled': IsLoading }">
+    <!-- Note: This example only works with Windows Insider Preview Builds 16237+. -->
+    <app-loading [IsLoading]="IsLoading">
+    </app-loading>
+    <header>
+
+        <label class="header_name"> فاتورة</label>
+        <button class="close-button" (click)="closeThisComponent()">X</button>
+
+    </header>
+    <aside>
+        <div class="Groupe-Bouton">
+
+        </div>
+    </aside>
+    <section id="main-container">
+
+        <div class="material-table">
+            <div class="card">
+                <p-toast></p-toast>
+                <p-contextMenu #cm [model]="items" data-original-title="ModalPassword" data-toggle="modal"
+                    appendTo="body" data-target="#ModalPassword"></p-contextMenu>
+
+                <p-table #dt1 [(first)]="first" [columns]="cols" [paginator]="true" [loading]="loading" [rows]="10"
+                    [contextMenu]="cm" [value]="dataFactureFournisseur"
+                    [globalFilterFields]="['codeSaisie', 'designationLt']" selectionMode="single"
+                    [metaKeySelection]="false" [(selection)]="selectedFactureFournisseur"
+                    (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" dataKey="code"
+                    [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
+
+                    <ng-template pTemplate="caption" class="col-md-12">
+
+                        <div class="flex-row-start flex-12">
+                            <fieldset style="padding: 5px;">
+
+                                <section class="flex-row-start">
+                                    <div style="width: 200px;">
+                                        <p-dropdown (onChange)="GetCodeEtatApprouver()" (onClear)="ngOnInit()"
+                                            [options]="EtatApprouve" [(ngModel)]="selectedEtatApprouve"
+                                            [style]="{'width':'200px '}" optionLabel="name" [showClear]="true"
+                                            placeholder="التأكيد.">
+                                            <ng-template pTemplate="selectedItem">
+                                                <div class="flex align-items-center gap-2" *ngIf="selectedEtatApprouve"
+                                                    style="width: 150px !important; display: flex;">
+                                                    <img src={{selectedEtatApprouve.url}}
+                                                        [class]="'flag flag- ' + selectedEtatApprouve.code.toLowerCase()"
+                                                        style="width: 18px" />
+                                                    <div style="padding-right: 20px;"> {{ selectedEtatApprouve.name }}
+                                                    </div>
+
+                                                </div>
+                                            </ng-template>
+                                            <ng-template let-EtatApprouve pTemplate="item">
+                                                <div class="flex align-items-center gap-2"
+                                                    style="width: 150px !important; display: flex; align-items: center;">
+                                                    <img src={{EtatApprouve.url}}
+                                                        [class]="'flag flag- ' + EtatApprouve.code.toLowerCase()"
+                                                        style="width: 18px" />
+                                                    <div style="padding-right: 20px;"> {{ EtatApprouve.name }}</div>
+                                                </div>
+                                            </ng-template>
+                                        </p-dropdown>
+                                    </div>
+                                    <label class="control-label-titer flex-6" style="padding-right: 20px;">البيان
+                                        :</label>
+                                    <span class="p-input-icon-left ml-auto flex-6">
+                                        <input pInputText class="recherche-value" [(ngModel)]="searchTerm"
+                                            name="zone-recherche" type="text"
+                                            (keyup.enter)="dt1.filterGlobal($any($event.target).value, 'contains')"
+                                            placeholder="البيان ..." />
+                                    </span>
+                                    <button type="button" class="Bouton-rechercher btn  btn-default "
+                                        data-original-title="Add"
+                                        (click)="dt1.filterGlobal($any($event.target).value, 'contains')">
+                                        <div class="bouton_style-2" style="margin: 0px 15px 0px 0px;">بحث</div>
+                                        <!-- <i class="fa-solid fa-magnifying-glass search-icon" style="font-size: 18px ;padding-top:2px ;margin: 0px 15px 0px 0px;"></i> -->
+                                            <i class="fa-solid fa-magnifying-glass search-icon" style="font-size: 18px ;padding-top:2px ;margin: 0px 15px 0px 0px;"></i>
+                                    </button>
+                                    <button type="button" class="Bouton-rechercher btn  btn-default "
+                                        data-original-title="Add" (click)="clear(dt1)"
+                                        (click)="GelAllFactureFournisseur()">
+                                        <div class="bouton_style-2">إعادة تعيين</div>
+                                        <!-- <i class="fa-solid fa-arrows-rotate search-icon" style="padding-top: 2px; padding-right: 3px; font-size: 18px;"></i> -->
+
+                                        <i class="fa-solid fa-arrows-rotate search-icon" style="padding-top: 2px; padding-right: 3px; font-size: 18px;"></i>
+                                    </button>
+                                </section>
+                            </fieldset>
+
+
+                            <section class="flex-row-start flex-5">
+                            </section>
+
+                            <fieldset style="padding: 5px;">
+                                <section class="flex-row-start flex-6">
+                                    <button data-backdrop="false" type="button"
+                                        class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
+                                        data-toggle="modal" data-target="#Modal" (click)="onOpenModal('add')">
+                                        <div class="bouton_style-2">إضافة</div>
+                                        <!-- <i class="fa-solid fa-plus add-icon" style=" font-size:18px ;padding-top:2px ;margin: 0px 10px 0px 0px;"></i> -->
+
+                                        <i class="fa-solid fa-plus add-icon" style=" font-size:18px ;padding-top:2px ;margin: 0px 10px 0px 0px;"></i>
+                                    </button>
+                                    <button *ngIf="VisModif" [disabled]="DisModif" data-backdrop="false" type="button"
+                                        class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
+                                        data-toggle="modal" data-target="#Modal" (click)="onOpenModal('edit')">
+                                        <div class="bouton_style-2">تعديل</div>
+                                        <i class="fa-solid fa-pen modif-icon"style=" font-size:18px ;padding-top:2px ;margin: 0px 10px 0px 0px;" ></i>
+                                    </button>
+
+                                    <button  *ngIf="VisVoir" data-backdrop="false" type="button"
+                                    class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
+                                    data-toggle="modal" data-target="#Modal" (click)="onOpenModal('voir')">
+                                    <div class="bouton_style-2">عرض</div>
+                                    <i class="fa-solid fa-eye modif-icon"style=" font-size:18px ;padding-top:2px ;margin: 0px 10px 0px 0px;" ></i>
+                                </button>
+                                    <button [disabled]="DisDelete" type="button"
+                                        class="Bouton-add-new2 btn  btn-default " data-original-title="Delete"
+                                        data-toggle="modal" data-target="#ModalDelete" (click)="onOpenModal('Delete')">
+                                        <div class="bouton_style-2">حذف</div>
+                                        <i class="fa-solid fa-trash-can delete-icon"></i>
+                                    </button>
+                                    <button [disabled]="DisPrint" data-backdrop="false" type="button"
+                                        class="Bouton-add-new2 btn btn-default " data-original-title="Print"
+                                        data-toggle="modal" data-target="#ModalPrint" (click)="onOpenModal('Print')">
+                                        <div class="bouton_style-2">طباعة</div>
+                                        <i class="fa-solid fa-print print-icon"></i>
+                                    </button>
+                                    <button [disabled]="DisApprouv" data-backdrop="false" type="button"
+                                        class="Bouton-add-new2 btn btn-default " data-original-title="ModalApprove"
+                                        data-toggle="modal" data-target="#ModalApprove"
+                                        (click)="approveFFDirect('ApproveModal')">
+                                        <div class="bouton_style-2">تأكيد</div>
+                                        <i class="fa-regular fa-floppy-disk ApprouveIcon"></i>
+                                    </button>
+                                    <button style="width: auto;" data-backdrop="false" type="button"
+                                        class="Bouton-add-new2 btn btn-default " data-original-title="Print"
+                                        data-toggle="modal" data-target="#ModalPrint">
+                                        <div class="bouton_style-2">إستراد يبانات</div>
+                                     <i style="color:#2d5e9f ;font-size: 20px ; padding-top: 1px ; margin: 0px 10px 0px 0px;" class="fa-solid fa-cloud-arrow-up"></i>
+
+                                        </button>
+                                   
+                                </section>
+                            </fieldset>
+
+
+                        </div>
+
+
+                    </ng-template>
+                    
+                    <ng-template pTemplate="header" let-col>
+                        <tr>
+                            <th *ngFor="let col of col ; let i = index" pResizableColumn>
+                                <span>
+                                    {{col.header}}
+                                </span> 
+                                <ng-container *ngIf="i > 0">
+                                    <p-columnFilter type="text" [field]="col.field"  display="menu" [hideOnClear]="true"  [showAddButton]="false" [showOperator]="false" [matchMode]="'contains'"  [showMatchModes]="false"  ></p-columnFilter>
+                                </ng-container>
+                            </th>
+                          </tr>
+
+                        
+                        
+                      </ng-template>
+                    <ng-template pTemplate="body" let-domaine>
+                        <tr [pSelectableRow]="domaine" [pContextMenuRow]="domaine">
+                            <td style="font-size: 15px !important" class="warning"
+                                [ngStyle]="{'background-image': (domaine.codeEtatApprouver == 2) ? (getPicValider()) : ((domaine.codeEtatApprouver == 1) ? (getPicNonEncore()) : (getPicRefuser())) }"
+                                style=" width: 65px ;background-repeat: no-repeat;background-size:25px 25px;background-position-y: 2px;background-position-x: 10px;">
+                            </td>
+                            <td style="font-size: 16px !important;">{{domaine.codeSaisie}}</td>
+                            <td style="font-size: 16px !important;">{{domaine.fournisseurDTO.codeSaisie}}</td>
+                            <td style="font-size: 16px !important;">{{domaine.fournisseurDTO.designationAr}}</td>
+                            <td style="font-size: 16px !important;">{{domaine.dateFactureFournisseur | date :
+                                "dd/MM/yyyy"}}</td>
+
+                            <td style="font-size: 16px !important;">
+                                {{domaine.montant}}
+                            </td>
+                            <td style="font-size: 16px !important;">
+                                {{domaine.numFactureFournisseur}}
+                            </td>
+
+                            <td style="font-size: 16px !important;">
+                                {{domaine.deviseDTO.designationAr}}
+                            </td>
+                            <td style="font-size: 16px !important;width: 170px;">
+                                {{domaine.dateCreate | date : "dd/MM/yyyy HH:mm:ss" }}
+                            </td>
+
+
+
+
+
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="4">No customers found.</td>
+                        </tr>
+                    </ng-template>
+
+
+                </p-table>
+
+
+            </div>
+        </div>
+    </section>
+    <footer>footer
+    </footer>
+</body>
+
+
+
+
+
+
+<!-- modal primeNG ADD -->
+<p-dialog id="Modal" header="Header" [scrollLeft]="true" [closeOnEscape]="true" [(visible)]="visibleModal"
+    data-backdrop="false" [modal]="true" styleClass="ModalAddFacture" [draggable]="false">
+    <p-toast key="toast1"></p-toast>
+
+    <ng-template pTemplate="header">
+        <h2 class="text-default headerForm"> {{formHeader}}</h2>
+        <button class="btn btn-default cancel-add-ModalSmallXXL" :closable="true" data-dismiss="modal"
+            (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+        </button>
+        <button *ngIf="visBtnSave" class="btn btn-default save-add-ModalSmallXXL" (click)="PostFactureFournisseur()"> <i
+                class="fa-lg fa-fw fa fa-check icon-save"></i>
+            حفظ
+        </button>
+        <p-toast key="toast1"></p-toast>
+    </ng-template>
+
+    <div class="modal-body">
+        <p-toast key="toast1"></p-toast>
+        <div class="flex-row-start flex-12">
+            <fieldset class="flex-12">
+                <div class="flex-row-start flex-12">
+                    <section class="flex-row-start flex-4">
+                        <label class="control-label flex-3" style="width: 25%; ">الرمز : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input flex-5  " style="padding: 0px 30px 0px 0px; max-width: 190px;">
+                            <input disabled="" readonly style="max-width: 55%;" id="codeSaisie" maxlength="10"
+                                name="codeSaisie" type="text" class="onlyForCentral form-control-dev input-xs" required
+                                [(ngModel)]="codeSaisie">
+                        </div>
+                    </section>
+                </div>
+                <div class="flex-row-start flex-12">
+                    <section class="block-row flex-4">
+                        <label class="control-label flex-3">المورد :<i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="dop control-input flex-7 " style="padding: 0px 86px 0px 0px; display: flex;">
+                            <p-dropdown name="fournisseur" appendTo="body" class="dropdown"
+                                [options]="listFournisseurRslt" [(ngModel)]="selectedFournisseur"
+                                [style]="{'width':'157px'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                                [required]="true" [lazy]="true" #fournisseur="ngModel">
+                            </p-dropdown>
+
+                        </div>
+                        <br>
+
+                        <label class="control-label flex-4-38">تاريخ فاتورة المورد:<i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="control-input flex-5-45" style="padding: 0px 20px 0px 0px; display: flex;">
+                            <p-calendar (onChange)="transformDateFormat()" (onSelect)="transformDateFormat()"
+                                [(ngModel)]="dateFactureFournisseur"
+                                [ngStyle]="{'width':'100%' , 'margin-right': '3px'}" [showButtonBar]="true"
+                                [readonlyInput]="true" appendTo="body" #calendar dateFormat="yy-mm-dd"></p-calendar>
+                        </div>
+
+                        <br>
+
+
+                        <label class="control-label flex-4"> مركز التكلفة : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="dop control-input flex-7 " style="padding: 0px 50px 0px 0px; display: flex;">
+                            <p-dropdown name="codecostCenter" [filter]="true" appendTo="body" class="dropdown"
+                                [options]="listCostCentreRslt" [(ngModel)]="selectedCostCentre" [style]="{'width':'160px'}"
+                                [autoDisplayFirst]="true" placeholder="&nbsp;" [required]="true" [lazy]="true"
+                                #codecostCenter="ngModel">
+                            </p-dropdown>
+                        </div>
+
+
+
+                    </section>
+                    <section class="block-row flex-4">
+                        <div class="flex-12">
+                            <label class="control-label flex-6">قيمة فاتورة المورد :<i
+                                    class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                            <div class="dop control-input flex-6-6 ">
+                                <input style="max-width: 95%;" id="MntFactFrs" maxlength="10" name="MntFactFrs"
+                                    type="number" min="0" class="onlyForCentral form-control-dev input-xs" required
+                                    [(ngModel)]="MntFactFrs">
+
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="flex-12">
+                            <label class="control-label flex-6">رقم فاتورة المورد:<i
+                                    class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                            <div class="dop control-input flex-6-6">
+                                <input id="NumFactFrs" maxlength="10" name="NumFactFrs" type="text"
+                                    class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="NumFactFrs">
+
+
+                            </div>
+                        </div>
+
+                        <br>
+ 
+                    </section>
+                    <section class="block-row flex-4" style="border-left:none">
+                        <label class="control-label flex-4">ملاحظة :<i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="dop control-input flex-9" style="padding: 0px 20px 0px 0px; display: flex;">
+                            <textarea rows="3" cols="30" pInputTextarea [(ngModel)]="observation"></textarea>
+                        </div>
+                        <br>
+
+
+
+                        <label class="control-label flex-4">العملة : <i
+                                class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                        <div class="dop control-input flex-7 " style="padding: 0px 25px 0px 0px; display: flex;">
+                            <p-dropdown name="devise" [filter]="true" appendTo="body" class="dropdown"
+                                [options]="listDeviseRslt" [(ngModel)]="selectedDevise" [style]="{'width':'165px'}"
+                                [autoDisplayFirst]="true" placeholder="&nbsp;" [required]="true" [lazy]="true"
+                                #devise="ngModel">
+                            </p-dropdown>
+                        </div>
+
+
+                    </section>
+                </div>
+
+                <div class="flex-row-start flex-12">
+                    <fieldset class="flex-12" style="margin: 0px; border-radius: 0px;">
+                        <div class="flex-row-start flex-6">
+                            <section class="flex-row-space flex-8">
+                                <label class="control-label flex-4">نوع المصروف :</label>
+                                <div class="dop control-input flex-10">
+                                    <!-- // for new table  -->
+
+                                    <p-dropdown [resetFilterOnHide]=true class="dropdown" appendTo="body"
+                                        [options]="listselectedTypeDepenseRslt" [(ngModel)]="selectedTypeDepense"
+                                        [filter]="true" [showClear]="true" [style]="{minWidth: '50px', width: '80%' }"
+                                        filterBy="label,value" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                                        [lazy]="true" id="dropDownLists" (onClick)="clickDropDownUp(dropDownListss)"
+                                        #dropDownListss (ngModelChange)="PushTableData()" (onClear)="NoAction()">
+                                    </p-dropdown>
+
+                                    <br />
+                                    <br />
+                                </div>
+
+                            </section>
+                        </div>
+                        <div class="flex-row-start flex-12">
+                            <section class="flex-12">
+                                <div class="dop control-input flex-12">
+                                    <p-toast></p-toast>
+
+                                    <p-table #dt1 [value]="listDetailsTypeDepense" selectionMode="single"
+                                        [metaKeySelection]="false" [(selection)]="selectedFactureFournisseur"
+                                        dataKey="code" scrollHeight="200px"
+                                        [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
+
+                                        <ng-template pTemplate="header">
+                                            <tr style="font-size: 16px !important;">
+                                                <th>#</th>
+                                                <th>الرمز</th>
+                                                <th>البيان بالعربي</th>
+                                                <th> البيان باللاتيني</th>
+                                                <th> القيمة</th>
+                                                <th>حذف</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-domaine let-editing="editing"
+                                            let-ri="rowIndex">
+
+                                            <tr [pSelectableRow]="domaine">
+                                                <td>{{ri+1}}</td>
+                                                <td style="font-size: 16px !important;">
+                                                    {{domaine.codeSaisieTypeDepense}}</td>
+                                                <td style="font-size: 16px !important;">
+                                                    {{domaine.designationArTypeDepense}}</td>
+                                                <td style="font-size: 16px !important;">
+                                                    {{domaine.designationLtTypeDepense}}</td>
+
+                                                <td style="width: 50px !important;">
+                                                    <input [(ngModel)]="domaine.montant " style="width: 100%;"
+                                                        class="InputQte" type="number" id="montant" name="montant"
+                                                        required minlength="4" (change)="ValueMntChanged()"
+                                                        maxlength="8" size="10" min="0" />
+                                                </td>
+
+                                                <!-- <td style="width: 50px !important;">
+                                                    <input disabled="" [(ngModel)]="domaine.montantDevise "
+                                                        style="width: 100%;border: 0px;" class="InputQte" type="number"
+                                                        id="montantDevise" name="montantDevise" required minlength="4"
+                                                        maxlength="8" size="10" min="0" />
+                                                </td> -->
+
+                                                <td style="width: 50px !important;"> <button *ngIf="!editing" pButton
+                                                        type="button" pDeleteEditableRow icon="pi pi-trash"
+                                                        class="p-button-item " (click)="remove(ri) "></button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="footer" let-domaine>
+                                            <tr>
+                                                <td colspan="4" class="FooterTable">الإجمالي:</td>
+                                                <td class="FooterTable">
+                                                    <input disabled="" style="border: 0px;" type="number"
+                                                        [(ngModel)]="Total">
+                                                </td>
+
+                                            </tr>
+                                        </ng-template>
+
+                                    </p-table>
+
+                                    <br>
+
+
+                                </div>
+                            </section>
+                        </div>
+                    </fieldset>
+
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</p-dialog>
+
+<!-- modal primeNG  Delete-->
+<p-dialog class="modal-delete" id="ModalDelete" data-backdrop="false" header="Header" [(visible)]="visDelete"
+    styleClass="ModalDelete" [modal]="true" [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="header">
+        <h2 class="text-default headerForm"> {{formHeader}}</h2>
+    </ng-template>
+    <div class="modal-body">
+        <form action="" #addForms="ngForm">
+            <fieldset class="deleteForms">
+                <h4 class="text-delete ">هل أنت متأكد من الحذف ?
+                    <button class="btn btn-default save-add-ModalSmall" style="right: 520px ;"
+                        (click)="DeleteFactureFournisseur()"> <i class="fa-lg fa-fw fa fa-check icon-save"></i>
+                        حذف
+                    </button>
+                    <button class="btn btn-default cancel-add-ModalSmall" style="right: 430px ;" :closable="true"
+                        data-dismiss="modal"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+                    </button>
+                </h4>
+            </fieldset>
+            <br>
+        </form>
+    </div>
+</p-dialog>
+<!-- fin modal primeng  -->
+
+
+
+
+
+
+
+<p-dialog id="ModalPrint" header="Header" [scrollLeft]="true" [(visible)]="visibleModalPrint" data-backdrop="false"
+    [modal]="true" styleClass="ModalPrint" [draggable]="false">
+    <p-toast key="toast1"></p-toast>
+
+    <ng-template pTemplate="header">
+        <h2 class="text-default headerForm"> {{formHeader}}</h2>
+        <button style="right: 995px;" class="btn btn-default cancel-add-ModalSmall" :closable="true"
+            data-dismiss="modal" (click)="clearForm() ; CloseModalPrint()"> <i
+                class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+        </button>
+
+        <p-toast key="toast1"></p-toast>
+    </ng-template>
+    <div class="modal-body">
+        <div id="pdfContainer"></div>
+    </div>
+
+</p-dialog>
+
+
+
+
+<!-- modal   Approuve -->
+<p-dialog id="ModalApprove" header="Header" [scrollLeft]="true" [(visible)]="visibleModalApprove" data-backdrop="false"
+    [modal]="true" styleClass="ModalAddFacture" [draggable]="false">
+    <p-toast key="toast1"></p-toast>
+
+    <ng-template pTemplate="header">
+        <h2 class="text-default headerForm"> {{formHeader}}</h2>
+        <button class="btn btn-default cancel-add-ModalSmallXXL" :closable="true" data-dismiss="modal"
+            (click)="clearForm()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+        </button>
+        <button class="btn btn-default save-add-ModalSmallXXL" (click)="ApprouveFactureFournisseur()"> <i
+                class="fa-lg fa-fw fa fa-check icon-save"></i>
+            حفظ
+        </button>
+        <p-toast key="toast1"></p-toast>
+    </ng-template>
+
+    <div class="modal-body">
+
+        <fieldset class="flex-12">
+            <div class="flex-row-start flex-12">
+                <section class="flex-row-start flex-8" disabled="">
+                    <label class="control-label flex-6" style="padding: 0px 15px 0px 0px;"> مرحلة الإعتماد : </label>
+                    <div class="control-input  flex-5">
+
+                        <label for="Encours"
+                            style="padding: 0px 10px 0px 10px;margin: 0px;font-size: 13px;font-weight: 500;">
+                            في طور التأكيد</label>
+                        <p-radioButton name="selectedValue" value=1 [(ngModel)]="selectedValue"
+                            inputId="Encours"></p-radioButton>
+
+                    </div>
+                    <div class="control-input  flex-4">
+                        <label for="Valider"
+                            style="padding: 0px 10px 0px 10px;margin: 0px;font-size: 13px;font-weight: 500;">
+                            إعتماد</label>
+                        <p-radioButton name="groupname" value=2 [(ngModel)]="selectedValue"
+                            inputId="Valider"></p-radioButton>
+
+                    </div>
+                    <div class="control-input  flex-4">
+                        <label for="Refuser"
+                            style="padding: 0px 10px 0px 10px;margin: 0px;;font-size: 13px;font-weight: 500;">
+                            رفض</label>
+                        <p-radioButton name="groupname" value=3 [(ngModel)]="selectedValue"
+                            inputId="Refuser"></p-radioButton>
+
+                    </div>
+
+                </section>
+
+            </div>
+        </fieldset>
+
+
+
+ 
+            <div class="flex-row-start flex-12">
+                <fieldset class="flex-12">
+                    <div class="flex-row-start flex-12">
+                        <section class="flex-row-start flex-4">
+                            <label class="control-label flex-3" style="width: 25%; ">الرمز : <i
+                                    class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                            <div class="control-input flex-5  " style="padding: 0px 30px 0px 0px; max-width: 190px;">
+                                <input disabled="" readonly style="max-width: 55%;" id="codeSaisie" maxlength="10"
+                                    name="codeSaisie" type="text" class="onlyForCentral form-control-dev input-xs" required
+                                    [(ngModel)]="codeSaisie">
+                            </div>
+                        </section>
+                    </div>
+                    <div class="flex-row-start flex-12">
+                        <section class="block-row flex-4">
+                            <label class="control-label flex-3">المورد :<i
+                                    class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                            <div class="dop control-input flex-7 " style="padding: 0px 86px 0px 0px; display: flex;">
+                                <p-dropdown name="fournisseur" appendTo="body" class="dropdown"
+                                    [options]="listFournisseurRslt" [(ngModel)]="selectedFournisseur"
+                                    [style]="{'width':'157px'}" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                                    [required]="true" [lazy]="true" #fournisseur="ngModel">
+                                </p-dropdown>
+    
+                            </div>
+                            <br>
+    
+                            <label class="control-label flex-4-38">تاريخ فاتورة المورد:<i
+                                    class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                            <div class="control-input flex-5-45" style="padding: 0px 20px 0px 0px; display: flex;">
+                                <p-calendar (onChange)="transformDateFormat()" (onSelect)="transformDateFormat()"
+                                    [(ngModel)]="dateFactureFournisseur"
+                                    [ngStyle]="{'width':'100%' , 'margin-right': '3px'}" [showButtonBar]="true"
+                                    [readonlyInput]="true" appendTo="body" #calendar dateFormat="yy-mm-dd"></p-calendar>
+                            </div>
+    
+                            <br>
+    
+    
+                            <label class="control-label flex-4"> مركز التكلفة : <i
+                                    class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                            <div class="dop control-input flex-7 " style="padding: 0px 50px 0px 0px; display: flex;">
+                                <p-dropdown name="codecostCenter" [filter]="true" appendTo="body" class="dropdown"
+                                    [options]="listCostCentreRslt" [(ngModel)]="selectedCostCentre" [style]="{'width':'160px'}"
+                                    [autoDisplayFirst]="true" placeholder="&nbsp;" [required]="true" [lazy]="true"
+                                    #codecostCenter="ngModel">
+                                </p-dropdown>
+                            </div>
+    
+    
+    
+                        </section>
+                        <section class="block-row flex-4">
+                            <div class="flex-12">
+                                <label class="control-label flex-6">قيمة فاتورة المورد :<i
+                                        class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                                <div class="dop control-input flex-6-6 ">
+                                    <input style="max-width: 95%;" id="MntFactFrs" maxlength="10" name="MntFactFrs"
+                                        type="number" min="0" class="onlyForCentral form-control-dev input-xs" required
+                                        [(ngModel)]="MntFactFrs">
+    
+                                </div>
+                            </div>
+    
+                            <br>
+                            <div class="flex-12">
+                                <label class="control-label flex-6">رقم فاتورة المورد:<i
+                                        class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                                <div class="dop control-input flex-6-6">
+                                    <input id="NumFactFrs" maxlength="10" name="NumFactFrs" type="text"
+                                        class="onlyForCentral form-control-dev input-xs" required [(ngModel)]="NumFactFrs">
+    
+    
+                                </div>
+                            </div>
+    
+                            <br>
+     
+                        </section>
+                        <section class="block-row flex-4" style="border-left:none">
+                            <label class="control-label flex-4">ملاحظة :<i
+                                    class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                            <div class="dop control-input flex-9" style="padding: 0px 20px 0px 0px; display: flex;">
+                                <textarea rows="3" cols="30" pInputTextarea [(ngModel)]="observation"></textarea>
+                            </div>
+                            <br>
+    
+    
+    
+                            <label class="control-label flex-4">العملة : <i
+                                    class="fa-lg fa-fw fa fa-times icon-required"></i></label>
+                            <div class="dop control-input flex-7 " style="padding: 0px 25px 0px 0px; display: flex;">
+                                <p-dropdown name="devise" [filter]="true" appendTo="body" class="dropdown"
+                                    [options]="listDeviseRslt" [(ngModel)]="selectedDevise" [style]="{'width':'165px'}"
+                                    [autoDisplayFirst]="true" placeholder="&nbsp;" [required]="true" [lazy]="true"
+                                    #devise="ngModel">
+                                </p-dropdown>
+                            </div>
+    
+    
+                        </section>
+                    </div>
+    
+                    <div class="flex-row-start flex-12">
+                        <fieldset class="flex-12" style="margin: 0px; border-radius: 0px;">
+                            <div class="flex-row-start flex-6">
+                                <section class="flex-row-space flex-8">
+                                    <label class="control-label flex-4">نوع المصروف :</label>
+                                    <div class="dop control-input flex-10">
+                                        <!-- // for new table  -->
+    
+                                        <p-dropdown [resetFilterOnHide]=true class="dropdown" appendTo="body"
+                                            [options]="listselectedTypeDepenseRslt" [(ngModel)]="selectedTypeDepense"
+                                            [filter]="true" [showClear]="true" [style]="{minWidth: '50px', width: '80%' }"
+                                            filterBy="label,value" [autoDisplayFirst]="true" placeholder="&nbsp;"
+                                            [lazy]="true" id="dropDownLists" (onClick)="clickDropDownUp(dropDownListss)"
+                                            #dropDownListss (ngModelChange)="PushTableData()" (onClear)="NoAction()">
+                                        </p-dropdown>
+    
+                                        <br />
+                                        <br />
+                                    </div>
+    
+                                </section>
+                            </div>
+                            <div class="flex-row-start flex-12">
+                                <section class="flex-12">
+                                    <div class="dop control-input flex-12">
+                                        <p-toast></p-toast>
+    
+                                        <p-table #dt1 [value]="listDetailsTypeDepense" selectionMode="single"
+                                            [metaKeySelection]="false" [(selection)]="selectedFactureFournisseur"
+                                            dataKey="code" scrollHeight="200px"
+                                            [tableStyle]="{'min-width': '50rem', 'width': '100%' , 'padding': '1px 1px 1px 1px'}">
+    
+                                            <ng-template pTemplate="header">
+                                                <tr style="font-size: 16px !important;">
+                                                    <th>#</th>
+                                                    <th>الرمز</th>
+                                                    <th>البيان بالعربي</th>
+                                                    <th> البيان باللاتيني</th>
+                                                    <th> القيمة</th>
+                                               
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-domaine let-editing="editing"
+                                                let-ri="rowIndex">
+    
+                                                <tr [pSelectableRow]="domaine">
+                                                    <td>{{ri+1}}</td>
+                                                    <td style="font-size: 16px !important;">
+                                                        {{domaine.codeSaisieTypeDepense}}</td>
+                                                    <td style="font-size: 16px !important;">
+                                                        {{domaine.designationArTypeDepense}}</td>
+                                                    <td style="font-size: 16px !important;">
+                                                        {{domaine.designationLtTypeDepense}}</td>
+    
+                                                    <td style="width: 50px !important;">
+                                                        <input [(ngModel)]="domaine.montant " style="width: 100%;"
+                                                            class="InputQte" type="number" id="montant" name="montant"
+                                                            required minlength="4" (change)="ValueMntChanged()"
+                                                            maxlength="8" size="10" min="0" />
+                                                    </td>
+    
+                                                   
+                                                  
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="footer" let-domaine>
+                                                <tr>
+                                                    <td colspan="4" class="FooterTable">الإجمالي:</td>
+                                                    <td class="FooterTable">
+                                                        <input disabled="" style="border: 0px;" type="number"
+                                                            [(ngModel)]="Total">
+                                                    </td>
+    
+                                                </tr>
+                                            </ng-template>
+    
+                                        </p-table>
+    
+                                        <br>
+    
+    
+                                    </div>
+                                </section>
+                            </div>
+                        </fieldset>
+    
+                    </div>
+                </fieldset>
+            </div>
+   
+
+    </div>
+</p-dialog>
+
+
+
+
+<p-dialog id="ModalPassword" header="Header" [scrollLeft]="true" [closeOnEscape]="true"
+    [(visible)]="visbileModalPassword" data-backdrop="false" [modal]="true" styleClass="ModalPassword"
+    [draggable]="false">
+
+
+    <ng-template pTemplate="header">
+        <h2 class="text-default headerForm"> {{formHeader}}</h2>
+        <button class="btn btn-default cancel-add-ModalSmalls" :closable="true" data-dismiss="modal"
+            (click)="CloseModalPassWord()"> <i class="fa-lg fa-fw fa fa-times  icon-fermer "></i>خروج
+        </button>
+        <button class="  btn btn-default save-add-ModalSmalls" (click)="approveAC('CancelApproveModal')">
+            <i class="fa-lg fa-fw fa fa-check icon-save"></i>
+            حفظ
+        </button>
+        <p-toast key="toast1"></p-toast>
+    </ng-template>
+    <div class="modal-body">
+        <fieldset class="flex-12">
+            <div class="flex-row-start flex-6">
+                <div class="flex-row-start flex-12">
+                    <section class="flex-row-start flex-12">
+                        <label class="control-label flex-6">كلمة السر : </label>
+                        <!-- <i class="fa-lg fa-fw fa fa-times icon-required" style="bottom: 0px; top:10px"></i> -->
+                        <div class="dop control-input flex-10" style="display: flex;">
+                            <input type="password" id="myInput" #myInput maxlength="200" name="password"
+                                class="onlyForCentral form-control-dev input-xs" [(ngModel)]="password"
+                                [required]="true"> 
+                                <i #icons  onclick="myFunction()" class="fa" style="position: absolute; top: 35px; right: 164px; font-size: 15px; " [ngClass]="{'fa-eye': myInput.type === 'password', 'fa-eye-slash': myInput.type !== 'password'}"></i>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </fieldset>
+
+
+
+
+    </div>
+
+    <!-- </div> -->
+</p-dialog>

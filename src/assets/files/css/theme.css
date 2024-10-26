@@ -983,7 +983,9 @@ p-chips.p-chips-clearable .p-chips-clear-icon {
 
 .p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
     padding-right: 1.75rem;
-    margin-right: -1.75rem
+    margin-right: -1.75rem;
+    font-family: auto;
+    font-size: 14px;
 }
 
 .p-dropdown-panel .p-dropdown-header .p-dropdown-filter-icon {
@@ -2182,8 +2184,8 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 
 .p-button {
-    color: #fff;
-    background: #007bff;
+    color: #000000;
+    background: #ffffff;
     border: 1px solid #007bff;
     padding: .5rem .75rem;
     font-size: 1rem;
@@ -2275,9 +2277,11 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 
 .p-button .p-button-label {
-    transition-duration: .15s
-}
-
+    transition-duration: .15s;
+    font-size: 13px;
+    font-family: auto;
+    font-weight: 600;
+  }
 .p-button .p-button-icon-left {
     margin-right: .5rem
 }
@@ -4410,19 +4414,26 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 .p-paginator .p-paginator-pages .p-paginator-page {
     background-color: #fff;
     border: 1px solid #dee2e6;
-    color: #007bff;
+    color: black;
     min-width: 2.357rem;
     height: 2.357rem;
     margin: 0 0 0 -1px;
     transition: box-shadow .15s;
-    border-radius: 0
+    border-radius: 3px;
 }
 
+ 
+
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-    background: #007bff;
-    border-color: #007bff;
-    color: #fff
-}
+    background: #30688b;
+    border-color: #30688b;
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 13px;
+    font-family: auto;
+   
+  }
+  
 
 .p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover {
     background: #e9ecef;
@@ -7731,3 +7742,5 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 .fc.fc-theme-standard .fc-highlight {
     background: #cce5ff
 }
+
+

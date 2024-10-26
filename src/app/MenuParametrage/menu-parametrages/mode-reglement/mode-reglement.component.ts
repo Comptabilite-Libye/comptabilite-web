@@ -74,7 +74,7 @@ export class ModeReglementComponent {
     this.designationAr = '';
     this.designationLt = '';
     this.actif = false;
-    this.visible = false;
+    this.reqBanque = false;
     this.codeSaisie = '';
     this.onRowUnselect(event);
 
@@ -96,7 +96,8 @@ export class ModeReglementComponent {
   designationAr: string = 'NULL';
   designationLt: string = "NULL";
   actif!: boolean;
-  visible!: boolean;
+  reqBanque!: boolean;
+
 
   selectedModeReglement!: ModeReglement;
 
@@ -104,7 +105,8 @@ export class ModeReglementComponent {
   onRowSelect(event: any) {
     this.code = event.data.code;
     this.actif = event.data.actif;
-    this.visible = event.data.visible;
+    this.reqBanque = event.data.reqBanque;
+    this.reqBanque = event.data.reqBanque;
     this.codeSaisie = event.data.codeSaisie;
     this.designationAr = event.data.designationAr;
     this.designationLt = event.data.designationLt;
@@ -137,7 +139,7 @@ export class ModeReglementComponent {
     this.designationAr = '';
     this.designationLt = '';
     this.actif = false;
-    this.visible = false;
+    this.reqBanque = false;
   }
 
   public onOpenModal(mode: string) {
@@ -155,7 +157,7 @@ export class ModeReglementComponent {
       this.onRowUnselect(event);
       this.clearSelected();
       this.actif = false;
-      this.visible = false;
+      this.reqBanque = false;
       this.visibleModal = true;
       this.code == undefined;
 
@@ -226,8 +228,10 @@ export class ModeReglementComponent {
 
     if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
       alertifyjs.set('notifier', 'position', 'top-left');
-      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
+      alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/required.gif" alt="image" >' + "Field Required"); 
+      
 
+      
     } else {
 
 
@@ -240,6 +244,7 @@ export class ModeReglementComponent {
         dateCreate: new Date().toISOString(), //
         code: this.code,
         actif: this.actif,
+        reqBanque: this.reqBanque,
 
       }
       if (this.code != null) {
@@ -249,7 +254,11 @@ export class ModeReglementComponent {
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
+            //             alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم التحيين");
+
+            
+            alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم التحيين");
+  
             this.visibleModal = false;
             this.clearForm();
             this.ngOnInit();
@@ -267,7 +276,8 @@ export class ModeReglementComponent {
         this.param_service.PostModeReglement(body).subscribe(
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+             alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم الحفظ بنجاح");
+
             this.visibleModal = false;
             this.clearForm();
             this.ngOnInit();

@@ -20,4 +20,19 @@
         "changeOrigin": true,
         "timeout": 360000
     } 
+
+    ,
+    "/depense": {
+        "target": "http://localhost:9090/api",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true,
+        "timeout": 360000
+    }  ,
+    "/finance/quote": { 
+        "target": "https://www.google.com", 
+        "secure": true,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
   }

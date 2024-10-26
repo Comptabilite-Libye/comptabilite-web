@@ -1,0 +1,10 @@
+:host ::ng-deep .p-dropdown-clear-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -.5rem;
+    right: 160px !important;
+  }
+
+  span {
+    font-family: 'Font Awesome 6 Free' !important;
+}

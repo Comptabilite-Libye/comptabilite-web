@@ -68,14 +68,13 @@
                                         data-original-title="Add"
                                         (click)="dt1.filterGlobal($any($event.target).value, 'contains')">
                                         <div class="bouton_style-2" style="margin: 0px 15px 0px 0px;">بحث</div>
-                                        <mat-icon style="margin: 0px 15px 0px 0px;"
-                                            class="search-icon">search</mat-icon>
+                                        <i class="fa-solid fa-magnifying-glass search-icon" style="font-size: 18px ;padding-top:2px ;margin: 0px 15px 0px 0px;"></i>
                                     </button>
                                     <button type="button" class="Bouton-rechercher btn  btn-default "
                                         data-original-title="Add" (click)="clear(dt1)"
                                         (click)="GelAllAlimentationCaisse()">
                                         <div class="bouton_style-2">إعادة تعيين</div>
-                                        <mat-icon class="search-icon">refresh</mat-icon>
+                                        <i class="fa-solid fa-arrows-rotate search-icon" style="padding-top: 2px; padding-right: 3px; font-size: 18px;"></i>
                                     </button>
                                 </section>
                             </fieldset>
@@ -90,20 +89,19 @@
                                         class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
                                         data-toggle="modal" data-target="#Modal" (click)="onOpenModal('add')">
                                         <div class="bouton_style-2">إضافة</div>
-                                        <mat-icon class="add-icon" style="margin: 0px 10px 0px 0px;">add</mat-icon>
+                                        <i class="fa-solid fa-plus add-icon" style=" font-size:18px ;padding-top:2px ;margin: 0px 10px 0px 0px;"></i>
                                     </button>
                                     <button [disabled]="DisModif" data-backdrop="false" type="button"
                                         class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
                                         data-toggle="modal" data-target="#Modal" (click)="onOpenModal('edit')">
                                         <div class="bouton_style-2">تعديل</div>
-                                        <mat-icon class="modif-icon" style="margin: 0px 10px 0px 0px;">create</mat-icon>
+                                        <i class="fa-solid fa-pen modif-icon"style=" font-size:18px ;padding-top:2px ;margin: 0px 10px 0px 0px;" ></i>
                                     </button>
+                                     
                                     <button [disabled]="DisDelete" type="button" class="Bouton-add-new2 btn  btn-default "
                                         data-original-title="Delete" data-toggle="modal" data-target="#ModalDelete"
                                         (click)="onOpenModal('Delete')">
                                         <div class="bouton_style-2">حذف</div>
-                                        <!-- <mat-icon class="delete-icon"
-                                            style="margin: 0px 10px 0px 0px;">delete</mat-icon> -->
                                         <i class="fa-solid fa-trash-can delete-icon"></i>
                                     </button>
                                     <button [disabled]="DisPrint" data-backdrop="false" type="button"
@@ -122,11 +120,10 @@
                                         class="Bouton-add-new2 btn btn-default " data-original-title="Print"
                                         data-toggle="modal" data-target="#ModalPrint">
                                         <div class="bouton_style-2">إستراد يبانات</div>
-                                        <!-- <mat-icon class="print-icon" style="margin: 0px 10px 0px 0px;">
-                                            local_printshop</mat-icon> -->
-                                        <mat-icon
-                                            style="color:#2d5e9f ; margin: 0px 10px 0px 0px;">cloud_upload</mat-icon>
-                                    </button>
+                                   
+                                            <i style="color:#2d5e9f ;font-size: 20px ; padding-top: 1px ; margin: 0px 10px 0px 0px;" class="fa-solid fa-cloud-arrow-up"></i>
+
+                                        </button>
 
                                 </section>
                             </fieldset>
@@ -266,7 +263,7 @@
                         class="fa-lg fa-fw fa fa-times icon-required"></i></label>
                 <div class="control-input flex-7">
                     
-                    <input readonly disabled=""   type="text" id="DesigDevise" maxlength="200"
+                    <input readonly disabled="" style="max-width: 83%;"  type="text" id="DesigDevise" maxlength="200"
                     name="DesigDevise" class="onlyForCentral form-control-dev input-xs"
                     [(ngModel)]="DesigDevise" [required]="true">
 
@@ -278,10 +275,10 @@
                 </div>
                     </section>
                     <section class="flex-row-start flex-6">
-                        <label class="control-label flex-5">الصرف:<i
+                        <label class="control-label flex-3">الصرف:<i
                             class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                    <div class="control-input flex-7">
-                        <input readonly disabled="" style="max-width: 25%;" type="text" id="TauxChange" maxlength="200"
+                    <div class="control-input flex-5-45 ">
+                        <input readonly disabled=""   type="text" id="TauxChange" maxlength="200"
                             name="TauxChange" class="onlyForCentral form-control-dev input-xs"
                             [(ngModel)]="TauxChange" [required]="true">
                     </div>
@@ -296,8 +293,8 @@
 
                         <label class="control-label flex-5">القيمة بالعملة المحلية :<i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input flex-7">
-                            <input readonly disabled="" style="max-width: 65%;" type="text" id="montantEnDevise" maxlength="200"
+                        <div class="control-input  flex-5-45 ">
+                            <input readonly disabled="" style="max-width: 48%;" type="text" id="montantEnDevise" maxlength="200"
                                 name="montantEnDevise" class="onlyForCentral form-control-dev input-xs"
                                 [(ngModel)]="montantEnDevise" [required]="true">
                         </div>
@@ -768,12 +765,10 @@
                         <label class="control-label flex-6">كلمة السر : </label>
                         <!-- <i class="fa-lg fa-fw fa fa-times icon-required" style="bottom: 0px; top:10px"></i> -->
                         <div class="dop control-input flex-10" style="display: flex;">
-                            <input type="password" id="myInput" maxlength="200" name="password"
+                            <input type="password" id="myInput" #myInput maxlength="200" name="password"
                                 class="onlyForCentral form-control-dev input-xs" [(ngModel)]="password"
-                                [required]="true">
-                                <!-- <input class="ShowPassword" type="checkbox" onclick="myFunction()">عرض -->
-                                <span onclick="myFunction()" class="fa fa-fw fa-eye field-icon toggle-password"
-                                style="position: absolute; top: 47px; right: 164px; font-size: 12px; " ></span>
+                                [required]="true"> 
+                                <i #icons  onclick="myFunction()" class="fa" style="position: absolute; top: 54px; right: 164px; font-size: 15px; " [ngClass]="{'fa-eye': myInput.type === 'password', 'fa-eye-slash': myInput.type !== 'password'}"></i>
                         </div>
                     </section>
                 </div>

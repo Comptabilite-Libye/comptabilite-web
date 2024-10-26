@@ -46,7 +46,7 @@ export class MenuRecettesComponent implements OnInit {
 
 
   PasswordAnnulApprouvTc() {
-    let PassAnnullApprouveTCX = sessionStorage.getItem("PasswordAnnuleApprouve");
+    let PassAnnullApprouveTCX = sessionStorage.getItem("PassAnnApprouveTC");
 
     if (PassAnnullApprouveTCX == "" || PassAnnullApprouveTCX == null  ) {
       this.paramServie.getParams("PassAnnullApprouveTC").subscribe(

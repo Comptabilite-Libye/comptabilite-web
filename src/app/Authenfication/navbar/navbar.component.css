@@ -338,7 +338,7 @@ span.links_name {
 
 img {
     padding: 1px;
-    height: 50px;
+    height: 35px;
 }
 
 .left {
@@ -357,7 +357,7 @@ img {
 
 
     color: #333 !important;
-    background-image: linear-gradient(to bottom, #fff 0, #e0e0e0 100%) !important;
+    background-image: linear-gradient(to bottom, #d1d1d1 0, #e0e0e0 100%) !important;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffffff", endColorstr="#ffe0e0e0", GradientType=0) !important;
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important;
     border: 1px solid #b7b7b7 !important;
@@ -369,7 +369,7 @@ img {
 }
 
 .left.open:hover {
-    width: 250px;
+    width: 255px;
 }
 
 .left:hover ul li.menu-heading {
@@ -662,7 +662,7 @@ img {
 } */
 
 .left.open li.profile {
-    width: 250px;
+    width: 255px;
 }
 
 .left.open .profile #log_out {
@@ -761,7 +761,7 @@ img {
 
 
 .left:hover {
-    width: 250px;
+    width: 255px;
 }
 
 .left:hover ul li.menu-heading {

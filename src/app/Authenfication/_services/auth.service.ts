@@ -23,8 +23,8 @@ export class AuthService {
     }, httpOptions);
   }
 
-  logout(): Observable<any> {
-    return this.http.post(`${environment.API_ACCESS}` + 'signout', { }, httpOptions);
+  logout(idUser:any) {
+    return this.http.post(`${environment.API_ACCESS}` + 'signout/' + idUser , httpOptions);
   }
 
  

@@ -26,10 +26,11 @@ span {
   margin: -3px auto 2px 0px;
   border: 0px ;
   background-image: none;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
 }
-.close-button:focus, .close-button:hover{
-  background-color: #ffffff;
+.close-button:focus, .close-button:hover{ 
+  background-color: rgb(255 0 0 / 61%);
+    color: white;
 }
 
 .close-button:hover {
@@ -64,7 +65,7 @@ border: 0px ;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0) !important;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important;
 
-  border: 1px solid #b7b7b7 !important;
+  border: 1px solid #c5c5c5 !important;
   height: 29px !important;
   padding: 0px 10px 0px !important;
   box-shadow: 4px -8px 20px 0px rgb(179 179 179 / 36%);
@@ -72,6 +73,12 @@ border: 0px ;
   border-radius: 3px;
   font-size: 13px !important;
   font-weight: bold !important;
+
+
+  position: sticky;
+  top: 0;
+  /* background-color: white; Or your desired header background */
+  z-index: 1; /* Ensure header is above table content */
 }
 
 :host ::ng-deep th {
@@ -267,13 +274,25 @@ tr.mat-footer-row {
   margin-right: 5px;
   display: flex;
   height: 30px;
-  width: 70px;
+  /* width: 70px; */
   padding: 3px 7px 0px 5px;
   margin-bottom: 3px;
   border: 1px solid #adadad;
 
 }
 
+
+.Bouton_new3 {
+  margin-right: 5px;
+  display: flex;
+  height: 50px;
+  width: 130px;
+  padding: 3px 7px 0px 5px;
+  margin-bottom: 3px;
+  border: 1px solid #adadad;
+  align-items: center;
+  flex-direction: column;
+}
 
 .Bouton-add-new-other {
   margin-right: 5px;
@@ -371,13 +390,23 @@ tr.mat-footer-row {
   height: 450px ;
 }
 
+:host ::ng-deep  .ModalAddFacture {
+  border-radius: 6px;
+  width: 1251px;
+  font-family: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 540px;
+  
+}
+
 :host ::ng-deep  .ModalEdition{
   border-radius: 6px;
   width: 800px;
   font-family: auto;
   overflow-y: auto;
   overflow-x: hidden;
-  height: 300px !important;
+  height: 266px !important;
 } 
 
 
@@ -445,6 +474,9 @@ tr.mat-footer-row {
   border-width: 1px 0 1px 0;
   /* padding: 3rem 0rem !important; */
   font-weight: 700;
+  
+
+  
 }
 
 
@@ -815,6 +847,11 @@ textarea {
   max-width: 33.33%;
   text-align: right;
 }
+.flex-4-38 {
+  flex: 4;
+  max-width: 38.33%;
+  text-align: right;
+}
 
 .flex-5 {
   flex: 5;
@@ -835,10 +872,28 @@ textarea {
   text-align: right;
 }
 
+.flex-6-6 {
+  flex: 6;
+  max-width: 50%;
+  padding: 3px 4px 2px;
+  text-align: right;
+  display: flex;
+}
+
 .flex-7 {
   flex: 7;
   text-align: right;
   max-width: 53.33%;
+}
+ 
+
+
+.flex-7-7 {
+  flex: 7;
+  text-align: right;
+  max-width: 53.33%;
+  padding-right: 20px;
+  display: flex;
 }
 
 .flex-8 {
@@ -882,6 +937,18 @@ textarea {
   padding-top: 5px;
 }
 
+.block-row {
+  display: block;
+  text-align: right;
+  padding-top: 5px; 
+  /* margin: 0px 0px 5px 0px; */
+  padding-right: 5px;
+  /* border-radius: 4px 4px; */
+  border-right: 0px;
+  border-left: 1px solid #d9d1d1;
+  border-top: 1px solid #d9d1d1;
+  border-bottom: 1px solid #d9d1d1;
+}
 
 fieldset {
   border: 1px solid #d9d1d1;
@@ -900,7 +967,7 @@ fieldset[disabled] .form-control-dev {
 
 .modal-body {
   position: relative;
-  padding: 25px 0px 1px 1px;
+  padding: 10px 0px 1px 1px;
 }
 
 
@@ -970,6 +1037,31 @@ button.btn.btn-danger.cancel-voir {
   font-weight: bold;
 
 }
+
+.save-add-ModalSmallXXL {
+  position: fixed;
+  right: 1083px;
+  font-size: 13px;
+  direction: ltr;
+  height: 35px;
+  border: 1px solid #adadad;
+  width: 70px;
+  font-weight: bold;
+
+}
+
+.cancel-add-ModalSmallXXL {
+  position: fixed;
+  height: 35px;
+  right: 1165px;
+  font-size: 15px;
+  direction: ltr;
+  font-weight: 500;
+  border: 1px solid #adadad;
+  width: 70px; 
+  font-weight: bold; 
+}
+
 
 
 
@@ -1429,6 +1521,7 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
 :host ::ng-deep .p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
   padding-right: -0.25rem !important;
   margin-right: 0.25rem !important;
+  font-family: auto;
   position: relative;
   z-index: 5000;
 }
@@ -1713,7 +1806,8 @@ label:hover input[type=checkbox].checkbox:checked+span:before {
 }
 
 :host ::ng-deep .p-inputtext {
-
+  color: black;
+  font-family: auto;
   font-size: 13px;
 }
 
@@ -2108,6 +2202,11 @@ label.header_name {
 }
 
 
+:host ::ng-deep span.p-paginator-pages.ng-star-inserted {
+  position: static;
+  margin-right: auto;
+  
+}
 
 :host ::ng-deep .p-calendar{
   width: 100% !important;
@@ -2117,7 +2216,7 @@ label.header_name {
 i.fa-solid.fa-print.print-icon {
   font-size: 17px;
   padding-right: 5px;
-  margin: 2px 5px 0px 0px;
+  margin: -3px 5px 0px 0px;
 }
 
 i.fa-solid.fa-trash-can.delete-icon {
@@ -2139,4 +2238,136 @@ i.fa-regular.fa-floppy-disk.ApprouveIcon{
   border-radius: 3px;
   font-size: 13px !important;
   font-weight: bold !important;
+}
+
+input.p-column-filter {
+  width: 114%;
+  margin-top: 6px;
+  margin-right: -10px;
+  border-radius: 0px;
+  /* margin-bottom: 0px; */
+  border: 1px solid #cdcdcd;
+  margin-left: -22px;
+}
+ 
+
+:host ::ng-deep .icon-del {
+  color: rgb(183 1 1 / 65%) !important;
+  font-size: 20px !important;
+  padding-top: 5px;
+
+}
+
+.icon_add {
+  color: #008000b5 !important;
+  font-size: 20px;
+  padding-top: 5px;
+
+}
+
+.icon_modif {
+  color: #0600ff87 !important;
+  font-size: 20px !important;
+  padding-top: 5px;
+
+}
+
+.print-icon{
+  color: #071aab !important;
+  font-size: 20px !important;
+  padding-top: 5px;
+
+}
+
+.approuve_icon{
+  color: #30c755 !important;
+  font-size: 20px !important;
+  padding-top: 5px;
+}
+
+/* fieldset[disabled] input[type=checkbox], fieldset[disabled] input[type=radio], input[type=checkbox].disabled, input[type=checkbox][disabled], input[type=radio].disabled, input[type=radio][disabled] {
+  cursor: pointer;
+  background-color: transparent;
+}
+  */
+.disabled-checkbox {
+  background-color: transparent; /* Remove the gray background */
+  cursor: pointer; /* Change the cursor to a default one */
+}
+
+.disabled-checkbox::before { /* Pseudo-element for unchecked state */
+  content: "";
+  display: inline-block;
+  width: 13px; 
+  height: 13px; 
+  /* border: 2px solid #ccc;   */
+  border-radius: 3px; 
+  /* margin-right: 5px;  */
+}
+
+.disabled-checkbox::after { /* Pseudo-element for checked state */
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-left: 2px solid #ffffff; /* Checkmark color */
+  border-bottom: 2px solid #ffffff; /* Checkmark color */
+  transform: rotate(-45deg) translate(3px, 1px);
+  position: relative;
+  top: -15px; /* Adjust vertical positioning */
+  left: -6px; /* Adjust horizontal positioning */
+  /* margin-right: 5px; */
+}
+
+.disabled-checkbox:checked::before {
+  background-color: #767676; /* Checkmark color */
+  border-color: #767676; /* Checkmark color */
+}
+ 
+ 
+
+:host ::ng-deep .div-panel {
+ 
+  font-family: auto; 
+}
+
+/* /// Matmenu */
+
+.div-panel {
+  /* Basic styles for the menu */
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  /* Optional: Adjust width */
+  width: 200px;
+
+  /* Optional: Additional styling */
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+.div-panel button {
+  /* Styles for menu items */
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  text-align: left;
+  background-color: transparent;
+  text-decoration: none;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.div-panel button:hover {
+  background-color: #f5f5f5;
+}
+
+.div-panel mat-icon {
+  /* Styles for icons */
+  margin-right: 8px;
+  vertical-align: middle;
 }

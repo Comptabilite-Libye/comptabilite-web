@@ -208,7 +208,7 @@ export class SignatureUserComponent {
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;"></i>' + "Success Updated");
+            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;"></i>' + "تم التحيين");
             this.visibleModal = false;
             this.clearForm();
             this.ngOnInit();

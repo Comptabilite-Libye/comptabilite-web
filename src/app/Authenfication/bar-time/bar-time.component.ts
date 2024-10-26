@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-bar-time',
@@ -7,13 +8,13 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './bar-time.component.css'
 })
 export class BarTimeComponent implements OnInit {
-  UserConnected:any;
+  UserConnected: any;
   ngOnInit(): void {
     this.liveClock();
     this.MethodeVisbileNavBars();
 
   }
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router,private authService: AuthService) { }
   liveDateTime = new Date();
   liveClock() {
     setInterval(() => {
@@ -46,16 +47,20 @@ export class BarTimeComponent implements OnInit {
       window.location.reload();
     }, 10);
   }
+ 
+  userIdCode :any;
   LogOut() {
-
-
+    
+  this.userIdCode= sessionStorage.getItem("USER-ID")?.toString();
+console.log("idUser" , this.userIdCode)
+    this.authService.logout(this.userIdCode).subscribe(
+      data => { 
+         
+      }, )
     sessionStorage.clear();
-  //   this.router.navigateByUrl('', {skipLocationChange: true}).then(() => {
-  //     this.router.navigate(['']);
-  // });
-  this.reloadPage();
+    this.reloadPage();
     this.router.navigate(['/login'], { relativeTo: this.route })
-   
+
 
   }
   VisibleBarTime: boolean = false;

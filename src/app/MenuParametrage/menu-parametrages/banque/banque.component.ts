@@ -252,7 +252,7 @@ export class BanqueComponent {
 
     if (!this.designationAr || !this.designationLt || !this.codeSaisie) {
       alertifyjs.set('notifier', 'position', 'top-left');
-      alertifyjs.error('<i class="error fa fa-exclamation-circle" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + " Field Required");
+      alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/required.gif" alt="image" >' + "Field Required");
 
     } else {
 
@@ -277,7 +277,8 @@ export class BanqueComponent {
 
           (res: any) => {
             alertifyjs.set('notifier', 'position', 'top-left');
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Updated");
+                        alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم التحيين");
+
             this.visibleModal = false;
             this.clearForm();
             this.ngOnInit();
@@ -295,7 +296,7 @@ export class BanqueComponent {
         this.param_service.PostBanque(body) .subscribe(
           (res:any) => {
             alertifyjs.set('notifier', 'position', 'top-left'); 
-            alertifyjs.success('<i class="success fa fa-chevron-down" aria-hidden="true" style="margin: 5px 5px 5px;font-size: 15px !important;;""></i>' + "Success Saved");
+            alertifyjs.notify('<img  style="width: 30px; height: 30px; margin: 0px 0px 0px 15px" src="/assets/files/images/ok.png" alt="image" >' + "تم الحفظ بنجاح");
             this.visibleModal = false;
             this.clearForm();
             this.ngOnInit();

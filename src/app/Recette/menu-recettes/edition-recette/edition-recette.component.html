@@ -9,7 +9,7 @@
             class="Bouton-add-new1 btn  btn-default " data-original-title="Add"
             data-toggle="modal" data-target="#Modal" (click)="onOpenModal('add')">
             <div class="bouton_style-2">إضافة</div>
-            <mat-icon class="add-icon" style="margin: 0px 10px 0px 0px;">add</mat-icon>
+            <i class="fa-solid fa-plus add-icon" style=" font-size:18px ;padding-top:2px ;margin: 0px 10px 0px 0px;"></i>
         </button> -->
                     <div class="block2">
                         <span>قائمة دخول الأموال</span>
@@ -108,14 +108,14 @@
                 <div class="flex-row-start flex-12">
                     <section class="flex-row-start flex-6">
                         <label class="control-label flex-3">من : </label>
-                        <div class="control-input flex-7">
+                        <div class="control-input flex-5-45">
                             <p-calendar [(ngModel)]="dateDeb" [ngStyle]="{'width':'100%'}" [showButtonBar]="true" [readonlyInput]="true" appendTo="body" #calendar></p-calendar>
     
                         </div>
                     </section>
                     <section class="flex-row-start flex-6">
                         <label class="control-label flex-3">  إلى : </label>
-                        <div class="control-input flex-7">
+                        <div class="control-input flex-5-45">
                             <p-calendar [(ngModel)]="dateFin" [ngStyle]="{'width':'100%'}" [showButtonBar]="true" [readonlyInput]="true" appendTo="body" #calendar></p-calendar>
     
                         </div>
@@ -128,7 +128,7 @@
                     <section class="flex-row-start flex-6">
                         <label class="control-label flex-3"> نوع الإيراد : <i
                                 class="fa-lg fa-fw fa fa-times icon-required"></i></label>
-                        <div class="control-input flex-7">
+                        <div class="control-input flex-5-45">
                             <p-dropdown name="caisseAlimenter" [filter]="true" appendTo="body" class="dropdown"
                                 [options]="listTypeRecette" [(ngModel)]="selectedTypeRectte" [showClear]="true"
                                 [style]="{'width':'100%'}" [autoDisplayFirst]="true" placeholder="&nbsp;"

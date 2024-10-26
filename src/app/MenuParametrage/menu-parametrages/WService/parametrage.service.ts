@@ -36,9 +36,12 @@ export class ParametrageService {
 
   GetCaisse(): Observable<any> {
 
-    return this.http.get(`${environment.API_Parametrage}caisse/all`, {
-      headers: this.getAuthorizationHeaders()
-    });
+    return this.http.get(`${environment.API_Parametrage}caisse/all` )
+  }
+
+  GetCaisseByCodeDevise(codeDevise : number): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}caisse/codeDevise?codeDevise=`+ codeDevise )
   }
 
 
@@ -159,10 +162,21 @@ export class ParametrageService {
   
    GetTypeDepense(): Observable<any> {
 
-    return this.http.get(`${environment.API_Parametrage}type_depense/all`, {
-      headers: this.getAuthorizationHeaders()
-    });
+    return this.http.get(`${environment.API_Parametrage}type_depense/all` )
   }
+
+    
+  GetTypeDepenseByCode(code: number): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}type_depense/`+code )
+  }
+
+  
+  GetTypeDepenseByCategorie(codeCategorieDepense:number): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}type_depense/findByCategorie?codeCategorieDepense=`+codeCategorieDepense )
+  }
+
 
   PostTypeDepense(body: any) {
 
@@ -180,7 +194,41 @@ export class ParametrageService {
     return this.http.delete(`${environment.API_Parametrage}type_depense/delete/`+code);
   }
 
+
+  //// categorie depense
   
+
+
+  GetCategorieDepense(): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}categorie_depense/all`);
+  }
+
+
+  GetCategorieDepenseByCode(code:number): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}categorie_depense/`+code);
+  }
+
+  PostCategorieDepense(body: any) {
+
+    return this.http.post(`${environment.API_Parametrage}categorie_depense`, body, {
+      headers: this.getAuthorizationHeaders()
+    });
+  } 
+  UpdateCategorieDepense(body: any) {
+
+    return this.http.put(`${environment.API_Parametrage}categorie_depense/update`, body);
+  }
+
+  DeleteCategorieDepense(code: any) {
+
+    return this.http.delete(`${environment.API_Parametrage}categorie_depense/delete/`+code);
+  }
+
+
+
+
    /// Type Recette 
 
   
@@ -219,9 +267,12 @@ export class ParametrageService {
   
    GetBanque(): Observable<any> {
 
-    return this.http.get(`${environment.API_Parametrage}banque/all`, {
-      headers: this.getAuthorizationHeaders()
-    });
+    return this.http.get(`${environment.API_Parametrage}banque/all` )
+  }
+
+  GetBanqueByCode(code:number): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}banque/`+code )
   }
 
   PostBanque(body: any) {
@@ -248,6 +299,12 @@ export class ParametrageService {
     return this.http.get(`${environment.API_Parametrage}mode_reglement/all`, {
       headers: this.getAuthorizationHeaders()
     });
+  }
+
+  
+  GetModeReglementByCode(code:number){
+
+    return this.http.get(`${environment.API_Parametrage}mode_reglement/`+code)
   }
   PostModeReglement(body: any) : Observable<any> {
 
@@ -320,6 +377,72 @@ export class ParametrageService {
   }
 
 
+
+  /// type cost centre
+
+  
+  GetTypeCostCentre(): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}type_cost_centre/all`, {
+      headers: this.getAuthorizationHeaders()
+    });
+  }
+
+  PostTypeCostCentre(body: any) {
+
+    return this.http.post(`${environment.API_Parametrage}type_cost_centre`, body, {
+      headers: this.getAuthorizationHeaders()
+    });
+  } 
+  UpdateTypeCostCentre(body: any) {
+
+    return this.http.put(`${environment.API_Parametrage}type_cost_centre/update`, body ,{responseType:'json'});
+  }
+
+  DeleteTypeCostCentre(code: any) {
+
+    return this.http.delete(`${environment.API_Parametrage}type_cost_centre/delete/`+code);
+  }
+
+
+  
+  ///   cost centre
+
+  
+  GetCostCentre(): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}cost_center/all`, {
+      headers: this.getAuthorizationHeaders()
+    });
+  }
+  
+  GetCostCentreByCode(code:number): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}cost_center/`+ code, {
+      headers: this.getAuthorizationHeaders()
+    });
+  }
+  GetCostCentreDetail(): Observable<any> {
+
+    return this.http.get(`${environment.API_Parametrage}cost_center/detail?detail=true`, {
+      headers: this.getAuthorizationHeaders()
+    });
+  }
+  PostCostCentre(body: any) {
+
+    return this.http.post(`${environment.API_Parametrage}cost_center`, body, {
+      headers: this.getAuthorizationHeaders()
+    });
+  } 
+  UpdateCostCentre(body: any) {
+
+    return this.http.put(`${environment.API_Parametrage}cost_center/update`, body ,{responseType:'json'});
+  }
+
+  DeleteCostCentre(code: any) {
+
+    return this.http.delete(`${environment.API_Parametrage}cost_center/delete/`+code);
+  }
 
 
 }
